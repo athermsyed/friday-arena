@@ -3048,7 +3048,10 @@ const FR={
  sweep:'M48 102 C42 50 76 30 110 32 C144 34 164 60 154 102 L149 88 C142 72 128 62 112 60 L121 74 L103 64 L106 80 L88 68 L86 84 L72 76 L66 94 L58 86 Z',
  side:'M48 104 C44 54 70 34 102 34 C134 34 158 56 152 104 L147 88 C141 72 128 62 112 60 L121 76 L104 66 L102 84 L92 70 L84 88 L75 74 L64 96 L57 86 Z',
  center:'M48 104 C44 54 70 34 100 34 C130 34 156 54 152 104 L147 90 C143 74 128 64 108 62 L100 74 L92 62 C72 64 57 74 53 90 Z',
- buzz:'M52 92 C52 56 74 40 100 40 C126 40 148 56 148 92 C140 72 122 62 100 62 C78 62 60 72 52 92 Z'};
+ buzz:'M52 92 C52 56 74 40 100 40 C126 40 148 56 148 92 C140 72 122 62 100 62 C78 62 60 72 52 92 Z',
+ crop:'M50 96 C47 56 72 36 100 36 C128 36 153 56 150 96 C147 84 142 76 136 72 C128 60 117 56 105 57 L98 52 L94 58 C84 57 74 61 66 70 C58 78 53 86 50 96 Z',
+ cropup:'M50 96 C47 60 64 40 82 34 C88 28 98 27 106 30 C112 27 122 28 128 34 C144 42 153 62 150 96 C147 84 142 76 136 72 C128 60 117 56 105 58 L97 51 L93 58 C83 57 74 61 66 70 C58 78 53 86 50 96 Z',
+ recede:'M50 96 C47 56 72 36 100 36 C128 36 153 56 150 96 C148 86 145 78 140 74 C136 66 130 60 122 60 C114 62 108 64 100 65 C92 64 86 62 78 60 C70 60 64 66 60 74 C55 78 52 86 50 96 Z'};
 const BK={
  cap:'M47 100 C44 58 70 36 100 36 C130 36 156 58 153 100 L151 118 L49 118 Z',
  sweep:'M44 104 C38 58 64 30 100 30 C136 30 162 58 156 104 C158 124 152 138 146 142 L140 132 L134 144 L66 144 L60 132 L54 142 C48 138 42 124 44 104 Z',
@@ -3065,6 +3068,9 @@ const LK={
  big:['M46 98 C32 124 44 146 36 170 C30 190 44 204 60 200 C50 184 64 166 58 146 C54 128 62 116 60 104 Z','M154 98 C168 124 156 146 164 170 C170 190 156 204 140 200 C150 184 136 166 142 146 C146 128 138 116 140 104 Z']};
 const HAIR={
  sweep:{b:BK.sweep,f:FR.sweep,sh:'M72 50 C92 40 120 40 140 54'},
+ crop:{b:'M48 100 C46 58 70 38 100 38 C130 38 154 58 152 100 L150 112 L50 112 Z',f:FR.crop,sh:'M74 50 C88 43 112 43 126 50'},
+ cropup:{b:'M48 100 C46 58 70 38 100 38 C130 38 154 58 152 100 L150 112 L50 112 Z',f:FR.cropup,sh:'M82 40 C94 33 110 33 122 40'},
+ recede:{b:'M48 100 C46 58 70 38 100 38 C130 38 154 58 152 100 L150 112 L50 112 Z',f:FR.recede,sh:'M74 50 C88 43 112 43 126 50'},
  short:{b:BK.cap,f:FR.short,sh:'M68 52 C84 44 116 44 132 52'},
  spiky:{b:BK.cap,f:FR.spiky,sh:'M70 50 C86 42 114 42 130 50'},
  quiff:{b:BK.cap,f:FR.quiff,sh:'M88 34 C100 26 116 24 128 30'},
@@ -3100,8 +3106,10 @@ function avatar(t,mood){
  const must=`<path d="M86 131 C92 126 98 127 100 130 C102 127 108 126 114 131 C108 133.5 104 133.5 100 132.5 C96 133.5 92 133.5 86 131 Z" fill="${hc}"/>`;
  const fh=t.fh==='beard'?`<path d="M52 104 C52 140 70 166 100 170 C130 166 148 140 148 104 C144 120 138 130 128 136 C120 132 110 130 100 131 C90 130 80 132 72 136 C62 130 56 120 52 104 Z" fill="${hc}"/><path d="M70 150 C82 162 118 162 130 150" stroke="${hl}" stroke-width="2" fill="none" opacity=".45"/>${must}`
   :t.fh==='stubble'?`<path d="M56 112 C58 140 76 160 100 162 C124 160 142 140 144 112 C140 128 132 140 118 146 Q100 152 82 146 C68 140 60 128 56 112 Z" fill="${hc}" opacity=".24"/><path d="M86 131 C92 127 98 128 100 130 C102 128 108 127 114 131 C108 133 104 133 100 132 C96 133 92 133 86 131 Z" fill="${hc}" opacity=".3"/>`
+  :t.fh==='trim'?`<path d="M55 108 C56 134 73 155 100 158 C127 155 144 134 145 108 C142 124 135 136 124 141 C116 139 108 140 100 141 C92 140 84 139 76 141 C65 136 58 124 55 108 Z" fill="${hc}" opacity=".92"/><path d="M90 131 C94 128.8 98 129.2 100 130.6 C102 129.2 106 128.8 110 131 C106 132.2 103 132.2 100 131.7 C97 132.2 94 132.2 90 131 Z" fill="${hc}" opacity=".6"/>`
+  :t.fh==='boxed'?`<path d="M53 106 C53 138 72 162 100 165 C128 162 147 138 147 106 C144 124 137 136 126 141 C117 138 108 139 100 140 C92 139 83 138 74 141 C63 136 56 124 53 106 Z" fill="${hc}"/><path d="M76 152 C88 160 112 160 124 152" stroke="${hl}" stroke-width="1.6" fill="none" opacity=".35"/><path d="M88 131 C93 128 98 128.5 100 130.2 C102 128.5 107 128 112 131 C107 133 103 133 100 132.2 C97 133 93 133 88 131 Z" fill="${hc}" opacity=".85"/>`
   :t.fh==='goatee'?`<path d="M89 147 C91 162 109 162 111 147 C104 151 96 151 89 147 Z" fill="${hc}"/>${must}`:'';
- const gl=t.gl?`<g stroke="${t.glc}" stroke-width="3.2" fill="#fff" fill-opacity=".1"><rect x="62" y="88" width="32" height="30" rx="9"/><rect x="106" y="88" width="32" height="30" rx="9"/></g><path d="M94 100 Q100 96 106 100" stroke="${t.glc}" stroke-width="3" fill="none"/><path d="M62 98 L52 100 M138 98 L148 100" stroke="${t.glc}" stroke-width="3"/><path d="M67 93 L74 93 M111 93 L118 93" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>`:'';
+ const gl=t.gl&&t.glr?`<g stroke="${t.glc}" stroke-width="3.4" fill="#fff" fill-opacity=".1"><rect x="59" y="91" width="36" height="25" rx="4"/><rect x="105" y="91" width="36" height="25" rx="4"/></g><path d="M95 100 L105 100" stroke="${t.glc}" stroke-width="3"/><path d="M59 97 L51 99 M141 97 L149 99" stroke="${t.glc}" stroke-width="3"/><path d="M64 95 L72 95 M110 95 L118 95" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>`:t.gl?`<g stroke="${t.glc}" stroke-width="3.2" fill="#fff" fill-opacity=".1"><rect x="62" y="88" width="32" height="30" rx="9"/><rect x="106" y="88" width="32" height="30" rx="9"/></g><path d="M94 100 Q100 96 106 100" stroke="${t.glc}" stroke-width="3" fill="none"/><path d="M62 98 L52 100 M138 98 L148 100" stroke="${t.glc}" stroke-width="3"/><path d="M67 93 L74 93 M111 93 L118 93" stroke="#fff" stroke-width="2" opacity=".7" stroke-linecap="round"/>`:'';
  const plug=t.plug?`<circle cx="51" cy="119" r="3.6" fill="${t.plug}" stroke="#555" stroke-width="1"/><circle cx="149" cy="119" r="3.6" fill="${t.plug}" stroke="#555" stroke-width="1"/>`:'';
  const ear=t.ear?(t.hoop?`<circle cx="51" cy="124" r="6" fill="none" stroke="${t.ear}" stroke-width="2.4"/><circle cx="149" cy="124" r="6" fill="none" stroke="${t.ear}" stroke-width="2.4"/>`:`<path d="M51 118 L51 127" stroke="${t.ear}" stroke-width="1.8"/><path d="M51 127 l-3 5 l3 5 l3 -5 z" fill="${t.ear}"/><path d="M149 118 L149 127" stroke="${t.ear}" stroke-width="1.8"/><path d="M149 127 l-3 5 l3 5 l3 -5 z" fill="${t.ear}"/>`):'';
  const bw=t.brow||3.4,bc=shade(hc,light?-.4:-.05);
@@ -3903,7 +3911,7 @@ function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',
  <label>Name<input id="l-n" value="${esc(t.n)}" ${name?'disabled':''} required maxlength="16"></label>
  ${sw('skin',SKIN,t.skin,'Skin')}${sw('hc',HAIRC,t.hc,'Hair color')}
  <div class="frow">${sel('l-hair',HAIRS,t.hair,'Hair style')}${sel('l-face',Object.keys(FACE),t.face,'Face shape')}${sel('l-top',TOPS,t.top,'Top')}</div>
- <div class="frow">${sel('l-fh',['none','beard','goatee','stubble'],t.fh||'none','Facial hair')}<label><span><input type="checkbox" id="l-gl" ${t.gl?'checked':''}> Glasses</span></label><label><span><input type="checkbox" id="l-lash" ${t.lash?'checked':''}> Lashes</span></label><label><span><input type="checkbox" id="l-ear" ${t.ear?'checked':''}> Earrings</span></label></div>
+ <div class="frow">${sel('l-fh',['none','beard','boxed','trim','goatee','stubble'],t.fh||'none','Facial hair')}<label><span><input type="checkbox" id="l-gl" ${t.gl?'checked':''}> Glasses</span></label><label><span><input type="checkbox" id="l-lash" ${t.lash?'checked':''}> Lashes</span></label><label><span><input type="checkbox" id="l-ear" ${t.ear?'checked':''}> Earrings</span></label></div>
  ${sw('tc',['#1c1c1f','#2b2b2f','#3b4049','#1f2d4d','#2d6bb8','#2f8f9d','#5a8f3a','#7a3a8a','#c0262e','#f3c3d2','#efe6d8','#dfe8f2'],t.tc,'Top color')}${sw('c',['#ff8fc0','#7fd3f5','#ffb3a1','#bfe68a','#c9b5ff','#ffd97a','#8fc3ff','#ffc48a','#d4b5ff','#a8e0ff'],t.c,'Spotlight')}
  <div class="frow"><button class="btn blue sm" type="submit">${name?'Save look':'Add player'}</button>${name&&R.edits[name]?`<button class="skip" type="button" id="l-reset">Back to original look</button>`:''}<button class="skip" type="button" id="l-cancel">Cancel</button></div></div></form>`;
  const read=()=>{t.hair=$('l-hair').value;t.face=$('l-face').value;t.top=$('l-top').value;const fh=$('l-fh').value;t.fh=fh==='none'?undefined:fh;t.gl=$('l-gl').checked?1:0;t.glc=t.glc||'#2a2522';t.lash=$('l-lash').checked?1:0;t.ear=$('l-ear').checked?(t.ear||'#e0b44a'):undefined;if(t.top==='blazer'||t.top==='suit')t.sh=t.sh||'#dbe6f0';$('lkPrev').innerHTML=stage(t,'happy')};
@@ -3912,7 +3920,7 @@ function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',
  $('l-cancel').onclick=()=>{F.innerHTML=''};
  const rs=$('l-reset');if(rs)rs.onclick=()=>{delete R.edits[name];saveRoster(R);applyRoster(R);admPlayers();admMsg(`${name} is back to the original look.`)};
  $('lf').onsubmit=e=>{e.preventDefault();read();const R2=loadRoster();
-  if(name){const isBase=BASE_TEAM.some(b=>b.n===name);const keep={skin:t.skin,hc:t.hc,hair:t.hair,face:t.face,top:t.top,fh:t.fh,gl:t.gl,glc:t.glc,lash:t.lash,ear:t.ear,tc:t.tc,c:t.c,sh:t.sh};
+  if(name){const isBase=BASE_TEAM.some(b=>b.n===name);const keep={skin:t.skin,hc:t.hc,hair:t.hair,face:t.face,top:t.top,fh:t.fh,gl:t.gl,glr:t.glr,glc:t.glc,lash:t.lash,ear:t.ear,tc:t.tc,c:t.c,sh:t.sh};
    if(isBase)R2.edits[name]=keep;else R2.custom=R2.custom.map(c=>c.n===name?{...c,...keep}:c)}
   else{const n=$('l-n').value.trim().slice(0,16);if(!n){admMsg('Add a name.',1);return}if(byName[n]!==undefined){admMsg('That name is already in the game.',1);return}t.n=n;R2.custom.push({...t})}
   saveRoster(R2);applyRoster(R2);admPlayers();admMsg(name?`${name}'s look saved.`:`${t.n} added to the game.`)};
