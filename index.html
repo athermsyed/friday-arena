@@ -3522,12 +3522,12 @@ function loadBank(){const b=jget(BKEY,{weeks:Object.keys(W).sort((x,y)=>x-y).map
 function saveBank(b){jset(BKEY,b)}
 function loadCfg(){const c=jget(CKEY,DEF_CFG);c.times={...DEF_CFG.times,...(c.times||{})};for(const k in DEF_CFG)if(c[k]===undefined)c[k]=DEF_CFG[k];return c}
 function saveCfg(c){jset(CKEY,c)}
-function loadRoster(){const r=jget(RKEY,{custom:[],edits:{},hidden:[]});r.custom=r.custom||[];r.edits=r.edits||{};r.hidden=r.hidden||[];return r}
+function loadRoster(){const r=jget(RKEY,{custom:[],edits:{},hidden:[]});r.custom=r.custom||[];r.edits=r.edits||{};r.hidden=r.hidden||[];r.removed=r.removed||[];return r}
 function saveRoster(r){jset(RKEY,r)}
 const BASE_TEAM=TEAM.map(t=>({...t}));
 function applyRoster(r){
- TEAM.length=0;BASE_TEAM.forEach(t=>TEAM.push({...t,...(r.edits[t.n]||{})}));
- (r.custom||[]).forEach(t=>{if(t&&typeof t.n==='string'&&t.n&&!BASE_TEAM.some(b=>b.n===t.n))TEAM.push({...t})});
+ const rm=new Set(r.removed||[]);TEAM.length=0;BASE_TEAM.forEach(t=>{if(!rm.has(t.n))TEAM.push({...t,...(r.edits[t.n]||{})})});
+ (r.custom||[]).forEach(t=>{if(t&&typeof t.n==='string'&&t.n&&!rm.has(t.n)&&!BASE_TEAM.some(b=>b.n===t.n))TEAM.push({...t})});
  for(const k in byName)delete byName[k];TEAM.forEach((t,i)=>byName[t.n]=i);
  HIDDEN=new Set(r.hidden||[])}
 let HIDDEN=new Set(),CFG=loadCfg();
@@ -3545,7 +3545,7 @@ function prepQ(q,pool){const Q={...q};Q.tag=q.tag||TAGS[q.type]||'Question';Q.ti
  if(q.type==='room'&&!q.w)Q.w=[.4,.25,.2,.15];
  if(q.type==='num')Q.ans=+q.ans;
  return Q}
-function buildQS(pool){const b=loadBank(),wk=currentWeek(),list=(b.weeks[wk-1]||[]).filter(q=>q&&q.type&&q.q);return {wk,qs:(list.length?list:(W[1]||[])).map(q=>prepQ(q,pool))}}
+function buildQS(pool){const b=loadBank(),wk=currentWeek(),list=(b.weeks[wk-1]||[]).filter(q=>q&&q.type&&q.q&&!(q.type==='team'&&typeof q.ans==='string'&&byName[q.ans]===undefined));return {wk,qs:(list.length?list:(W[1]||[])).map(q=>prepQ(q,pool))}}
 
 const DIRS={choice:['👆','Tap one answer'],room:['👆','Tap what you think most people will pick'],team:['🕵️','Tap the teammate you think it is'],num:['⌨️','Type a number, then press Enter'],word:['⌨️','Type the word, then press Enter. One letter off still scores']};
 const CATCOL={choice:'var(--blue)',room:'var(--berry)',team:'var(--lime)',num:'var(--violet)',word:'var(--coral)'};
@@ -4183,7 +4183,7 @@ function admUpload(){const b=loadBank(),n=Math.max(4,...b.weeks.map(w=>w.length)
 function admPlayers(){const s=loadSeason(),r=loadRoster();
  $('admBody').innerHTML=`<div class="admrow"><h2>Players and season scores</h2><span style="flex:1"></span><button class="btn blue sm" type="button" id="plAdd">+ Add a player</button><button class="skip danger" type="button" id="seaReset">Reset all scores</button></div><div id="plForm"></div>
  <div class="pltable">${TEAM.map((t,i)=>{const tot=s.tot[t.n]||0,hid=HIDDEN.has(t.n),games=s.games.filter(g=>g.p.includes(t.n)).length;return `<div class="plrow ${hid?'hid':''}"><span class="plav">${stage(t,'idle')}</span><div class="pln"><b>${esc(t.n)}</b><span>${games} games · catch-up next game ${multFor(s,t.n)}x${hid?' · hidden':''}</span></div>
- <label class="plsc">Season <input type="number" data-n="${esc(t.n)}" value="${tot}"></label><div class="qbtns"><button class="skip" type="button" data-a="save" data-n="${esc(t.n)}">Save</button><button class="skip" type="button" data-a="zero" data-n="${esc(t.n)}">Reset to 0</button><button class="skip" type="button" data-a="look" data-n="${esc(t.n)}">Edit look</button><button class="skip" type="button" data-a="hide" data-n="${esc(t.n)}">${hid?'Show':'Hide'}</button>${r.custom.some(c=>c.n===t.n)?`<button class="skip danger" type="button" data-a="rm" data-n="${esc(t.n)}">Remove</button>`:''}</div></div>`}).join('')}</div>`;
+ <label class="plsc">Season <input type="number" data-n="${esc(t.n)}" value="${tot}"></label><div class="qbtns"><button class="skip" type="button" data-a="save" data-n="${esc(t.n)}">Save</button><button class="skip" type="button" data-a="zero" data-n="${esc(t.n)}">Reset to 0</button><button class="skip" type="button" data-a="look" data-n="${esc(t.n)}">Edit look</button><button class="skip" type="button" data-a="hide" data-n="${esc(t.n)}">${hid?'Show':'Hide'}</button><button class="skip danger" type="button" data-a="rm" data-n="${esc(t.n)}">Delete</button></div></div>`}).join('')}</div>`;
  $('plAdd').onclick=()=>lookForm(null);
  let arm=0;$('seaReset').onclick=e=>{if(!arm){arm=1;e.target.textContent='Tap again to erase every score';setTimeout(()=>{arm=0;if(e.target.isConnected)e.target.textContent='Reset all scores'},4000);return}saveSeasonData({games:[],tot:{}});admPlayers();admMsg('All season scores and game history erased.')};
  $('admBody').querySelectorAll('.pltable button').forEach(x=>x.onclick=()=>{const n=x.dataset.n,a=x.dataset.a,S=loadSeason(),R=loadRoster();
@@ -4191,7 +4191,7 @@ function admPlayers(){const s=loadSeason(),r=loadRoster();
   else if(a==='zero'){S.tot[n]=0;saveSeasonData(S);admPlayers();admMsg(`${n}: season score reset to 0.`)}
   else if(a==='hide'){const h=new Set(R.hidden);h.has(n)?h.delete(n):h.add(n);R.hidden=[...h];saveRoster(R);applyRoster(R);admPlayers();admMsg(h.has(n)?`${n} is hidden from the game.`:`${n} is back in the game.`)}
   else if(a==='look')lookForm(n);
-  else if(a==='rm'){if(x.dataset.arm){R.custom=R.custom.filter(c=>c.n!==n);saveRoster(R);applyRoster(R);admPlayers();admMsg(`${n} removed.`)}else{x.dataset.arm=1;x.textContent='Sure?'}}})}
+  else if(a==='rm'){if(x.dataset.arm){R.custom=R.custom.filter(c=>c.n!==n);if(BASE_TEAM.some(b=>b.n===n)&&!R.removed.includes(n))R.removed.push(n);R.hidden=R.hidden.filter(h=>h!==n);delete R.edits[n];saveRoster(R);applyRoster(R);if(n in S.tot){delete S.tot[n];saveSeasonData(S)}admPlayers();admMsg(`${n} deleted from the game and the season table.`)}else{x.dataset.arm=1;x.textContent='Tap again to delete '+n}}})}
 function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',skin:'#efc6a8',face:'soft',hair:'short',hc:'#3a2418',lips:'#b86a62',top:'plain',tc:'#2d6bb8',c:'#9fd8ff'};const t={...base};
  const F=$('plForm');const sel=(id,arr,v,lab)=>`<label>${lab}<select id="${id}">${arr.map(a=>`<option ${a===v?'selected':''}>${a}</option>`).join('')}</select></label>`;
  const sw=(id,arr,v,lab)=>`<div class="swl"><span>${lab}</span><div class="sws">${arr.map(c=>`<button type="button" class="sw ${c===v?'on':''}" data-f="${id}" data-c="${c}" style="background:${c}" aria-label="${lab} ${c}"></button>`).join('')}</div></div>`;
@@ -4210,7 +4210,7 @@ function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',
  $('lf').onsubmit=e=>{e.preventDefault();read();const R2=loadRoster();
   if(name){const isBase=BASE_TEAM.some(b=>b.n===name);const keep={skin:t.skin,hc:t.hc,hair:t.hair,face:t.face,top:t.top,fh:t.fh,gl:t.gl,glr:t.glr,glc:t.glc,lash:t.lash,ear:t.ear,tc:t.tc,c:t.c,sh:t.sh};
    if(isBase)R2.edits[name]=keep;else R2.custom=R2.custom.map(c=>c.n===name?{...c,...keep}:c)}
-  else{const n=$('l-n').value.trim().slice(0,16);if(!n){admMsg('Add a name.',1);return}if(byName[n]!==undefined){admMsg('That name is already in the game.',1);return}t.n=n;R2.custom.push({...t})}
+  else{const n=$('l-n').value.trim().slice(0,16);if(!n){admMsg('Add a name.',1);return}if(byName[n]!==undefined){admMsg('That name is already in the game.',1);return}t.n=n;if(BASE_TEAM.some(b=>b.n===n)){R2.removed=(R2.removed||[]).filter(x=>x!==n);R2.edits[n]={...t}}else R2.custom.push({...t})}
   saveRoster(R2);applyRoster(R2);admPlayers();admMsg(name?`${name}'s look saved.`:`${t.n} added to the game.`)};
  F.scrollIntoView({behavior:'smooth',block:'nearest'})}
 /* settings */
