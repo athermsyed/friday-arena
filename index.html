@@ -508,6 +508,285 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 .sw{width:30px;height:30px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px var(--line);cursor:pointer}
 .sw.on{box-shadow:0 0 0 3px var(--blue)}
 
+/* ===== 20 more exits ===== */
+.ex .rel{position:relative;width:100%}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes fadein{to{opacity:1}}
+@keyframes fadeout{to{opacity:0}}
+/* 1 elevator */
+.ex-elevator{background:linear-gradient(#dfe6ee,#b9c6d3)}
+.ex-elevator .floor{position:absolute;left:0;right:0;bottom:0;height:18%;background:repeating-linear-gradient(90deg,#8a9bb0 0 12vmin,#7d8ea3 12vmin 12.4vmin)}
+.ex-elevator .frame{position:absolute;left:50%;bottom:18%;width:40vmin;height:56vmin;margin-left:-20vmin;background:#56708c;border:2vmin solid #c9d6e3;border-bottom:none;overflow:hidden;z-index:3}
+.ex-elevator .inside{position:absolute;inset:0;background:linear-gradient(#f5e7c8,#e8d3a6)}
+.ex-elevator .inside .ea{left:50%;bottom:0;margin-left:-8vmin}
+.ex-elevator .inside .ea{animation:elev 1.2s cubic-bezier(.6,0,1,.4) 3.2s both}
+@keyframes elev{to{transform:translateY(60vmin)}}
+.ex-elevator .door{position:absolute;top:0;bottom:0;width:50%;background:linear-gradient(90deg,#c9d6e3,#e8eef4 50%,#c9d6e3);z-index:4}
+.ex-elevator .door.l{left:0;transform:translateX(-100%);animation:doorl 3.4s ease-in-out 1.6s both}
+.ex-elevator .door.r{right:0;transform:translateX(100%);animation:doorr 3.4s ease-in-out 1.6s both}
+@keyframes doorl{0%{transform:translateX(-100%)}20%,80%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+@keyframes doorr{0%{transform:translateX(100%)}20%,80%{transform:translateX(0)}100%{transform:translateX(100%)}}
+.ex-elevator .ind{position:absolute;left:50%;bottom:calc(18% + 58vmin);transform:translateX(-50%);width:22vmin;height:8vmin;background:#0b2340;border-radius:1.4vmin;color:#ff6b4a;font-family:var(--mono);font-size:5vmin;display:grid;place-items:center;overflow:hidden;z-index:3}
+.ex-elevator .ind span{position:absolute;opacity:0;animation:indf .45s steps(1) both}
+@keyframes indf{0%{opacity:1}99%{opacity:1}100%{opacity:0}}
+.ex-elevator .oos{position:absolute;left:50%;bottom:calc(18% + 22vmin);transform:translateX(-50%) rotate(-4deg);background:#ffb81c;color:var(--ink);font-weight:800;font-size:3.4vmin;padding:.6vmin 2vmin;border-radius:1vmin;opacity:0;animation:fadein .3s 5.1s both;z-index:5}
+/* 2 eject seat */
+.ex-eject{background:linear-gradient(#eef3f7,#d5dee7)}
+.ex-eject .ceil{position:absolute;left:0;right:0;top:13vh;height:9vh;background:repeating-linear-gradient(90deg,#fff 0 14vmin,#dfe6ee 14vmin 14.4vmin);border-bottom:.6vmin solid #c9d6e3;z-index:5}
+.ex-eject .hole{position:absolute;left:60%;top:13vh;width:24vmin;height:9vh;margin-left:-12vmin;background:#0b2340;clip-path:polygon(10% 0,90% 0,100% 100%,70% 80%,50% 100%,30% 80%,0 100%);opacity:0;animation:fadein .1s 2.5s both;z-index:6}
+.ex-eject .table{position:absolute;left:8%;right:30%;bottom:22%;height:7vmin;background:#8a5a30;border-radius:4vmin;box-shadow:0 1.4vmin 0 #6b4428;z-index:3}
+.ex-eject .seat{position:absolute;left:52%;bottom:14%;width:18vmin;z-index:4;animation:ejectup 1.4s cubic-bezier(.4,0,.8,.5) 2.3s both}
+.ex-eject .chairback{position:absolute;left:-6%;top:6%;width:112%;height:96%;background:#1f2d4d;border-radius:4vmin 4vmin 1vmin 1vmin;z-index:0}
+.ex-eject .seat .ea{z-index:1}
+.ex-eject .seat .ea{position:relative;width:100%}
+.ex-eject .flame{position:absolute;left:30%;top:100%;width:40%;height:12vmin;background:radial-gradient(ellipse at 50% 0,#fff 0,#ffb81c 30%,#ff6b4a 60%,transparent 70%);opacity:0;animation:fadein .1s 2.3s both}
+@keyframes ejectup{to{transform:translateY(-110vh)}}
+.ex-eject .btnred{position:absolute;left:36%;bottom:calc(22% + 7vmin);width:7vmin;height:4vmin;background:#e23b4e;border-radius:1vmin 1vmin .4vmin .4vmin;box-shadow:0 1vmin 0 #9b1c2c;z-index:4;animation:pressbtn .3s ease-in 2s both}
+.ex-eject .btnred::after{content:"EJECT";position:absolute;top:-3.4vmin;left:50%;transform:translateX(-50%);font-weight:800;font-size:2.2vmin;color:#e23b4e}
+@keyframes pressbtn{50%{transform:translateY(.8vmin);box-shadow:0 .2vmin 0 #9b1c2c}}
+.ex-eject .smoke{position:absolute;left:54%;bottom:12%;width:14vmin;height:14vmin;border-radius:50%;background:#c9d6e3;opacity:0;animation:smoke 1.6s ease-out 2.35s both;z-index:3}
+.ex-eject .smoke.b{left:48%;animation-delay:2.5s}.ex-eject .smoke.c{left:60%;animation-delay:2.6s}
+@keyframes smoke{0%{transform:scale(.2);opacity:.9}100%{transform:scale(2.4) translateY(-4vmin);opacity:0}}
+/* 3 removed from meeting */
+.ex-removed{background:#1b1f27}
+.ex-removed .grid{position:absolute;left:6%;right:6%;top:17%;bottom:15%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:1fr 1fr;gap:1.4vmin}
+.ex-removed .tile{position:relative;background:#2b313d;border-radius:1.6vmin;overflow:hidden;display:grid;place-items:end center}
+.ex-removed .tile .ea{position:relative;width:52%;bottom:-1vmin}
+.ex-removed .tile .ea b{display:none}
+.ex-removed .nm{position:absolute;left:1.2vmin;bottom:1vmin;background:rgba(0,0,0,.55);color:#fff;font-family:var(--body);font-weight:700;font-size:1.9vmin;padding:.2vmin 1vmin;border-radius:.6vmin}
+.ex-removed .tile.me{box-shadow:0 0 0 .5vmin #e23b4e;animation:tileout 1.2s ease-in 3.6s both}
+@keyframes tileout{0%{transform:none}30%{transform:scale(1.05)}100%{transform:scale(.1) translateY(60vh) rotate(20deg);opacity:0}}
+.ex-removed .banner{position:absolute;left:4%;right:4%;top:40%;background:#e23b4e;color:#fff;font-family:var(--body);font-weight:800;font-size:2.2vmin;text-align:center;padding:1vmin;border-radius:1vmin;opacity:0;animation:fadein .2s 2.4s both}
+.ex-removed .me .ea{animation:grey 1s 2.4s both}
+@keyframes grey{to{filter:grayscale(1) brightness(.7)}}
+.ex-removed .bar{position:absolute;left:0;right:0;bottom:0;height:10%;background:#111;display:flex;justify-content:center;align-items:center;gap:2vmin}
+.ex-removed .bar i{width:6vmin;height:6vmin;border-radius:50%;background:#3a404c}.ex-removed .bar i.end{background:#e23b4e;width:10vmin;border-radius:3vmin}
+/* 4 recycle bin */
+.ex-recycle{background:linear-gradient(135deg,#0a4fa8,#2d8fe0 60%,#7fd3f5)}
+.ex-recycle .icon{position:absolute;left:14%;top:30%;width:14vmin;z-index:4;animation:drag 2s cubic-bezier(.5,0,.5,1) 1.4s both}
+.ex-recycle .icon .ea b{font-size:2vmin;background:#0b2340cc;padding:0 .8vmin;border-radius:.4vmin;display:inline-block}
+.ex-recycle .icon .ea{position:relative;width:100%;text-align:center;outline:.3vmin dashed #fff;outline-offset:.6vmin;border-radius:1vmin;background:rgba(255,255,255,.15)}
+@keyframes drag{0%{transform:none}100%{transform:translate(56vw,30vh) scale(.8)}}
+.ex-recycle .icon{animation:drag 2s cubic-bezier(.5,0,.5,1) 1.4s both,intobin .4s ease-in 3.4s forwards}
+@keyframes intobin{to{transform:translate(58vw,36vh) scale(0);opacity:0}}
+.ex-recycle .cursor{position:absolute;left:calc(14% + 9vmin);top:calc(30% + 9vmin);font-size:6vmin;z-index:5;animation:drag 2s cubic-bezier(.5,0,.5,1) 1.4s both,fadeout .2s 3.6s forwards}
+.ex-recycle .bin{position:absolute;right:12%;bottom:12%;width:16vmin;z-index:3;text-align:center;color:#fff;font-family:var(--body);font-weight:700;font-size:2vmin}
+.ex-recycle .bin svg{width:100%}
+.ex-recycle .lid{transform-origin:10% 100%;animation:lid .6s ease-in-out 3.2s both}
+@keyframes lid{50%{transform:rotate(-30deg)}}
+.ex-recycle .bin{animation:binjig .4s ease-in-out 3.6s 3}
+@keyframes binjig{50%{transform:rotate(6deg)}}
+.ex-recycle .menu{position:absolute;right:calc(12% + 15vmin);bottom:calc(12% + 12vmin);background:#fff;border-radius:1vmin;padding:1vmin 2vmin;font-family:var(--body);font-weight:700;font-size:2.4vmin;color:var(--ink);box-shadow:0 1vmin 3vmin rgba(0,0,0,.3);opacity:0;animation:fadein .2s 4.1s both;z-index:6}
+.ex-recycle .menu b{color:#e23b4e}
+/* 5 shredder */
+.ex-shred{background:linear-gradient(#f3f4f7,#dfe3ea)}
+.ex-shred .mach{position:absolute;left:50%;top:44%;width:44vmin;height:22vmin;margin-left:-22vmin;background:#3b4049;border-radius:2vmin;z-index:4;box-shadow:inset 0 -2vmin 0 #2b2f36}
+.ex-shred .mach::before{content:"";position:absolute;left:10%;right:10%;top:3vmin;height:1.6vmin;background:#0b0d10;border-radius:1vmin}
+.ex-shred .mach::after{content:"SHRED-O-MATIC";position:absolute;left:0;right:0;bottom:3vmin;text-align:center;color:#ffb81c;font-weight:800;font-size:3vmin}
+.ex-shred .mach{animation:shake2 .1s linear 1.8s 18}
+@keyframes shake2{50%{transform:translate(.4vmin,-.3vmin)}}
+.ex-shred .paper{position:absolute;left:50%;top:10%;width:26vmin;margin-left:-13vmin;background:#fff;border-radius:1vmin;padding:1vmin;box-shadow:0 1vmin 2vmin rgba(0,0,0,.15);z-index:3;animation:feed 2.2s linear 1.6s both}
+.ex-shred .paper .ea{position:relative;width:100%}.ex-shred .paper .ea b{color:var(--ink);text-shadow:none}
+@keyframes feed{to{transform:translateY(40vh)}}
+.ex-shred .strips{position:absolute;left:50%;top:calc(44% + 22vmin);width:26vmin;margin-left:-13vmin;height:0;display:flex;gap:.5vmin;overflow:hidden;z-index:2;animation:strips 2.2s linear 1.9s both}
+.ex-shred .strips i{flex:1;background:repeating-linear-gradient(#fff 0 2vmin,#f3c3d2 2vmin 3vmin,#8fc3ff 3vmin 4vmin)}
+@keyframes strips{to{height:30vh}}
+/* 6 rocket */
+.ex-rocket{background:linear-gradient(#050b18,#0b2340 55%,#2d6bb8)}
+.ex-rocket .stars{position:absolute;inset:0;background-image:radial-gradient(#fff 1px,transparent 1.5px);background-size:8vmin 8vmin;opacity:.6}
+.ex-rocket .pad{position:absolute;left:0;right:0;bottom:0;height:14%;background:#56708c}
+.ex-rocket .ship{position:absolute;left:50%;bottom:14%;width:22vmin;margin-left:-11vmin;z-index:4;animation:liftoff 2.6s cubic-bezier(.6,0,.9,.4) 2.6s both}
+.ex-rocket .ship svg{width:100%;display:block}
+.ex-rocket .win{position:absolute;left:25%;top:30%;width:50%;aspect-ratio:1;border-radius:50%;overflow:hidden;background:#bfe3f4;border:1vmin solid #c9d6e3}
+.ex-rocket .win svg{position:absolute;left:-12%;top:-6%;width:124%}
+@keyframes liftoff{0%{transform:translateY(0)}10%{transform:translate(.4vmin,-1vh)}100%{transform:translateY(-120vh)}}
+.ex-rocket .fire{position:absolute;left:30%;top:96%;width:40%;height:20vmin;background:radial-gradient(ellipse at 50% 0,#fff 0,#ffb81c 25%,#ff6b4a 50%,transparent 70%);animation:flick .08s linear infinite alternate;opacity:0;animation:flick .08s linear 2.4s infinite alternate}
+@keyframes flick{from{opacity:.8;transform:scaleY(.9)}to{opacity:1;transform:scaleY(1.15)}}
+.ex-rocket .puff{position:absolute;bottom:12%;width:16vmin;height:16vmin;border-radius:50%;background:#dfe6ee;opacity:0;animation:smoke 2s ease-out both;z-index:5}
+.ex-rocket .sat{position:absolute;right:10%;top:12%;font-size:10vmin;animation:bob 2s ease-in-out infinite}
+/* 7 tornado */
+.ex-tornado{background:linear-gradient(#56708c,#8a9bb0 50%,#c9b98a)}
+.ex-tornado .ground{position:absolute;left:0;right:0;bottom:0;height:22%;background:#b89a5a}
+.ex-tornado .funnel{position:absolute;right:6%;bottom:18%;width:34vmin;height:70vh;z-index:3;animation:twister 5s ease-in-out both}
+@keyframes twister{0%{transform:translateX(30vw)}40%{transform:translateX(-18vw)}100%{transform:translateX(-10vw)}}
+.ex-tornado .funnel i{position:absolute;left:50%;height:7vh;border-radius:50%;background:rgba(90,100,115,.85);transform:translateX(-50%);animation:swirl .6s ease-in-out infinite alternate}
+@keyframes swirl{from{margin-left:-2vmin}to{margin-left:2vmin}}
+.ex-tornado .victim{position:absolute;left:42%;bottom:21%;width:16vmin;z-index:4;animation:sucked 4.4s ease-in both}
+@keyframes sucked{0%,38%{transform:none}55%{transform:translate(4vw,-12vh) rotate(180deg)}75%{transform:translate(-2vw,-38vh) rotate(540deg) scale(.8)}100%{transform:translate(10vw,-80vh) rotate(1000deg) scale(.4);opacity:0}}
+.ex-tornado .victim .ea{position:relative;width:100%}
+.ex-tornado .debris{position:absolute;font-size:6vmin;z-index:4;animation:deb 2.2s linear infinite}
+@keyframes deb{0%{transform:translate(0,0) rotate(0)}100%{transform:translate(-20vw,-50vh) rotate(720deg);opacity:0}}
+/* 8 rodeo */
+.ex-rodeo{background:linear-gradient(#ffcf8a,#ffe6bf 60%)}
+.ex-rodeo .dirt{position:absolute;left:0;right:0;bottom:0;height:26%;background:#b07b45}
+.ex-rodeo .fence{position:absolute;left:0;right:0;bottom:26%;height:12vh;background:repeating-linear-gradient(90deg,transparent 0 10vmin,#7a4f28 10vmin 11.4vmin),linear-gradient(transparent 20%,#a4723f 20%,#a4723f 32%,transparent 32%,transparent 62%,#a4723f 62%,#a4723f 74%,transparent 74%)}
+.ex-rodeo .bull{position:absolute;left:40%;bottom:18%;width:34vmin;z-index:3;transform-origin:50% 100%;animation:buck .5s ease-in-out infinite alternate}
+@keyframes buck{from{transform:rotate(-12deg)}to{transform:rotate(14deg) translateY(-2vmin)}}
+.ex-rodeo .bull svg{width:100%}
+.ex-rodeo .rider{position:absolute;left:calc(40% + 9vmin);bottom:calc(18% + 16vmin);width:16vmin;z-index:4;animation:ride .5s ease-in-out infinite alternate,thrown 1.8s cubic-bezier(.3,.6,.6,1) 3s forwards}
+@keyframes ride{from{transform:rotate(-14deg)}to{transform:rotate(16deg) translateY(-3vmin)}}
+@keyframes thrown{0%{transform:none}60%{transform:translate(-24vw,-40vh) rotate(-400deg)}100%{transform:translate(-40vw,30vh) rotate(-560deg);opacity:.2}}
+.ex-rodeo .rider .ea{position:relative;width:100%}
+.ex-rodeo .hat{position:absolute;right:8%;top:22%;font-size:9vmin;opacity:0;animation:fadein .2s 3.6s both,bob 1.4s ease-in-out 3.8s infinite}
+/* 9 out of office */
+.ex-ooo{background:linear-gradient(#e8f6fd,#bfe3f4)}
+.ex-ooo .mail{position:absolute;left:50%;top:18%;width:min(64vmin,80vw);margin-left:calc(min(64vmin,80vw) / -2);background:#fff;border-radius:2vmin;box-shadow:0 2vmin 4vmin rgba(0,87,184,.2);padding:2.4vmin 3vmin;font-family:var(--body);color:var(--ink);z-index:4;animation:fold 1.4s ease-in 3.3s both}
+.ex-ooo .mail h4{margin:0 0 .6vmin;font-family:var(--display);font-size:3.6vmin;color:var(--cobalt)}
+.ex-ooo .mail p{margin:.4vmin 0;font-size:2.3vmin}
+.ex-ooo .mail .row2{display:flex;gap:2vmin;align-items:center}
+.ex-ooo .mail .row2 .ea{position:relative;width:14vmin}.ex-ooo .mail .row2 .ea b{display:none}
+.ex-ooo .stamp{position:absolute;right:6%;top:34%;border:1vmin solid #e23b4e;color:#e23b4e;font-weight:800;font-size:7vmin;padding:0 2vmin;border-radius:1.4vmin;transform:rotate(-14deg) scale(3);opacity:0;animation:stamp .35s cubic-bezier(.5,0,.6,1.4) 2.2s forwards}
+@keyframes stamp{to{transform:rotate(-14deg) scale(1);opacity:.9}}
+@keyframes fold{0%{transform:none}40%{transform:scale(.4) rotate(-10deg);border-radius:50%}100%{transform:translate(60vw,-50vh) scale(.1) rotate(-40deg);opacity:0}}
+.ex-ooo .plane{position:absolute;left:46%;top:40%;font-size:10vmin;opacity:0;animation:plane 1.6s ease-in 3.9s both;z-index:5}
+@keyframes plane{0%{opacity:0;transform:none}1%{opacity:1}100%{opacity:1;transform:translate(50vw,-60vh) rotate(-20deg)}}
+/* 10 firewall */
+.ex-firewall{background:linear-gradient(#2a1050,#7b4fe0)}
+.ex-firewall .wall{position:absolute;right:10%;bottom:14%;width:26vmin;height:56vh;background:repeating-linear-gradient(0deg,#c0262e 0 5vmin,#8d1a20 5vmin 5.6vmin),#c0262e;background-image:repeating-linear-gradient(0deg,transparent 0 5vmin,#8d1a20 5vmin 5.6vmin),repeating-linear-gradient(90deg,transparent 0 8vmin,#8d1a20 8vmin 8.6vmin);z-index:3}
+.ex-firewall .flames{position:absolute;right:10%;bottom:calc(14% + 56vh);width:26vmin;height:12vmin;background:radial-gradient(ellipse at 20% 100%,#ffb81c 0,#ff6b4a 40%,transparent 60%),radial-gradient(ellipse at 60% 100%,#ffd97a 0,#ff6b4a 45%,transparent 62%),radial-gradient(ellipse at 90% 100%,#ffb81c 0,#ff6b4a 40%,transparent 60%);animation:flick .15s linear infinite alternate;transform-origin:bottom}
+.ex-firewall .ground{position:absolute;left:0;right:0;bottom:0;height:14%;background:#1b0b38}
+.ex-firewall .runner{position:absolute;left:8%;bottom:13%;width:16vmin;z-index:4;animation:charge 4.6s cubic-bezier(.5,0,.6,1) both}
+@keyframes charge{0%{transform:none}45%{transform:translateX(52vw)}52%{transform:translateX(48vw) rotate(-20deg)}75%{transform:translate(20vw,-30vh) rotate(-300deg)}100%{transform:translate(-30vw,-10vh) rotate(-600deg);opacity:.2}}
+.ex-firewall .runner .ea{position:relative;width:100%}
+.ex-firewall .denied{position:absolute;right:9%;top:22%;background:#e23b4e;color:#fff;font-weight:800;font-size:4vmin;padding:.8vmin 2vmin;border-radius:1.4vmin;opacity:0;transform:scale(2);animation:stamp2 .3s ease-out 2.2s forwards;z-index:6}
+@keyframes stamp2{to{opacity:1;transform:scale(1)}}
+/* 11 buffering */
+.ex-buffer{background:#0b0d12}
+.ex-buffer .player{position:absolute;left:50%;top:16%;width:min(80vmin,84vw);aspect-ratio:16/9;margin-left:calc(min(80vmin,84vw) / -2);background:#1b1f27;border-radius:1.6vmin;overflow:hidden}
+.ex-buffer .player .ea{position:absolute;left:50%;bottom:0;width:36%;transform:translateX(-50%);animation:pixelout 1.2s steps(6) 3.2s both}
+.ex-buffer .player .ea b{display:none}
+.ex-buffer .spin{position:absolute;left:50%;top:40%;width:12vmin;height:12vmin;margin:-6vmin 0 0 -6vmin;border:1.2vmin solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;opacity:0;animation:spin .8s linear .8s infinite,fadein .2s .8s forwards;z-index:3}
+.ex-buffer .prog{position:absolute;left:4%;right:4%;bottom:4%;height:1vmin;background:#3a404c;border-radius:1vmin}
+.ex-buffer .prog i{display:block;height:100%;width:0;background:#e23b4e;border-radius:1vmin;animation:prog .8s ease-out forwards}
+@keyframes prog{to{width:37%}}
+.ex-buffer .pct{position:absolute;left:50%;top:calc(16% + 48vmin);transform:translateX(-50%);color:#8a9bb0;font-family:var(--mono);font-size:3vmin;white-space:nowrap}
+.ex-buffer .err{position:absolute;left:50%;top:32%;transform:translateX(-50%);background:#fff;color:var(--ink);font-family:var(--body);font-weight:800;font-size:3vmin;padding:1.4vmin 3vmin;border-radius:1.4vmin;opacity:0;animation:fadein .3s 3.6s both;z-index:4;white-space:nowrap}
+@keyframes pixelout{0%{filter:none;opacity:1}60%{filter:blur(.6vmin) contrast(3) saturate(0);opacity:.7}100%{filter:blur(1.4vmin);opacity:0}}
+/* 12 coffee wave */
+.ex-coffee{background:linear-gradient(#fff4e3,#ffe0b8)}
+.ex-coffee .desk{position:absolute;left:0;right:0;bottom:0;height:24%;background:#a4723f}
+.ex-coffee .mug{position:absolute;right:6%;top:10%;width:26vmin;height:28vmin;background:#e5316e;border-radius:0 0 4vmin 4vmin;transform-origin:0 100%;animation:tip 1s ease-in 1.2s both;z-index:4}
+.ex-coffee .mug::after{content:"";position:absolute;right:-7vmin;top:5vmin;width:8vmin;height:12vmin;border:2.4vmin solid #e5316e;border-left:none;border-radius:0 5vmin 5vmin 0}
+@keyframes tip{to{transform:rotate(-70deg)}}
+.ex-coffee .wave{position:absolute;right:-150%;bottom:0;width:140%;height:50%;background:linear-gradient(#6b3b20,#3e200f);border-radius:40% 40% 0 0 / 30% 30% 0 0;animation:surge 2.8s ease-in 2s both;z-index:3}
+.ex-coffee .wave::before{content:"";position:absolute;left:0;right:0;top:-4vmin;height:8vmin;background:radial-gradient(circle at 50% 100%,transparent 60%,#8a5a30 61%) 0 0/10vmin 8vmin repeat-x}
+@keyframes surge{to{right:40%}}
+.ex-coffee .surfer{position:absolute;left:40%;bottom:24%;width:16vmin;z-index:5;animation:carried 3s ease-in 2.4s both}
+@keyframes carried{0%{transform:none}30%{transform:translate(-4vw,-18vh) rotate(-30deg)}100%{transform:translate(-60vw,-10vh) rotate(-200deg)}}
+.ex-coffee .surfer .ea{position:relative;width:100%}
+/* 13 printer */
+.ex-printer{background:linear-gradient(#eef3f7,#cfd9e3)}
+.ex-printer .prn{position:absolute;left:50%;top:38%;width:50vmin;height:28vmin;margin-left:-25vmin;background:#dfe3ea;border-radius:2vmin;box-shadow:inset 0 -3vmin 0 #b9c1cc,0 2vmin 0 rgba(0,0,0,.1);z-index:4;animation:shake2 .12s linear 2.2s 14}
+.ex-printer .prn::before{content:"";position:absolute;left:10%;right:10%;top:-3vmin;height:3vmin;background:#b9c1cc;border-radius:1vmin 1vmin 0 0}
+.ex-printer .prn::after{content:"";position:absolute;left:14%;right:14%;bottom:4vmin;height:1.4vmin;background:#0b2340;border-radius:1vmin}
+.ex-printer .led{position:absolute;right:8%;top:3vmin;width:2vmin;height:2vmin;border-radius:50%;background:#7cc41f;animation:blinkred .3s steps(1) 2.2s 10}
+.ex-printer .victim{position:absolute;left:50%;top:6%;width:16vmin;margin-left:-8vmin;z-index:3;animation:slurp 1s ease-in 1.4s both}
+@keyframes slurp{to{transform:translateY(24vh) scaleY(.1) scaleX(.9);opacity:0}}
+.ex-printer .victim .ea{position:relative;width:100%}
+.ex-printer .sheet{position:absolute;left:50%;top:calc(38% + 22vmin);width:24vmin;margin-left:-12vmin;background:#fff;border-radius:.6vmin;padding:1.2vmin;box-shadow:0 1vmin 2vmin rgba(0,0,0,.15);z-index:5;opacity:0;animation:printout 1s ease-out 3.4s forwards,flyaway 1.2s ease-in 4.4s forwards}
+.ex-printer .sheet .ea{position:relative;width:100%;filter:grayscale(1) contrast(1.3)}.ex-printer .sheet .ea b{color:var(--ink);text-shadow:none}
+@keyframes printout{0%{opacity:1;clip-path:inset(0 0 100% 0)}100%{opacity:1;clip-path:inset(0 0 0 0);transform:translateY(8vh)}}
+@keyframes flyaway{from{transform:translateY(8vh)}to{transform:translate(50vw,-60vh) rotate(60deg);opacity:0}}
+/* 14 island vote */
+.ex-island{background:linear-gradient(#0b1a3a,#2a3f78 60%,#e8a55a)}
+.ex-island .sand{position:absolute;left:0;right:0;bottom:0;height:26%;background:#d9b173}
+.ex-island .torch{position:absolute;bottom:24%;width:1.6vmin;height:20vmin;background:#6b4428;z-index:2}
+.ex-island .torch::after{content:"";position:absolute;left:-2.4vmin;top:-7vmin;width:6.4vmin;height:8vmin;background:radial-gradient(ellipse at 50% 100%,#fff3 0,#ffb81c 25%,#ff6b4a 50%,transparent 70%);animation:flick .15s linear infinite alternate}
+.ex-island .torch.mine::after{animation:flick .15s linear infinite alternate,snuff .5s ease-in 3.2s forwards}
+@keyframes snuff{to{opacity:0;transform:scale(.2)}}
+.ex-island .smk{position:absolute;width:6vmin;height:6vmin;border-radius:50%;background:#8a9bb0;opacity:0;animation:smoke 1.6s ease-out 3.4s both;z-index:3}
+.ex-island .voter{position:absolute;bottom:22%;width:13vmin;z-index:3}
+.ex-island .voter .ea{position:relative;width:100%}
+.ex-island .tab{position:absolute;left:10%;bottom:34%;width:80%;background:#f5ecdc;border:.4vmin solid #8a5a30;border-radius:.8vmin;text-align:center;font-family:var(--display);font-weight:800;font-size:2.2vmin;color:#8d1a20;opacity:0;transform:translateY(4vmin);animation:tabup .4s ease-out both;z-index:5}
+@keyframes tabup{to{opacity:1;transform:none}}
+.ex-island .loner{position:absolute;right:12%;bottom:22%;width:16vmin;z-index:3}
+.ex-island .loner .ea{position:relative;width:100%;animation:walkoff 1.6s ease-in 4s both}
+@keyframes walkoff{to{transform:translateX(30vw);opacity:0}}
+/* 15 coaster */
+.ex-coaster{background:linear-gradient(#5fc2ff,#dff3ff)}
+.ex-coaster .track{position:absolute;left:-5%;bottom:10%;width:80%;height:1.4vmin;background:#e5316e;transform-origin:0 50%;transform:rotate(-24deg);z-index:2}
+.ex-coaster .ties{position:absolute;left:-5%;bottom:10%;width:80%;height:4vmin;margin-bottom:-1.3vmin;background:repeating-linear-gradient(90deg,#7a4f28 0 1vmin,transparent 1vmin 4vmin);transform-origin:0 50%;transform:rotate(-24deg);z-index:1}
+.ex-coaster .legs{position:absolute;bottom:0;width:1vmin;background:#c9d6e3}
+.ex-coaster .cart{position:absolute;left:0;bottom:10%;width:20vmin;transform-origin:0 100%;transform:rotate(-24deg);z-index:3;animation:climb 2.6s linear both}
+@keyframes climb{from{left:0;bottom:10%}to{left:62%;bottom:calc(10% + 28vw)}}
+.ex-coaster .car{position:absolute;left:0;bottom:0;width:100%;height:6vmin;background:#ffb81c;border-radius:1vmin 1vmin 3vmin 3vmin}
+.ex-coaster .flyer{position:absolute;left:18%;bottom:2vmin;width:64%;animation:flyoff 2s cubic-bezier(.3,.5,.6,1) 2.6s both}
+@keyframes flyoff{0%{transform:none}50%{transform:translate(20vw,-26vh) rotate(260deg)}100%{transform:translate(44vw,20vh) rotate(560deg) scale(.6);opacity:0}}
+.ex-coaster .flyer .ea{position:relative;width:100%}
+/* 16 golf */
+.ex-golf{background:linear-gradient(#7fd3f5,#dff3ff 55%)}
+.ex-golf .green{position:absolute;left:-10%;right:-10%;bottom:-24%;height:56%;background:#5aa33a;border-radius:50%}
+.ex-golf .flag{position:absolute;right:10%;bottom:30%;width:.8vmin;height:16vmin;background:#fff;z-index:2}
+.ex-golf .flag::after{content:"";position:absolute;left:.8vmin;top:0;width:8vmin;height:5vmin;background:#e23b4e;clip-path:polygon(0 0,100% 50%,0 100%)}
+.ex-golf .tee{position:absolute;left:34%;bottom:24%;width:1vmin;height:4vmin;background:#fff;z-index:2}
+.ex-golf .ball{position:absolute;left:calc(34% - 6vmin);bottom:calc(24% + 3vmin);width:13vmin;height:13vmin;border-radius:50%;background:#fff;overflow:hidden;z-index:3;box-shadow:inset -1vmin -1vmin 0 #dfe6ee;animation:drive 2.6s cubic-bezier(.2,.6,.5,1) 2.3s both}
+.ex-golf .ball svg{position:absolute;left:-10%;top:-4%;width:120%}
+@keyframes drive{0%{transform:none}50%{transform:translate(28vw,-54vh) rotate(720deg) scale(.5)}100%{transform:translate(54vw,-80vh) rotate(1400deg) scale(.1);opacity:0}}
+.ex-golf .golfer{position:absolute;left:14%;bottom:22%;width:18vmin;z-index:4}
+.ex-golf .golfer .ea{position:relative;width:100%}
+.ex-golf .club{position:absolute;left:calc(14% + 12vmin);bottom:calc(22% + 12vmin);width:1vmin;height:24vmin;background:#56708c;transform-origin:50% 0;transform:rotate(60deg);z-index:5;animation:swing 1.2s cubic-bezier(.6,0,.4,1) 1.2s both}
+.ex-golf .club::after{content:"";position:absolute;left:-1.4vmin;bottom:-1vmin;width:4vmin;height:2vmin;background:#3b4049;border-radius:.6vmin}
+@keyframes swing{0%{transform:rotate(60deg)}60%{transform:rotate(150deg)}90%{transform:rotate(-60deg)}100%{transform:rotate(-70deg)}}
+/* 17 bowling */
+.ex-bowling{background:linear-gradient(#1b0b38,#3a1f78)}
+.ex-bowling .lane{position:absolute;left:50%;bottom:0;width:70vmin;height:80vh;margin-left:-35vmin;background:linear-gradient(#e8c38a,#c99a5e);clip-path:polygon(34% 0,66% 0,100% 100%,0 100%)}
+.ex-bowling .pins{position:absolute;left:50%;top:18%;width:40vmin;margin-left:-20vmin;height:24vmin;z-index:3}
+.ex-bowling .pin{position:absolute;width:5vmin;height:12vmin;background:#fff;border-radius:50% 50% 30% 30%/40% 40% 20% 20%;box-shadow:inset 0 3.4vmin 0 -2.4vmin #fff,inset 0 3vmin 0 #e23b4e}
+.ex-bowling .pin{animation:pinfly 1.4s ease-out 2.5s both}
+@keyframes pinfly{to{transform:translate(var(--dx),var(--dy)) rotate(var(--r));opacity:0}}
+.ex-bowling .headpin{position:absolute;left:50%;top:calc(18% + 10vmin);width:15vmin;margin-left:-7.5vmin;z-index:4;animation:pinfly 1.6s ease-out 2.45s both;--dx:-6vw;--dy:-30vh;--r:-540deg}
+.ex-bowling .headpin .ea{position:relative;width:100%}
+.ex-bowling .bball{position:absolute;left:50%;bottom:4%;width:16vmin;height:16vmin;margin-left:-8vmin;border-radius:50%;background:radial-gradient(circle at 35% 35%,#7b4fe0,#2a1050);z-index:5;animation:roll 2.4s cubic-bezier(.3,0,.8,.8) .2s both}
+.ex-bowling .bball::after{content:"";position:absolute;left:30%;top:25%;width:12%;height:12%;border-radius:50%;background:#0b0d10;box-shadow:3vmin .6vmin 0 #0b0d10,1.4vmin 3vmin 0 #0b0d10}
+@keyframes roll{from{transform:translateY(0) rotate(0)}to{transform:translateY(-58vh) scale(.55) rotate(720deg)}}
+.ex-bowling .strike{position:absolute;left:50%;top:44%;transform:translateX(-50%);font-weight:800;font-size:14vmin;color:#ffb81c;-webkit-text-stroke:.4vmin #0b2340;opacity:0;animation:boom .9s cubic-bezier(.3,1.6,.5,1) 2.7s both;z-index:7}
+/* 18 magic */
+.ex-magic{background:radial-gradient(circle at 50% 35%,#7b4fe0,#1b0b38 75%)}
+.ex-magic .stage2{position:absolute;left:0;right:0;bottom:0;height:20%;background:#8d1a20}
+.ex-magic .subject{position:absolute;left:52%;bottom:19%;width:18vmin;z-index:3;animation:vanish .1s 3s both}
+@keyframes vanish{to{opacity:0}}
+.ex-magic .subject .ea{position:relative;width:100%}
+.ex-magic .sheet{position:absolute;left:calc(52% - 2vmin);bottom:19%;width:22vmin;height:30vmin;background:linear-gradient(90deg,#e5316e,#ff8fc0 50%,#e5316e);border-radius:8vmin 8vmin 1vmin 1vmin;transform-origin:50% 100%;transform:translateY(-130vh);z-index:4;animation:drape .6s cubic-bezier(.5,0,.7,1.3) 1.4s forwards,flat .4s ease-in 3.1s forwards}
+@keyframes drape{from{transform:translateY(-130vh)}to{transform:none}}
+@keyframes flat{to{transform:scaleY(.08)}}
+.ex-magic .mage{position:absolute;left:18%;bottom:19%;width:18vmin;z-index:3}
+.ex-magic .mage .ea{position:relative;width:100%}
+.ex-magic .tophat{position:absolute;left:calc(18% + 4vmin);bottom:calc(19% + 22vmin);width:10vmin;height:8vmin;background:#0b0d10;border-radius:.6vmin;z-index:4}
+.ex-magic .tophat::after{content:"";position:absolute;left:-2vmin;right:-2vmin;bottom:-.6vmin;height:1.6vmin;background:#0b0d10;border-radius:1vmin}
+.ex-magic .wand{position:absolute;left:calc(18% + 15vmin);bottom:calc(19% + 12vmin);width:18vmin;height:1.2vmin;background:linear-gradient(90deg,#0b0d10 80%,#fff 80%);transform-origin:0 50%;transform:rotate(-20deg);z-index:5;animation:tap .5s ease-in-out 2.4s 2 alternate}
+@keyframes tap{to{transform:rotate(10deg)}}
+.ex-magic .poof{position:absolute;left:calc(52% - 4vmin);bottom:18%;width:26vmin;height:26vmin;border-radius:50%;background:radial-gradient(#fff,#dfe6ee 50%,transparent 70%);opacity:0;animation:poof 1.4s ease-out 2.9s both;z-index:6}
+@keyframes poof{0%{transform:scale(.2);opacity:1}100%{transform:scale(2.2);opacity:0}}
+.ex-magic .bunny{position:absolute;left:54%;bottom:19%;font-size:12vmin;opacity:0;animation:fadein .3s 3.8s both,bob 1s ease-in-out 4s infinite;z-index:5}
+/* 19 robot vacuum */
+.ex-vacuum{background:linear-gradient(#f5ecdc,#e8d3a6)}
+.ex-vacuum .floor{position:absolute;left:0;right:0;bottom:0;height:36%;background:repeating-linear-gradient(90deg,#b07b45 0 14vmin,#a06d3c 14vmin 14.4vmin)}
+.ex-vacuum .bot{position:absolute;left:-30vmin;bottom:18%;width:26vmin;height:9vmin;background:#2b2f36;border-radius:50%/40%;box-shadow:inset 0 -2vmin 0 #1b1d22;z-index:4;animation:vdrive 5s linear both}
+.ex-vacuum .bot::after{content:"";position:absolute;left:44%;top:1.4vmin;width:3vmin;height:1.4vmin;border-radius:1vmin;background:#7cc41f;animation:blinkred .6s steps(1) infinite}
+@keyframes vdrive{0%{left:-30vmin}45%{left:38%}60%{left:38%}100%{left:110%}}
+.ex-vacuum .victim{position:absolute;left:calc(38% + 5vmin);bottom:20%;width:16vmin;z-index:3;transform-origin:50% 100%;animation:suckin .8s ease-in 2.4s both}
+@keyframes suckin{0%{transform:none}40%{transform:skewX(-20deg) scaleY(1.2)}100%{transform:scale(0) translate(0,10vmin);opacity:0}}
+.ex-vacuum .victim .ea{position:relative;width:100%}
+.ex-vacuum .dust{position:absolute;bottom:20%;width:1.6vmin;height:1.6vmin;border-radius:50%;background:#8a9bb0;animation:dust 1.2s linear infinite}
+@keyframes dust{to{transform:translate(-6vmin,-4vmin);opacity:0}}
+/* 20 dunk tank */
+.ex-dunk{background:linear-gradient(#7fd3f5,#e8f6fd 60%)}
+.ex-dunk .grass{position:absolute;left:0;right:0;bottom:0;height:18%;background:#7cc41f}
+.ex-dunk .tank{position:absolute;right:14%;bottom:18%;width:40vmin;height:34vmin;border:1.2vmin solid #56708c;border-top:none;background:linear-gradient(rgba(53,180,240,.5),rgba(10,111,176,.8));background-size:100% 70%;background-position:bottom;background-repeat:no-repeat;z-index:2}
+.ex-dunk .plank{position:absolute;right:calc(14% + 8vmin);bottom:calc(18% + 30vmin);width:24vmin;height:2vmin;background:#a4723f;transform-origin:100% 50%;animation:plankdrop .3s ease-in 2.6s both;z-index:3}
+@keyframes plankdrop{to{transform:rotate(70deg)}}
+.ex-dunk .sitter{position:absolute;right:calc(14% + 12vmin);bottom:calc(18% + 32vmin);width:16vmin;z-index:3;animation:dunk .7s cubic-bezier(.5,0,1,.6) 2.65s both}
+@keyframes dunk{to{transform:translateY(24vmin)}}
+.ex-dunk .sitter .ea{position:relative;width:100%}
+.ex-dunk .target{position:absolute;right:4%;bottom:calc(18% + 26vmin);width:12vmin;height:12vmin;border-radius:50%;background:radial-gradient(#e23b4e 0 20%,#fff 20% 40%,#e23b4e 40% 60%,#fff 60% 80%,#e23b4e 80%);z-index:3;animation:hit .3s ease-out 2.5s both}
+@keyframes hit{50%{transform:scale(1.3) rotate(20deg)}}
+.ex-dunk .thrower{position:absolute;left:10%;bottom:16%;width:17vmin;z-index:3}
+.ex-dunk .thrower .ea{position:relative;width:100%}
+.ex-dunk .tball{position:absolute;left:calc(10% + 14vmin);bottom:calc(16% + 14vmin);width:5vmin;height:5vmin;border-radius:50%;background:#fff;box-shadow:inset -.8vmin -.8vmin 0 #dfe6ee;z-index:5;animation:throw 1s cubic-bezier(.4,0,.6,1) 1.5s both}
+@keyframes throw{0%{transform:none}50%{transform:translate(34vw,-24vh)}100%{transform:translate(68vw,-14vh);opacity:0}}
+.ex-dunk .bubbles i{position:absolute;right:calc(14% + 18vmin);bottom:calc(18% + 4vmin);width:2vmin;height:2vmin;border-radius:50%;border:.3vmin solid #fff;opacity:0;animation:bubble 1.4s ease-out infinite;z-index:3}
+@keyframes bubble{0%{transform:none;opacity:0}20%{opacity:1}100%{transform:translate(var(--bx),-22vmin);opacity:0}}
+
 /* scenes */
 .sc *{transform-box:fill-box}
 .sc .chomp{transform-origin:5% 90%;animation:chomp 1s ease-in-out infinite}
@@ -3436,7 +3715,7 @@ function announce(){phase='announce';
  flash('rgba(255,107,74,.5)');broadcast();sfx('alarm');next(()=>intro(ri+1),7000)}
 
 function eliminate(){phase='elim';const lo=lowest().sort((a,b)=>a.answered-b.answered||b.res.t-a.res.t),p=lo[0],isMe=p.i===me;
- const kind=exOrder[exCount++%exOrder.length],top=alive().filter(q=>q!==p).sort((a,b)=>b.total-a.total);
+ const kind=exOrder[exCount++%exOrder.length];logEx(kind);const top=alive().filter(q=>q!==p).sort((a,b)=>b.total-a.total);
  hideOv();const T=CFG.elim*1000;showEx(kind,p,top,isMe,T);exSound(kind);
  flash('rgba(226,59,78,.35)');lastOut=p.t.n;broadcast();
  const el=$('tile-'+p.i);el.classList.add('leaving');
@@ -3469,9 +3748,15 @@ function tickFx(){const d=devicePixelRatio;cx.clearRect(0,0,cv.width,cv.height);
  parts=parts.filter(p=>p.y<innerHeight+40&&p.life<420);
  if(parts.length)requestAnimationFrame(tickFx);else{fxOn=false;cx.clearRect(0,0,cv.width,cv.height)}}
 /* ---------- elimination scenes: AT&T edition ---------- */
-const EX_KINDS=['tower','dropped','coverage','hold','launch','fiber'];
+const EX_ATT=['tower','dropped','coverage','hold','launch','fiber'];
+const EX_OFF=['shred'];
+let EX_KINDS=[...EX_ATT];
 let exOrder=[...EX_KINDS],exCount=0,lastCap='';
-function shuffleEx(){exOrder=[...EX_KINDS].sort(()=>Math.random()-.5);exCount=0}
+const XKEY='fridayArenaExits';
+function exLog(){const l=jget(XKEY,[]);return Array.isArray(l)?l:[]}
+function shuffleEx(){const log=exLog(),last=k=>log.lastIndexOf(k);
+ exOrder=[...EX_KINDS].map(k=>[k,last(k),Math.random()]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).map(x=>x[0]);exCount=0}
+function logEx(kind){if(MODE!=='host')return;const l=exLog().filter(k=>k!==kind);l.push(kind);jset(XKEY,l.slice(-60))}
 function ea(p,mood,cls,style){return `<div class="ea ${cls||''}" style="${style||''}">${avatar(p.t,mood)}<b>${p.t.n}</b></div>`}
 function boom(txt,delay,style){return `<div class="boom" style="animation-delay:${delay}s;${style||''}">${txt}</div>`}
 function skyline(){return `<div class="skyline">${[20,34,26,44,30,52,24,38,30,46,22,36,28,40].map(v=>`<i style="height:${v*1.4}vmin"></i>`).join('')}</div>`}
@@ -3948,6 +4233,125 @@ function admBackup(){const data=()=>JSON.stringify({v:1,bank:loadBank(),cfg:CFG,
  $('bkRestore').onclick=()=>{try{const d=JSON.parse($('bkText').value);if(!d||!d.bank||!Array.isArray(d.bank.weeks))throw 0;saveBank(d.bank);if(d.cfg){CFG={...DEF_CFG,...d.cfg};saveCfg(CFG)}if(d.roster){saveRoster(d.roster);applyRoster(loadRoster())}if(d.season)saveSeasonData(d.season);admMsg('Backup restored.')}catch(e){admMsg('That does not look like a Friday Arena backup.',1)}};
  let arm=0;$('bkWipe').onclick=e=>{if(!arm){arm=1;e.target.textContent='Tap again: erases questions, players, settings and scores';setTimeout(()=>{arm=0;if(e.target.isConnected)e.target.textContent='Reset everything to the original game'},5000);return}
   [BKEY,CKEY,RKEY,SKEY].forEach(jdel);CFG=loadCfg();applyRoster(loadRoster());admMsg('Everything is back to the original game.')}}
+
+/* ---------- 19 extra exits from the Elimination Lab (shredder left out) ---------- */
+/* ===== 20 more exits ===== */
+function splash(delay,style){let d='';for(let k=0;k<10;k++){const a=(k/9)*Math.PI;d+=`<i style="--dx:${(Math.cos(a)*14).toFixed(1)}vmin;--dy:-${(6+Math.sin(a)*14).toFixed(1)}vmin;animation-delay:${delay}s"></i>`}return `<div class="splash" style="${style}">${d}<u style="animation-delay:${delay}s"></u><u style="animation-delay:${delay+.3}s"></u></div>`}
+const EX20=[
+ ['elevator','Going down','The elevator doors close and the car drops to the basement. Back comes an OUT OF SERVICE sign.'],
+ ['eject','Meeting ended early','A teammate slaps the EJECT button and the chair rockets through the ceiling.'],
+ ['removed','Removed from the meeting','A video-call grid. Their tile turns red, goes grey, and falls off the screen.'],
+ ['recycle','Dragged to the Recycle Bin','A cursor drags their desktop icon into the bin, then empties it.'],
+ ['shred','Through the shredder','Their photo feeds into the Shred-o-matic and comes out in strips.'],
+ ['rocket','Promoted to the satellite team','3, 2, 1, liftoff. A rocket with their face in the window heads to orbit.'],
+ ['tornado','Texas tornado','A twister rolls across the prairie and spins them up into the sky.'],
+ ['rodeo','Bucked off the bull','Rodeo night. They ride the bull for a few seconds before it throws them.'],
+ ['ooo','Set to Out of Office','An auto-reply gets stamped OOO, folds into a paper plane, and flies off.'],
+ ['firewall','Blocked by the firewall','They charge a flaming brick wall, hit ACCESS DENIED, and bounce away.'],
+ ['buffer','Stuck buffering','Frozen at 37 percent, then pixelated. Connection timed out.'],
+ ['coffee','Coffee tsunami','A giant mug tips over and a wave of coffee surfs them off the desk.'],
+ ['printer','Printed out of the arena','Sucked into the office printer and printed out in black and white.'],
+ ['island','Voted off the island','Teammates hold up votes with their name, and their torch goes out.'],
+ ['coaster','Flung off the coaster','The cart clacks up the lift hill and they fly off at the top.'],
+ ['golf','Teed off','Curled up as a golf ball, then a teammate drives them off the course.'],
+ ['bowling','Strike!','They are the head pin. The ball rolls in and they go flying.'],
+ ['magic','Made to disappear','A magician teammate drapes the sheet, taps the wand, and poof. A bunny.'],
+ ['vacuum','Picked up by the robot vacuum','The robot vacuum rolls through and slurps them up.'],
+ ['dunk','Dunk tank','A teammate throws, hits the target, and they drop into the water.']];
+function exScene20(kind,p,top){const n=p.t.n,T=top.length?top:[p];const t=k=>T[k%T.length];let cap='',h='';
+ const q=(k,st,mood)=>ea(t(k),mood||'happy','cheer',st);
+ switch(kind){
+ case 'elevator':cap=`${n} is going down!`;
+  h=`<div class="floor"></div>${q(0,'left:8%;bottom:17%')}${q(1,'left:20%;bottom:17%;animation-delay:.2s')}${q(2,'right:10%;bottom:17%;animation-delay:.1s')}
+  <div class="ind">${['3','2','1','G','B1','B2','B3','▼'].map((f,i)=>`<span style="animation-delay:${2.2+i*.4}s;${i===7?'animation:fadein .1s 5s both':''}">${f}</span>`).join('')}<span style="animation-delay:0s;animation-duration:2.2s">4</span></div>
+  <div class="frame"><div class="inside">${ea(p,'nervous')}</div><div class="door l"></div><div class="door r"></div></div><div class="oos">OUT OF SERVICE</div>${boom('DING!',.5,'left:58%;top:22%;font-size:7vmin')}`;break;
+ case 'eject':cap=`${n}'s meeting ended early!`;
+  h=`<div class="ceil"></div><div class="hole"></div><div class="table"></div>${q(0,'left:12%;bottom:26%')}${q(1,'left:24%;bottom:26%;animation-delay:.15s')}<div class="btnred"></div>
+  <div class="smoke"></div><div class="smoke b"></div><div class="smoke c"></div><div class="seat"><div class="chairback"></div>${ea(p,'nervous','','position:relative')}<div class="flame"></div></div>${boom('EJECT!',2,'left:30%;top:30%')}`;break;
+ case 'removed':cap=`${n} was removed from the meeting!`;
+  const tiles=[t(0),t(1),p,t(2),t(3),t(4)];
+  h=`<div class="grid">${tiles.map(x=>`<div class="tile ${x===p?'me':''}">${ea(x,x===p?'nervous':'happy','','position:relative')}<span class="nm">${x.t.n}${x===p?' (you)':''}</span>${x===p?'<div class="banner">You have been removed from this meeting</div>':''}</div>`).join('')}</div><div class="bar"><i></i><i></i><i></i><i class="end"></i></div>`;break;
+ case 'recycle':cap=`${n} was dragged to the Recycle Bin!`;
+  h=`<div class="icon">${ea(p,'nervous')}</div><div class="cursor">↖️</div><div class="bin"><svg viewBox="0 0 60 70"><g class="lid"><rect x="4" y="6" width="52" height="7" rx="3" fill="#dfe6ee"/><rect x="22" y="1" width="16" height="6" rx="2" fill="#dfe6ee"/></g><path d="M8 16 L52 16 L47 66 L13 66 Z" fill="#c9d6e3"/><path d="M20 24 L22 58 M30 24 L30 58 M40 24 L38 58" stroke="#8a9bb0" stroke-width="3"/></svg>Recycle Bin</div><div class="menu">Empty Recycle Bin? <b>Yes</b></div>`;break;
+ case 'shred':cap=`${n} went through the shredder!`;
+  h=`${q(0,'left:8%;bottom:10%')}${q(1,'right:8%;bottom:10%;animation-delay:.2s')}<div class="paper">${ea(p,'nervous','','position:relative')}</div><div class="mach"></div><div class="strips">${'<i></i>'.repeat(9)}</div>${boom('BRRRRR',2.2,'left:30%;top:28%;font-size:8vmin')}`;break;
+ case 'rocket':cap=`${n} was promoted to the satellite team!`;
+  h=`<div class="stars"></div><div class="sat">🛰️</div><div class="pad"></div>${q(0,'left:8%;bottom:13%')}${q(1,'left:20%;bottom:13%;animation-delay:.2s')}${q(2,'right:8%;bottom:13%;animation-delay:.1s')}
+  <div class="ship"><svg viewBox="0 0 60 120"><path d="M30 0 C48 20 50 60 46 96 L14 96 C10 60 12 20 30 0 Z" fill="#fff"/><path d="M30 0 C40 12 44 24 45 34 L15 34 C16 24 20 12 30 0 Z" fill="#e23b4e"/><path d="M14 76 L2 104 L16 96 Z M46 76 L58 104 L44 96 Z" fill="#009fdb"/></svg><div class="win">${avatar(p.t,'nervous')}</div><div class="fire"></div></div>
+  <div class="puff" style="left:30%;animation-delay:2.5s"></div><div class="puff" style="left:52%;animation-delay:2.6s"></div>${boom('3',.5,'left:46%;top:30%;font-size:16vmin;color:#fff')}${boom('2',1.2,'left:46%;top:30%;font-size:16vmin;color:#fff')}${boom('1',1.9,'left:46%;top:30%;font-size:16vmin;color:#fff')}${boom('LIFTOFF!',2.6,'left:28%;top:30%;font-size:12vmin')}`;break;
+ case 'tornado':cap=`${n} got swept up by a Texas tornado!`;
+  h=`<div class="ground"></div>${q(0,'left:4%;bottom:21%','nervous')}${q(1,'left:15%;bottom:21%','nervous')}<div class="funnel">${[0,1,2,3,4,5,6,7,8,9].map(i=>`<i style="top:${i*9}%;width:${34-i*3}vmin;animation-delay:${i*.07}s"></i>`).join('')}</div>
+  <div class="victim">${ea(p,'nervous','','position:relative')}</div><div class="debris" style="left:70%;bottom:30%">🐄</div><div class="debris" style="left:80%;bottom:24%;animation-delay:.7s">🌵</div>${boom('WHOOOOSH',2,'left:38%;top:26%;font-size:8vmin')}`;break;
+ case 'rodeo':cap=`${n} got bucked off the bull!`;
+  h=`<div class="fence"></div><div class="dirt"></div>${q(0,'left:4%;bottom:24%')}${q(1,'left:15%;bottom:24%;animation-delay:.15s')}${q(2,'right:4%;bottom:24%;animation-delay:.1s')}
+  <div class="bull"><svg viewBox="0 0 120 70"><ellipse cx="60" cy="38" rx="44" ry="20" fill="#6b4428"/><circle cx="104" cy="28" r="13" fill="#6b4428"/><path d="M98 18 Q92 4 84 8 M112 18 Q120 4 128 8" stroke="#f5ecdc" stroke-width="4" fill="none"/><circle cx="108" cy="26" r="2" fill="#000"/><rect x="26" y="50" width="8" height="20" fill="#4a2f1f"/><rect x="80" y="50" width="8" height="20" fill="#4a2f1f"/><path d="M16 34 Q4 30 8 20" stroke="#4a2f1f" stroke-width="4" fill="none"/></svg></div>
+  <div class="rider">${ea(p,'nervous','','position:relative')}</div><div class="hat">🤠</div>${boom('YEE-HAW!',1,'left:8%;top:28%;font-size:8vmin')}${boom('BUCKED!',3,'left:44%;top:26%')}`;break;
+ case 'ooo':cap=`${n} is set to Out of Office!`;
+  h=`${q(0,'left:6%;bottom:6%')}${q(1,'right:6%;bottom:6%;animation-delay:.2s')}<div class="mail"><h4>Automatic reply: ${n}</h4><div class="row2">${ea(p,'nervous')}<div><p>I am currently out of the arena with no access to points.</p><p>Back next Friday. For urgent trivia, please contact the winner.</p></div></div><div class="stamp">OOO</div></div><div class="plane">✈️</div>`;break;
+ case 'firewall':cap=`${n} was blocked by the firewall!`;
+  h=`<div class="ground"></div><div class="wall"></div><div class="flames"></div>${q(0,'left:2%;bottom:13%')}<div class="runner">${ea(p,'nervous','','position:relative')}</div><div class="denied">ACCESS DENIED</div>${boom('BONK!',2.2,'left:50%;top:40%')}`;break;
+ case 'buffer':cap=`${n} is stuck buffering...`;
+  h=`<div class="player">${ea(p,'nervous')}<div class="spin"></div><div class="prog"><i></i></div></div><div class="pct">Buffering 37%</div><div class="err">⚠️ Connection timed out</div>`;break;
+ case 'coffee':cap=`${n} got washed away in a coffee tsunami!`;
+  h=`<div class="desk"></div>${q(0,'left:4%;bottom:24%','nervous')}${q(1,'left:16%;bottom:24%','nervous')}<div class="mug"></div><div class="surfer">${ea(p,'nervous','','position:relative')}</div><div class="wave"></div>${boom('SPLOOSH!',2.6,'left:42%;top:30%')}`;break;
+ case 'printer':cap=`${n} was printed out of the arena!`;
+  h=`${q(0,'left:6%;bottom:8%')}${q(1,'right:6%;bottom:8%;animation-delay:.2s')}<div class="victim">${ea(p,'nervous','','position:relative')}</div><div class="prn"><span class="led"></span></div><div class="sheet">${ea(p,'sad','','position:relative')}</div>${boom('PAPER JAM?',2.4,'left:34%;top:24%;font-size:7vmin')}`;break;
+ case 'island':cap=`${n} was voted off the island!`;
+  h=`<div class="sand"></div>${[0,1,2,3].map(k=>`<div class="voter" style="left:${4+k*15}%">${ea(t(k),'happy','','position:relative')}<div class="tab" style="animation-delay:${1+k*.4}s">${n}</div></div><div class="torch" style="left:${9+k*15}%"></div>`).join('')}
+  <div class="torch mine" style="right:24%"></div><div class="smk" style="right:23.4%;bottom:46%"></div><div class="loner">${ea(p,'sad','','position:relative')}</div>${boom('The team has spoken.',3.2,'left:30%;top:22%;font-size:7vmin;color:#fff')}`;break;
+ case 'coaster':cap=`${n} got flung off the roller coaster!`;
+  h=`${[10,26,42,58].map(x=>`<div class="legs" style="left:${x}%;height:calc(10% + ${x*.46}vw)"></div>`).join('')}<div class="ties"></div><div class="track"></div>${q(0,'right:4%;bottom:4%')}${q(1,'right:16%;bottom:4%;animation-delay:.2s')}
+  <div class="cart"><div class="flyer">${ea(p,'nervous','','position:relative')}</div><div class="car"></div></div>${boom('clack clack clack',.4,'left:10%;top:30%;font-size:6vmin')}${boom('WHEEEE!',2.8,'left:56%;top:18%')}`;break;
+ case 'golf':cap=`${n} got teed off!`;
+  h=`<div class="green"></div><div class="flag"></div><div class="golfer">${ea(t(0),'happy','','position:relative')}</div><div class="club"></div><div class="tee"></div><div class="ball">${avatar(p.t,'nervous')}</div>${boom('FORE!',2.2,'left:40%;top:28%')}`;break;
+ case 'bowling':cap=`STRIKE! ${n} goes flying!`;
+  const pins=[[-12,4],[12,4],[-18,10],[0,10],[18,10],[-6,0],[6,0]];
+  h=`<div class="lane"></div><div class="pins">${pins.map(([x,y],i)=>`<i class="pin" style="left:calc(50% + ${x}vmin - 2.5vmin);top:${y}vmin;--dx:${x*1.6}vw;--dy:-${20+i*4}vh;--r:${i%2?'':'-'}${300+i*60}deg"></i>`).join('')}</div><div class="headpin">${ea(p,'nervous','','position:relative')}</div><div class="bball"></div><div class="strike">STRIKE!</div>${q(0,'left:4%;bottom:6%')}${q(1,'right:4%;bottom:6%;animation-delay:.2s')}`;break;
+ case 'magic':cap=`${n} was made to disappear!`;
+  h=`<div class="stage2"></div><div class="mage">${ea(t(0),'happy','','position:relative')}</div><div class="tophat"></div><div class="wand"></div><div class="subject">${ea(p,'nervous','','position:relative')}</div><div class="sheet"></div><div class="poof"></div><div class="bunny">🐰</div>${q(1,'right:4%;bottom:19%')}${boom('ABRACADABRA!',2.3,'left:20%;top:24%;font-size:8vmin')}${boom('POOF!',3,'left:50%;top:40%')}`;break;
+ case 'vacuum':cap=`${n} got picked up by the robot vacuum!`;
+  h=`<div class="floor"></div>${q(0,'left:4%;bottom:34%')}${q(1,'right:4%;bottom:34%;animation-delay:.2s')}<div class="victim">${ea(p,'nervous','','position:relative')}</div><div class="bot"></div>${boom('SLURP!',2.6,'left:40%;top:36%')}`;break;
+ case 'dunk':cap=`${n} got dunked!`;
+  h=`<div class="grass"></div><div class="thrower">${ea(t(0),'happy','','position:relative')}</div><div class="tball"></div><div class="tank"></div><div class="plank"></div><div class="sitter">${ea(p,'nervous','','position:relative')}</div><div class="target"></div><div class="bubbles">${[0,1,2,3,4].map(i=>`<i style="--bx:${(i-2)*3}vmin;animation-delay:${3.2+i*.2}s"></i>`).join('')}</div>${q(1,'left:26%;bottom:16%;animation-delay:.2s')}${boom('DING!',2.5,'right:6%;top:28%;font-size:8vmin')}${boom('SPLASH!',3.2,'right:20%;top:44%')}${splash(3.3,'right:calc(14% + 6vmin);bottom:calc(18% + 20vmin)')}`;break;
+ }
+ return {cap,h}}
+Object.assign(EX_SND,{
+ elevator:[['ding',.5],['click',2],['fall',3.2],['thud',4.3],['ding',4.9]],
+ eject:[['click',2],['launch',2.3],['thud',3.6]],
+ removed:[['busy',1],['hangup',2.4],['whoosh',3.6]],
+ recycle:[['click',1.4],['whoosh',1.6],['crumple',3.4],['crumple',4.2]],
+ shred:[['shred',1.8],['cheer',4]],
+ rocket:[['beep',.5],['beep',1.2],['beep',1.9],['launch',2.6],['twinkle',4.4]],
+ tornado:[['wind',0],['wind',2],['fall',3.2]],
+ rodeo:[['cheer',.6],['boing',1.4],['boing',2.3],['bump',3],['fall',3.2],['thud',4.6]],
+ ooo:[['stamp',2.2],['whoosh',3.4],['twinkle',4.6]],
+ firewall:[['riser',0],['bump',2.2],['wrong',2.3],['fall',3]],
+ buffer:[['static',1.2],['hangup',3.4]],
+ coffee:[['pop',1.2],['splash',2.2],['splash',3]],
+ printer:[['whoosh',1.4],['printer',2.2],['printer',2.9],['whoosh',4.4]],
+ island:[['drumroll',0],['thud',3.2],['wind',3.4]],
+ coaster:[['clack',0],['whoop',2.6],['fall',2.8]],
+ golf:[['whoosh',1.4],['bump',2.3],['twinkle',4]],
+ bowling:[['rumble',.2],['strike',2.5],['cheer',2.8]],
+ magic:[['twinkle',1.4],['twinkle',2.4],['poof',3],['cheer',3.6]],
+ vacuum:[['vacuum',.4],['pop',2.6]],
+ dunk:[['whoosh',1.5],['bump',2.5],['ding',2.55],['splash',3.2],['cheer',3.6]]});
+const _sfx0=sfx;
+sfx=function(k,at=0){const A=x=>at+x;switch(k){
+ case 'ding':tone(NOTE(84),1.4,{type:'sine',vol:.18,at});tone(NOTE(79),1.6,{type:'sine',vol:.14,at:A(.3)});break;
+ case 'crumple':for(let i=0;i<10;i++)noise(.05,{f:2500+Math.random()*2000,q:.8,vol:.2,at:A(i*.04+Math.random()*.03)});break;
+ case 'shred':noise(2.2,{f:900,q:3,vol:.25,at});tone(90,2.2,{type:'sawtooth',vol:.1,at});break;
+ case 'stamp':tone(80,.3,{type:'sine',vol:.6,to:40,at});noise(.1,{f:400,vol:.35,at});break;
+ case 'printer':for(let i=0;i<5;i++)tone(220+i*20,.1,{type:'square',vol:.08,at:A(i*.12)});noise(.6,{f:1500,q:4,vol:.12,at});break;
+ case 'clack':for(let i=0;i<14;i++)tone(700,.04,{type:'square',vol:.1,at:A(i*.18),wet:0});break;
+ case 'rumble':noise(2.3,{ft:'lowpass',f:220,vol:.5,swell:1,peak:.9,at});break;
+ case 'strike':noise(.6,{f:1800,q:.5,vol:.5,at});for(let i=0;i<8;i++)tone(600+Math.random()*900,.12,{type:'triangle',vol:.1,at:A(i*.03)});break;
+ case 'poof':noise(.8,{ft:'lowpass',f:1200,fto:200,vol:.5,at});break;
+ case 'vacuum':noise(3,{f:700,q:6,vol:.2,swell:1,peak:.3,at});tone(180,3,{type:'sawtooth',vol:.05,at});break;
+ default:_sfx0(k,at)}};
+
+EX_KINDS=[...EX_ATT,...EX20.map(e=>e[0]).filter(k=>!EX_OFF.includes(k))];exOrder=[...EX_KINDS];
+const _ex0=exScene;exScene=function(k,p,top){return EX20.some(e=>e[0]===k)?exScene20(k,p,top):_ex0(k,p,top)};
 
 /* ---------- boot ---------- */
 function showMode(){$('alivePill').hidden=false;stopAll();hideOv();['admin','lobby','hostLobby','phone','game','final'].forEach(id=>$(id).hidden=true);$('mode').hidden=false;$('roundPill').textContent='Welcome';$('alivePill').textContent=TEAM.length+' players'}
