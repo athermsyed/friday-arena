@@ -190,7 +190,7 @@ h1,h2,h3{font-family:var(--display);line-height:1.05;margin:0;text-wrap:balance}
 #flash.go{animation:flash .6s ease-out}
 @keyframes flash{0%{opacity:.85}100%{opacity:0}}
 canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;height:100%}
-.modes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.modes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 @media (max-width:700px){.modes{grid-template-columns:1fr}}
 .modec{border:3px solid transparent;background:var(--sky);border-radius:20px;padding:18px 16px;text-align:left;display:flex;flex-direction:column;gap:4px;cursor:pointer;transition:transform .15s,border-color .15s}
 .modec:hover:not([disabled]){transform:translateY(-3px);border-color:var(--blue)}
@@ -914,7 +914,6 @@ svg.st-sad{filter:saturate(.45) brightness(.96)}
     <div class="modes">
       <button type="button" class="modec" id="modeHost"><span class="mi">📽️</span><b>Projector screen</b><span>For the host. Runs the game on the big screen.</span></button>
       <button type="button" class="modec" id="modeJoin"><span class="mi">📱</span><b>Join on my phone</b><span>Pick your face, then answer every question here.</span></button>
-      <button type="button" class="modec" id="modePractice"><span class="mi">🎮</span><b>Practice solo</b><span>Play one full game against computer players.</span></button>
     </div>
     <div class="startrow" style="margin-top:12px"><p class="hint" id="modeNote" style="margin:0">Connecting...</p><button class="skip" type="button" id="modeAdmin">⚙ Host admin</button></div>
   </div>
@@ -3518,7 +3517,7 @@ function fbJoin(){return new Promise((res,rej)=>{
 async function fbJoinStart(){MODE='phone';if(room){phoneMode();return}try{room=await fbJoin();wireRoom();phoneMode()}catch(e){room=null;phoneMode()}}
 
 const BKEY='fridayArenaBank',CKEY='fridayArenaConfig',RKEY='fridayArenaRoster';
-const DEF_CFG={warm:3,times:{choice:20,room:15,team:20,num:25,word:40},week:0,celebrate:10,board:10,elim:9.5};
+const DEF_CFG={start:'2026-10-02',warm:3,times:{choice:20,room:15,team:20,num:25,word:40},week:0,celebrate:10,board:10,elim:9.5};
 function loadBank(){const b=jget(BKEY,{weeks:Object.keys(W).sort((x,y)=>x-y).map(k=>W[k]).filter(Array.isArray)});if(!Array.isArray(b.weeks))b.weeks=[];return b}
 function saveBank(b){jset(BKEY,b)}
 function loadCfg(){const c=jget(CKEY,DEF_CFG);c.times={...DEF_CFG.times,...(c.times||{})};for(const k in DEF_CFG)if(c[k]===undefined)c[k]=DEF_CFG[k];return c}
@@ -3534,7 +3533,10 @@ function applyRoster(r){
 let HIDDEN=new Set(),CFG=loadCfg();
 function visible(){return TEAM.map((t,i)=>i).filter(i=>!HIDDEN.has(TEAM[i].n))}
 function playedWeeks(){const s=loadSeason();return new Set(s.games.map(g=>g.w).filter(Boolean))}
-function currentWeek(){const b=loadBank();if(!b.weeks.length)return 0;if(CFG.week&&CFG.week<=b.weeks.length)return CFG.week;const pw=playedWeeks();for(let i=1;i<=b.weeks.length;i++)if(!pw.has(i))return i;return b.weeks.length}
+function dayNum(d){const [y,m,dd]=String(d).split('-').map(Number);return Math.round(Date.UTC(y,m-1,dd)/864e5)}
+function weekForDate(d){const st=CFG.start||DEF_CFG.start,days=dayNum(d)-dayNum(st);return days<=0?1:Math.floor((days+6)/7)+1}
+function weekDate(w){const st=CFG.start||DEF_CFG.start,t=new Date((dayNum(st)+(w-1)*7)*864e5);return t.toLocaleDateString('en-US',{timeZone:'UTC',weekday:'short',month:'short',day:'numeric'})}
+function currentWeek(){const b=loadBank();if(!b.weeks.length)return 0;if(CFG.week&&CFG.week<=b.weeks.length)return CFG.week;return Math.min(weekForDate(today()),b.weeks.length)}
 function scramble(w){if(w.length<2)return w;for(let t=0;t<20;t++){const a=w.split('');for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}const s=a.join('');if(s!==w)return s}return w.split('').reverse().join('')}
 function prepQ(q,pool){const Q={...q};Q.tag=q.tag||TAGS[q.type]||'Question';Q.time=+q.time||CFG.times[q.type]||20;Q.sc=q.sc||DEFSC[q.type];
  if(q.type==='team'){if(typeof q.ans==='string'){const names=(pool&&pool.length>=4?pool:visible().map(i=>TEAM[i].n)).filter(n=>n!==q.ans&&byName[n]!==undefined);
@@ -3844,7 +3846,7 @@ function renderRoster(){const SEA0=loadSeason();const n=Object.keys(claimed).len
  $('hostStart').disabled=n<1}
 $('modeHost').addEventListener('click',()=>{ac();startHosting()});
 $('modeJoin').addEventListener('click',()=>{ac();NET==='fb'?fbJoinStart():NET==='peer'?joinScreen():phoneMode()});
-$('modePractice').addEventListener('click',()=>lobby());
+
 $('hostBack').addEventListener('click',()=>{clearInterval(hb);MODE='practice';showMode()});
 $('hostStart').addEventListener('click',()=>{MODE='host';start()});
 $('hostRules').addEventListener('click',()=>showRules());
@@ -3867,7 +3869,7 @@ function phoneAnswer(a){const s=PS;if(!s||s.ph!=='q'||(myAns&&myAns.g===s.g&&myA
  myAns={g:s.g,q:s.qi,a};room.presence({ans:{g:s.g,q:s.qi,a,t:Math.round(t*100)/100}}).catch(()=>{});pkey='';phoneRender(true)}
 function esc(x){return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
 function phoneRender(force){const B=$('phoneBody'),s=PS;
- if(!room){B.innerHTML=`<div class="card"><h2>Cannot connect</h2><p class="hint">Could not reach the game server. Check your Wi-Fi or VPN and reload. You can still practice solo.</p><button class="btn" type="button" id="ph-practice">Practice solo</button></div>`;$('ph-practice').onclick=()=>lobby();return}
+ if(!room){B.innerHTML=`<div class="card"><h2>Cannot connect</h2><p class="hint">Could not reach the game server. Check your Wi-Fi or VPN and try again.</p><button class="btn" type="button" id="ph-practice">Try again</button></div>`;$('ph-practice').onclick=()=>location.reload();return}
  if(!myName){const tk=takenBy();
   B.innerHTML=`<div class="card"><h2>Tap your face</h2><p class="hint">Faded faces are already taken.</p><div class="pnames">${TEAM.filter(t=>!HIDDEN.has(t.n)).map((t,i)=>`<button type="button" class="pick ${tk[t.n]?'off':''}" data-n="${t.n}" ${tk[t.n]?'disabled':''}>${stage(t,'idle')}<b>${t.n}</b></button>`).join('')}</div></div>`;
   B.querySelectorAll('.pick').forEach(b=>b.onclick=()=>pickName(b.dataset.n));return}
@@ -4066,7 +4068,7 @@ async function startHosting(){const note=$('modeNote');note.textContent='Opening
  if(NET==='room'){hostLobby();return}
  if(NET==='fb'){try{if(!room){room=await fbHost();wireRoom()}hostLobby()}catch(e){note.textContent='Could not open the game room. Check the network and try again.'}return}
  for(let tries=0;tries<3;tries++){CODE=mkCode();try{room=await peerHost(CODE);wireRoom();hostLobby();return}catch(e){if(!(e&&e.type==='unavailable-id'))break}}
- note.textContent='Could not open a game room. The network may be blocking the connection service. Practice solo still works.'}
+ note.textContent='Could not open a game room. The network may be blocking the connection service.'}
 function joinScreen(err){MODE='phone';['mode','lobby','hostLobby','game','final'].forEach(id=>$(id).hidden=true);$('phone').hidden=false;$('alivePill').hidden=true;
  const pre=(location.hash.match(/^#join-([A-Za-z]{4})$/)||[])[1]||'';
  $('phoneBody').innerHTML=`<div class="card"><h2>Enter the join code</h2><p class="hint">It is shown big on the projector screen.</p><form class="typer" id="codeForm" style="justify-content:center"><input id="codeIn" maxlength="4" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABCD" aria-label="Join code" value="${pre.toUpperCase()}" style="text-align:center;letter-spacing:.3em;flex:0 1 200px"><button class="btn blue" type="submit">Join</button></form><p class="status bad" id="codeErr">${err||''}</p></div>`;
@@ -4088,9 +4090,10 @@ function adminOpen(){ADM.prevMode=MODE;stopAll();hideOv();['mode','lobby','hostL
  adminRender()}
 function adminClose(){$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);if(ADM.prevMode==='host'&&room)hostLobby();else showMode()}
 function adminRender(){const tabs=[['questions','Questions'],['upload','Upload list'],['players','Players and scores'],['settings','Game settings'],['backup','Backup']];
- $('admin').innerHTML=`<div class="card"><div class="admhead"><h1>Host admin</h1><div class="admtabs">${tabs.map(([k,l])=>`<button type="button" class="admtab ${ADM.tab===k?'on':''}" data-t="${k}">${l}</button>`).join('')}</div><button class="btn" type="button" id="admDone" style="font-size:16px;padding:8px 16px">Done</button></div><div id="admBody"></div><p class="status" id="admMsg" aria-live="polite"></p></div>`;
+ $('admin').innerHTML=`<div class="card"><div class="admhead"><h1>Host admin</h1><div class="admtabs">${tabs.map(([k,l])=>`<button type="button" class="admtab ${ADM.tab===k?'on':''}" data-t="${k}">${l}</button>`).join('')}</div><button class="btn blue" type="button" id="admPractice" style="font-size:16px;padding:8px 16px">🎮 Practice solo</button><button class="btn" type="button" id="admDone" style="font-size:16px;padding:8px 16px">Done</button></div><div id="admBody"></div><p class="status" id="admMsg" aria-live="polite"></p></div>`;
  $('admin').querySelectorAll('.admtab').forEach(b=>b.onclick=()=>{ADM.tab=b.dataset.t;ADM.edit=null;adminRender()});
  $('admDone').onclick=adminClose;
+ $('admPractice').onclick=()=>{$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);lobby()};
  ({questions:admQuestions,upload:admUpload,players:admPlayers,settings:admSettings,backup:admBackup})[ADM.tab]()}
 function admMsg(t,bad){const m=$('admMsg');if(m){m.className='status '+(bad?'bad':'good');m.textContent=t}}
 function ansLabel(q){if(q.type==='choice')return q.opts?q.opts[q.ans]:'';if(q.type==='room')return 'Majority wins';return String(q.ans)}
@@ -4213,13 +4216,14 @@ function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',
 /* settings */
 function admSettings(){const c=CFG,b=loadBank(),cw=currentWeek();
  $('admBody').innerHTML=`<form class="qform" id="cf"><h2>Game settings</h2>
- <div class="frow"><label>Week to play next<select id="c-week"><option value="0">Automatic: first week not played yet (now week ${cw||1})</option>${b.weeks.map((_,i)=>`<option value="${i+1}" ${c.week===i+1?'selected':''}>Week ${i+1}</option>`).join('')}</select></label><label>Warm-up questions (nobody leaves)<input id="c-warm" type="number" min="0" max="9" value="${c.warm}"></label></div>
+ <div class="frow"><label>Week to play next<select id="c-week"><option value="0">Automatic by date (now week ${cw||1})</option>${b.weeks.map((_,i)=>`<option value="${i+1}" ${c.week===i+1?'selected':''}>Week ${i+1}</option>`).join('')}</select></label><label>Week 1 game day<input id="c-start" type="date" value="${c.start||DEF_CFG.start}"></label><label>Warm-up questions (nobody leaves)<input id="c-warm" type="number" min="0" max="9" value="${c.warm}"></label></div>
+ <p class="hint">Schedule: ${b.weeks.map((_,i)=>`Week ${i+1} on ${weekDate(i+1)}`).join(' · ')}. Each week's questions show from the day after the previous game day. Pick a week above to override.</p>
  <h3>Seconds to answer, by question type</h3><div class="frow">${Object.keys(TAGS).map(k=>`<label>${TAGS[k]}<input id="c-t-${k}" type="number" min="5" max="120" value="${c.times[k]}"></label>`).join('')}</div>
  <h3>Pauses between questions (seconds)</h3><div class="frow"><label>Celebration screen<input id="c-cel" type="number" min="4" max="30" value="${c.celebrate}"></label><label>Scoreboard<input id="c-brd" type="number" min="4" max="30" value="${c.board}"></label><label>Elimination scene<input id="c-elim" type="number" min="5" max="20" step=".5" value="${c.elim}"></label></div>
  <p class="hint">A question's own seconds (set on the Questions tab) wins over the type default.</p>
  <div class="frow"><button class="btn blue sm" type="submit">Save settings</button><button class="skip" type="button" id="c-def">Back to defaults</button></div></form>`;
  $('cf').onsubmit=e=>{e.preventDefault();const n=(id,d)=>{const v=+$(id).value;return isNaN(v)?d:v};
-  CFG={...CFG,week:+$('c-week').value,warm:Math.max(0,Math.min(9,n('c-warm',3))),celebrate:n('c-cel',10),board:n('c-brd',10),elim:n('c-elim',9.5),times:Object.fromEntries(Object.keys(TAGS).map(k=>[k,Math.max(5,n('c-t-'+k,DEF_CFG.times[k]))]))};saveCfg(CFG);admMsg('Settings saved.')};
+  CFG={...CFG,week:+$('c-week').value,start:/^\d{4}-\d{2}-\d{2}$/.test($('c-start').value)?$('c-start').value:DEF_CFG.start,warm:Math.max(0,Math.min(9,n('c-warm',3))),celebrate:n('c-cel',10),board:n('c-brd',10),elim:n('c-elim',9.5),times:Object.fromEntries(Object.keys(TAGS).map(k=>[k,Math.max(5,n('c-t-'+k,DEF_CFG.times[k]))]))};saveCfg(CFG);admMsg('Settings saved.')};
  $('c-def').onclick=()=>{CFG=JSON.parse(JSON.stringify(DEF_CFG));saveCfg(CFG);admSettings();admMsg('Settings back to defaults.')}}
 /* backup */
 function admBackup(){const data=()=>JSON.stringify({v:1,bank:loadBank(),cfg:CFG,roster:loadRoster(),season:loadSeason()});
@@ -4360,7 +4364,7 @@ async function boot(){showMode();const hostB=$('modeHost'),joinB=$('modeJoin'),n
  const ok=await fbLoadData(10000);applyBase();CFG=loadCfg();applyRoster(loadRoster());showMode();
  if(ok){NET='fb';fbWatch();hostB.disabled=false;joinB.disabled=false;
   note.textContent=visible().length?'Host: open Projector screen on the laptop you share. Everyone else: Join on my phone, then tap your face.':'Connected. No players yet: open Host admin to add them.'}
- else{NET='none';note.textContent='Could not reach the game server (the network may be blocking it). Practice solo still works.'}
+ else{NET='none';note.textContent='Could not reach the game server. Check the Wi-Fi or VPN and reload the page.'}
  phoneTick();
  if(location.hash==='#admin')adminOpen();else if((location.hash==='#play'||/^#join/.test(location.hash))&&NET==='fb')fbJoinStart()}
 boot();
