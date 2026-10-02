@@ -787,6 +787,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 .ex-dunk .bubbles i{position:absolute;right:calc(14% + 18vmin);bottom:calc(18% + 4vmin);width:2vmin;height:2vmin;border-radius:50%;border:.3vmin solid #fff;opacity:0;animation:bubble 1.4s ease-out infinite;z-index:3}
 @keyframes bubble{0%{transform:none;opacity:0}20%{opacity:1}100%{transform:translate(var(--bx),-22vmin);opacity:0}}
 
+.phonelook{display:block}.phonelook .lkprev{max-width:220px;margin:0 auto 8px}.phonelook .frow{flex-wrap:wrap}.phonelook .frow>label{flex:1 1 140px}
 /* scenes */
 .sc *{transform-box:fill-box}
 .sc .chomp{transform-origin:5% 90%;animation:chomp 1s ease-in-out infinite}
@@ -3868,7 +3869,8 @@ function phoneAnswer(a){const s=PS;if(!s||s.ph!=='q'||(myAns&&myAns.g===s.g&&myA
  const t=Math.max(0,s.q.time-Math.max(0,(deadline-Date.now())/1000));
  myAns={g:s.g,q:s.qi,a};room.presence({ans:{g:s.g,q:s.qi,a,t:Math.round(t*100)/100}}).catch(()=>{});pkey='';phoneRender(true)}
 function esc(x){return String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
-function phoneRender(force){const B=$('phoneBody'),s=PS;
+let phoneEditing=false;
+function phoneRender(force){const B=$('phoneBody'),s=PS;if(phoneEditing&&(!s||s.ph==='hlobby'||s.ph==='rules'))return;phoneEditing=false;
  if(!room){B.innerHTML=`<div class="card"><h2>Cannot connect</h2><p class="hint">Could not reach the game server. Check your Wi-Fi or VPN and try again.</p><button class="btn" type="button" id="ph-practice">Try again</button></div>`;$('ph-practice').onclick=()=>location.reload();return}
  if(!myName){const tk=takenBy();
   B.innerHTML=`<div class="card"><h2>Tap your face</h2><p class="hint">Faded faces are already taken.</p><div class="pnames">${TEAM.filter(t=>!HIDDEN.has(t.n)).map((t,i)=>`<button type="button" class="pick ${tk[t.n]?'off':''}" data-n="${t.n}" ${tk[t.n]?'disabled':''}>${stage(t,'idle')}<b>${t.n}</b></button>`).join('')}</div></div>`;
@@ -3880,7 +3882,8 @@ function phoneRender(force){const B=$('phoneBody'),s=PS;
  const r=s&&s.res&&s.res[myName];
  const rankLine=r?`<div class="prank">#${r[3]} of ${Object.keys(s.res).length} · ${r[2]} pts${r[4]?' · sideline':''}</div>`:'';
  const card=h=>`<div class="card">${h}</div>`;
- if(!s||s.ph==='hlobby'){B.innerHTML=card(`<div class="big">${stage(my,'happy')}</div><h2>You are in, ${esc(myName)}!</h2><p class="hint">Watch the big screen. The game starts when the host presses Start.</p><button class="btn blue" type="button" id="ph-change" style="font-size:15px">Not you? Change</button>`);
+ if(!s||s.ph==='hlobby'){B.innerHTML=card(`<div class="big">${stage(my,'happy')}</div><h2>You are in, ${esc(myName)}!</h2><p class="hint">Watch the big screen. The game starts when the host presses Start.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn blue" type="button" id="ph-change" style="font-size:15px">Not you? Change</button><button class="btn" type="button" id="ph-edit" style="font-size:15px">✏️ Edit my look</button></div>`);
+  $('ph-edit').onclick=()=>{ac();phoneEditing=true;const B2=$('phoneBody');B2.innerHTML='<div class="card" id="phLook"></div>';lookForm(myName,{target:$('phLook'),phone:true,done:m=>{phoneEditing=false;if(m){$('mePill').innerHTML=avatar(TEAM[byName[myName]],'idle')+'You: '+myName;sfx('pop')}pkey='';phoneRender(true)}})};
   $('ph-change').onclick=()=>{myName=null;room.presence({role:null,name:null,ans:null}).catch(()=>{});$('mePill').hidden=true;pkey='';phoneRender(true)};return}
  if(s.ph==='rules'){B.innerHTML=card(`<h2>How it works</h2><div class="prules"><p>⚡ Answer fast on this phone</p><p>⭐ Right +10, close +3 to +6, answering +1</p><p>🛡️ Questions 1 to 3: nobody leaves</p><p>🌉 Then the lowest score leaves after every question</p><p>🪑 Out? Keep answering for half points</p><p>🔁 Missed weeks multiply your first game back</p></div>`);return}
  if(!s.q){B.innerHTML=card(`<div class="big">${stage(my,'idle')}</div><h2>Watch the big screen</h2>`);return}
@@ -4192,27 +4195,27 @@ function admPlayers(){const s=loadSeason(),r=loadRoster();
   else if(a==='hide'){const h=new Set(R.hidden);h.has(n)?h.delete(n):h.add(n);R.hidden=[...h];saveRoster(R);applyRoster(R);admPlayers();admMsg(h.has(n)?`${n} is hidden from the game.`:`${n} is back in the game.`)}
   else if(a==='look')lookForm(n);
   else if(a==='rm'){if(x.dataset.arm){R.custom=R.custom.filter(c=>c.n!==n);if(BASE_TEAM.some(b=>b.n===n)&&!R.removed.includes(n))R.removed.push(n);R.hidden=R.hidden.filter(h=>h!==n);delete R.edits[n];saveRoster(R);applyRoster(R);if(n in S.tot){delete S.tot[n];saveSeasonData(S)}admPlayers();admMsg(`${n} deleted from the game and the season table.`)}else{x.dataset.arm=1;x.textContent='Tap again to delete '+n}}})}
-function lookForm(name){const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',skin:'#efc6a8',face:'soft',hair:'short',hc:'#3a2418',lips:'#b86a62',top:'plain',tc:'#2d6bb8',c:'#9fd8ff'};const t={...base};
- const F=$('plForm');const sel=(id,arr,v,lab)=>`<label>${lab}<select id="${id}">${arr.map(a=>`<option ${a===v?'selected':''}>${a}</option>`).join('')}</select></label>`;
+function lookForm(name,o){o=o||{};const R=loadRoster(),base=name?TEAM[byName[name]]:{n:'',skin:'#efc6a8',face:'soft',hair:'short',hc:'#3a2418',lips:'#b86a62',top:'plain',tc:'#2d6bb8',c:'#9fd8ff'};const t={...base};
+ const F=o.target||$('plForm');const done=o.done||((m,bad)=>{admPlayers();if(m)admMsg(m,bad)});const sel=(id,arr,v,lab)=>`<label>${lab}<select id="${id}">${arr.map(a=>`<option ${a===v?'selected':''}>${a}</option>`).join('')}</select></label>`;
  const sw=(id,arr,v,lab)=>`<div class="swl"><span>${lab}</span><div class="sws">${arr.map(c=>`<button type="button" class="sw ${c===v?'on':''}" data-f="${id}" data-c="${c}" style="background:${c}" aria-label="${lab} ${c}"></button>`).join('')}</div></div>`;
- F.innerHTML=`<form class="qform lookf" id="lf"><div class="lkprev" id="lkPrev"></div><div class="lkctl">
+ F.innerHTML=`<form class="qform lookf${o.phone?' phonelook':''}" id="lf">${o.phone?'<h2 style="margin:0 0 4px">Edit your look</h2>':''}<div class="lkprev" id="lkPrev"></div><div class="lkctl">
  <label>Name<input id="l-n" value="${esc(t.n)}" ${name?'disabled':''} required maxlength="16"></label>
  ${sw('skin',SKIN,t.skin,'Skin')}${sw('hc',HAIRC,t.hc,'Hair color')}
  <div class="frow">${sel('l-hair',HAIRS,t.hair,'Hair style')}${sel('l-face',Object.keys(FACE),t.face,'Face shape')}${sel('l-top',TOPS,t.top,'Top')}</div>
- <div class="frow">${sel('l-fh',['none','beard','boxed','trim','goatee','stubble'],t.fh||'none','Facial hair')}<label><span><input type="checkbox" id="l-gl" ${t.gl?'checked':''}> Glasses</span></label><label><span><input type="checkbox" id="l-lash" ${t.lash?'checked':''}> Lashes</span></label><label><span><input type="checkbox" id="l-ear" ${t.ear?'checked':''}> Earrings</span></label></div>
+ <div class="frow">${sel('l-fh',['none','beard','boxed','trim','goatee','stubble'],t.fh||'none','Facial hair')}<label><span><input type="checkbox" id="l-gl" ${t.gl?'checked':''}> Glasses</span></label><label><span><input type="checkbox" id="l-glr" ${t.glr?'checked':''}> Square frames</span></label><label><span><input type="checkbox" id="l-lash" ${t.lash?'checked':''}> Lashes</span></label><label><span><input type="checkbox" id="l-ear" ${t.ear?'checked':''}> Earrings</span></label></div>
  ${sw('tc',['#1c1c1f','#2b2b2f','#3b4049','#1f2d4d','#2d6bb8','#2f8f9d','#5a8f3a','#7a3a8a','#c0262e','#f3c3d2','#efe6d8','#dfe8f2'],t.tc,'Top color')}${sw('c',['#ff8fc0','#7fd3f5','#ffb3a1','#bfe68a','#c9b5ff','#ffd97a','#8fc3ff','#ffc48a','#d4b5ff','#a8e0ff'],t.c,'Spotlight')}
  <div class="frow"><button class="btn blue sm" type="submit">${name?'Save look':'Add player'}</button>${name&&R.edits[name]?`<button class="skip" type="button" id="l-reset">Back to original look</button>`:''}<button class="skip" type="button" id="l-cancel">Cancel</button></div></div></form>`;
- const read=()=>{t.hair=$('l-hair').value;t.face=$('l-face').value;t.top=$('l-top').value;const fh=$('l-fh').value;t.fh=fh==='none'?undefined:fh;t.gl=$('l-gl').checked?1:0;t.glc=t.glc||'#2a2522';t.lash=$('l-lash').checked?1:0;t.ear=$('l-ear').checked?(t.ear||'#e0b44a'):undefined;if(t.top==='blazer'||t.top==='suit')t.sh=t.sh||'#dbe6f0';$('lkPrev').innerHTML=stage(t,'happy')};
+ const read=()=>{t.hair=$('l-hair').value;t.face=$('l-face').value;t.top=$('l-top').value;const fh=$('l-fh').value;t.fh=fh==='none'?'':fh;t.gl=$('l-gl').checked?1:0;t.glr=$('l-glr').checked?1:0;t.glc=t.glc||'#2a2522';t.lash=$('l-lash').checked?1:0;t.ear=$('l-ear').checked?(t.ear||'#e0b44a'):'';if(t.top==='blazer'||t.top==='suit')t.sh=t.sh||'#dbe6f0';$('lkPrev').innerHTML=stage(t,'happy')};
  F.querySelectorAll('.sw').forEach(b=>b.onclick=()=>{t[b.dataset.f]=b.dataset.c;F.querySelectorAll(`.sw[data-f="${b.dataset.f}"]`).forEach(x=>x.classList.toggle('on',x===b));read()});
  F.querySelectorAll('select,input[type=checkbox]').forEach(x=>x.onchange=read);read();
- $('l-cancel').onclick=()=>{F.innerHTML=''};
- const rs=$('l-reset');if(rs)rs.onclick=()=>{delete R.edits[name];saveRoster(R);applyRoster(R);admPlayers();admMsg(`${name} is back to the original look.`)};
+ $('l-cancel').onclick=()=>{F.innerHTML='';if(o.done)o.done(null)};
+ const rs=$('l-reset');if(rs)rs.onclick=()=>{delete R.edits[name];saveRoster(R);applyRoster(R);done(`${name} is back to the original look.`)};
  $('lf').onsubmit=e=>{e.preventDefault();read();const R2=loadRoster();
   if(name){const isBase=BASE_TEAM.some(b=>b.n===name);const keep={skin:t.skin,hc:t.hc,hair:t.hair,face:t.face,top:t.top,fh:t.fh,gl:t.gl,glr:t.glr,glc:t.glc,lash:t.lash,ear:t.ear,tc:t.tc,c:t.c,sh:t.sh};
    if(isBase)R2.edits[name]=keep;else R2.custom=R2.custom.map(c=>c.n===name?{...c,...keep}:c)}
-  else{const n=$('l-n').value.trim().slice(0,16);if(!n){admMsg('Add a name.',1);return}if(byName[n]!==undefined){admMsg('That name is already in the game.',1);return}t.n=n;if(BASE_TEAM.some(b=>b.n===n)){R2.removed=(R2.removed||[]).filter(x=>x!==n);R2.edits[n]={...t}}else R2.custom.push({...t})}
-  saveRoster(R2);applyRoster(R2);admPlayers();admMsg(name?`${name}'s look saved.`:`${t.n} added to the game.`)};
- F.scrollIntoView({behavior:'smooth',block:'nearest'})}
+  else{const n=$('l-n').value.trim().slice(0,16);if(!n){done('Add a name.',1);return}if(byName[n]!==undefined){done('That name is already in the game.',1);return}t.n=n;if(BASE_TEAM.some(b=>b.n===n)){R2.removed=(R2.removed||[]).filter(x=>x!==n);R2.edits[n]={...t}}else R2.custom.push({...t})}
+  saveRoster(R2);applyRoster(R2);done(name?`${name}'s look saved.`:`${t.n} added to the game.`)};
+ F.scrollIntoView({behavior:o.phone?'auto':'smooth',block:o.phone?'start':'nearest'})}
 /* settings */
 function admSettings(){const c=CFG,b=loadBank(),cw=currentWeek();
  $('admBody').innerHTML=`<form class="qform" id="cf"><h2>Game settings</h2>
