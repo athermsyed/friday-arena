@@ -935,6 +935,80 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 @keyframes x-vanish{to{opacity:0;visibility:hidden}}
 @media (prefers-reduced-motion:reduce){.x100 *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
+/* ask the team + player question badges */
+.qby{display:inline-flex;align-items:center;gap:8px;background:var(--sun);color:var(--ink);border-radius:999px;padding:3px 14px 3px 3px;font-weight:800;font-size:clamp(14px,1.6vw,20px);font-family:var(--body);margin-top:10px;animation:slam .5s cubic-bezier(.3,1.6,.5,1)}
+.qby svg{width:clamp(30px,3vw,44px);height:auto;border-radius:50%;background:#fff}
+.qby.hide{background:#ece6fd;color:var(--violet)}
+.qbym{width:clamp(30px,3vw,44px);height:clamp(30px,3vw,44px);border-radius:50%;background:#fff;display:grid;place-items:center;font-family:var(--display);font-size:22px}
+#qby[hidden]{display:none}
+.pqline{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.pqline .qby{margin-top:0;font-size:14px}.pqline .qby svg,.pqline .qbym{width:30px;height:30px}
+.pqmine{background:var(--sky);border-radius:10px;padding:4px 10px;font-weight:700;font-size:13px;color:var(--cobalt)}
+.card.ask{display:flex;flex-direction:column;gap:12px}
+.card.ask h2{color:var(--cobalt);font-size:30px}
+.card.ask .lead{margin:0;color:var(--ink);font-size:16px}
+.askhow{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:4px;font-weight:600}
+.locknote{background:var(--sky);border-radius:14px;padding:10px 12px;font-weight:600;font-size:14px;color:var(--cobalt)}
+.asktypes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:380px){.asktypes{grid-template-columns:1fr}}
+.asktype{border:0;border-radius:16px;padding:12px;text-align:left;display:flex;flex-direction:column;gap:4px;cursor:pointer;font-size:13px;line-height:1.3;color:var(--ink)}
+.asktype b{font-family:var(--display);font-size:20px;line-height:1.05}
+.asktype.t-team{background:#fde3ec;grid-column:1/-1}.asktype.t-team b{color:var(--berry)}
+.asktype.t-num{background:#fff3d6}.asktype.t-num b{color:#9a6b00}
+.asktype.t-choice{background:#dff1fb}.asktype.t-choice b{color:var(--cobalt)}
+.asktype.t-brain{background:#ece6fd}.asktype.t-brain b{color:var(--violet)}
+.asktype .best{align-self:flex-start;background:var(--berry);color:#fff;border-radius:999px;font-size:11px;font-weight:800;padding:2px 9px}
+.askrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.card.ask .lab{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--dim)}
+.card.ask textarea,.card.ask input[type=text],.card.ask #aN{font:inherit;font-size:17px;border:2px solid var(--line);border-radius:12px;padding:10px 12px;width:100%;background:#fff;color:var(--ink)}
+.card.ask textarea:focus,.card.ask input:focus{outline:3px solid var(--sun);border-color:var(--sun)}
+.ideas{display:flex;gap:6px;flex-wrap:wrap}
+.idea{border:0;background:#fff3d6;color:#7a5200;border-radius:999px;padding:5px 11px;font-weight:700;font-size:13px;cursor:pointer}
+.autoans{display:flex;gap:10px;align-items:center;background:#fde3ec;border-radius:14px;padding:8px 10px;font-weight:700;color:#9c1546;font-size:14px}
+.autoans svg{width:44px;height:auto;flex:none;border-radius:50%;background:#fff}
+.optrow{display:grid;grid-template-columns:28px 28px minmax(0,1fr);gap:6px;align-items:center}
+.optrow input[type=radio]{width:24px;height:24px;accent-color:var(--good)}
+.optrow .ab{font-family:var(--display);font-weight:800;color:var(--cobalt);font-size:18px}
+.tip{margin:0;color:var(--dim);font-size:13px}
+.askcount{margin:0;font-family:var(--display);font-weight:800;color:var(--good);font-size:20px}
+.dlist{display:flex;flex-direction:column;gap:8px}
+.ditem{background:var(--sky);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:3px}
+.ditem .dt{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--berry)}
+.ditem small{color:var(--dim)}
+.dbtns{display:flex;gap:6px;margin-top:4px}
+.sentok{width:84px;height:84px;border-radius:50%;background:var(--good);color:#fff;font-size:48px;font-weight:800;display:grid;place-items:center;margin:0 auto;animation:slam .5s cubic-bezier(.3,1.6,.5,1)}
+.asklink{display:inline-block;margin-top:4px;font-weight:700;color:var(--cobalt)}
+.card.ask{text-align:left;justify-content:flex-start;align-items:stretch;min-height:0}
+.card.ask h2{text-align:left}
+.card.ask .askrow .btn{flex:0 1 auto}
+.qform .pqedit label.pqnum,.qform .pqopts label{flex-direction:row!important;flex:0 0 auto!important;align-items:center;height:auto}
+.qform .pqopts label input[type=radio]{width:20px;flex:none}
+.qform .pqnum input{width:160px}
+/* admin player questions */
+.pqstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+@media (max-width:600px){.pqstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.pqstats div{background:var(--sky);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column}
+.pqstats b{font-family:var(--display);font-size:30px;color:var(--cobalt);line-height:1;font-variant-numeric:tabular-nums}
+.pqstats span{color:var(--dim);font-weight:600;font-size:13px}
+.pqweeks{display:flex;gap:6px;flex-wrap:wrap}
+.pqweeks span{background:var(--sky);border-radius:999px;padding:3px 10px;font-weight:700;font-size:13px;color:var(--dim)}
+.pqweeks span b{margin-left:6px;color:var(--ink)}
+.pqweeks span.on{background:#fde3ec;color:var(--berry)}
+.pqwh{font-size:20px;color:var(--cobalt);margin-top:8px}
+.pqrow{display:grid;grid-template-columns:90px minmax(0,1fr);gap:12px;background:#fff;border:2px solid var(--line);border-radius:16px;padding:10px}
+@media (max-width:600px){.pqrow{grid-template-columns:1fr}}
+.pqwho{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;font-size:12px;color:var(--dim)}
+.pqwho .stage,.pqwho svg{width:70px!important;height:auto}
+.pqwho b{color:var(--ink);font-size:14px}
+.pqedit{display:flex;flex-direction:column;gap:8px;min-width:0}
+.pqedit textarea,.pqedit input[type=text]{font:inherit;border:2px solid var(--line);border-radius:10px;padding:6px 10px;width:100%}
+.pqopts{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.pqopts label{display:flex;gap:6px;align-items:center}
+.pqnum{display:flex;gap:8px;align-items:center;font-weight:600}
+.pqnum input{max-width:160px}
+.pqplayed summary{cursor:pointer;font-weight:700;color:var(--cobalt)}
+.pqp{font-size:14px;padding:4px 0;color:var(--dim)}
+
 /* scenes */
 .sc *{transform-box:fill-box}
 .sc .chomp{transform-origin:5% 90%;animation:chomp 1s ease-in-out infinite}
@@ -1115,7 +1189,7 @@ svg.st-sad{filter:saturate(.45) brightness(.96)}
   <div class="card qcard">
     <div class="qmain">
       <div class="qhead"><div class="tags"><span class="tag" id="qtag">Round</span><span class="tag safe" id="qmode">Warm-up</span></div><span class="clock" id="clock">20</span></div>
-      <h2 class="qtext" id="qtext"></h2>
+      <h2 class="qtext" id="qtext"></h2><div id="qby" hidden></div>
       <div class="direction" id="direction"></div>
       <div class="timer"><i id="tbar"></i></div>
       <div id="answer"></div>
@@ -3619,11 +3693,21 @@ const FB_CFG={apiKey:'',projectId:'friday-arena',databaseURL:'https://friday-are
 const TKEY='fridayArenaTeam',WKEY='fridayArenaW';
 let FBD=null,DATA={},DATA_OK=false;
 function fbInit(){if(FBD)return FBD;if(typeof firebase==='undefined')return null;try{const app=firebase.apps.length?firebase.app():firebase.initializeApp(FB_CFG);FBD=app.database()}catch(e){FBD=null}return FBD}
-function fbLoadData(ms){return new Promise(res=>{const d=fbInit();if(!d)return res(false);let done=false;
+const LIGHT_KEYS=[TKEY,'fridayArenaRoster','fridayArenaConfig'],HOST_KEYS=[WKEY,'fridayArenaBank','fridayArenaSeason','fridayArenaExits'];
+function fbLoadKeys(keys,ms){return new Promise(res=>{const d=fbInit();if(!d)return res(false);let done=false;
  const t=setTimeout(()=>{if(!done){done=true;res(false)}},ms||9000);
- d.ref('fa/data').once('value').then(s=>{if(done)return;done=true;clearTimeout(t);DATA=fbParse(s.val());DATA_OK=true;res(true)},e=>{if(done)return;done=true;clearTimeout(t);console.warn('Friday Arena data read failed',e);res(false)})})}
+ Promise.all(keys.map(k=>d.ref('fa/data/'+k).once('value').then(s=>{const v=s.val();if(v!=null){try{DATA[k]=JSON.parse(v)}catch(e){}}}))).then(()=>{if(done)return;done=true;clearTimeout(t);DATA_OK=true;res(true)},e=>{if(done)return;done=true;clearTimeout(t);console.warn('Friday Arena data read failed',e);res(false)})})}
+function fbLoadData(ms){return fbLoadKeys(LIGHT_KEYS,ms)}
 function fbParse(v){const o={};v=v||{};for(const k in v){try{o[k]=JSON.parse(v[k])}catch(e){}}return o}
-function fbWatch(){if(!FBD)return;FBD.ref('fa/data').on('value',s=>{const nd=fbParse(s.val());const changed=JSON.stringify(nd)!==JSON.stringify(DATA);DATA=nd;DATA_OK=true;if(changed)onDataChanged()},()=>{})}
+function fbWatchKeys(keys){if(!FBD)return;keys.forEach(k=>FBD.ref('fa/data/'+k).on('value',s=>{const v=s.val();let nv=null;try{nv=v==null?null:JSON.parse(v)}catch(e){}
+ const old=JSON.stringify(DATA[k]===undefined?null:DATA[k]);if(nv==null)delete DATA[k];else DATA[k]=nv;if(JSON.stringify(nv)!==old)onDataChanged()},()=>{}))}
+function fbWatch(){fbWatchKeys(LIGHT_KEYS)}
+let hostDataP=null;
+function fbHostData(){if(hostDataP)return hostDataP;hostDataP=(async()=>{await fbLoadKeys(HOST_KEYS,10000);fbWatchKeys(HOST_KEYS);
+ await new Promise(res=>{let first=true;const t=setTimeout(()=>{if(first){first=false;res()}},10000);
+  FBD.ref('fa/data').orderByKey().startAt(SUBP).endAt(SUBP+'\uf8ff').on('value',s=>{const v=s.val()||{};Object.keys(DATA).filter(k=>k.startsWith(SUBP)).forEach(k=>delete DATA[k]);for(const k in v){try{DATA[k]=JSON.parse(v[k])}catch(e){}}if(first){first=false;clearTimeout(t);res()}},()=>{if(first){first=false;res()}})});
+ CFG=loadCfg()})();return hostDataP}
+function fbActivate(){needHostData=fbHostData;subStore.list=()=>Object.keys(DATA).filter(k=>k.startsWith(SUBP)).map(k=>({key:k,...DATA[k]}))}
 function onDataChanged(){CFG=loadCfg();applyBase();
  const quiet=['hlobby','lobby','rules',undefined,null,''].includes(phase)||!$('mode').hidden;
  if(quiet&&MODE!=='phone'){applyRoster(loadRoster());if(MODE==='host'&&phase==='hlobby'){renderRoster();renderSeason()}if(!$('mode').hidden)$('alivePill').textContent=visible().length+' players'}}
@@ -3684,7 +3768,7 @@ function playedWeeks(){const s=loadSeason();return new Set(s.games.map(g=>g.w).f
 function dayNum(d){const [y,m,dd]=String(d).split('-').map(Number);return Math.round(Date.UTC(y,m-1,dd)/864e5)}
 function weekForDate(d){const st=CFG.start||DEF_CFG.start,days=dayNum(d)-dayNum(st);return days<=0?1:Math.floor((days+6)/7)+1}
 function weekDate(w){const st=CFG.start||DEF_CFG.start,t=new Date((dayNum(st)+(w-1)*7)*864e5);return t.toLocaleDateString('en-US',{timeZone:'UTC',weekday:'short',month:'short',day:'numeric'})}
-function currentWeek(){const b=loadBank();if(!b.weeks.length)return 0;if(CFG.week&&CFG.week<=b.weeks.length)return CFG.week;return Math.min(weekForDate(today()),b.weeks.length)}
+function currentWeek(){const b=loadBank();if(CFG.week&&CFG.week<=b.weeks.length+GEN.length)return CFG.week;return weekForDate(today())}
 function scramble(w){if(w.length<2)return w;for(let t=0;t<20;t++){const a=w.split('');for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}const s=a.join('');if(s!==w)return s}return w.split('').reverse().join('')}
 function prepQ(q,pool){const Q={...q};Q.tag=q.tag||TAGS[q.type]||'Question';Q.time=+q.time||CFG.times[q.type]||20;Q.sc=q.sc||DEFSC[q.type];
  if(q.type==='team'){if(typeof q.ans==='string'){const names=(pool&&pool.length>=4?pool:visible().map(i=>TEAM[i].n)).filter(n=>n!==q.ans&&byName[n]!==undefined);
@@ -3693,7 +3777,7 @@ function prepQ(q,pool){const Q={...q};Q.tag=q.tag||TAGS[q.type]||'Question';Q.ti
  if(q.type==='room'&&!q.w)Q.w=[.4,.25,.2,.15];
  if(q.type==='num')Q.ans=+q.ans;
  return Q}
-function buildQS(pool){const b=loadBank(),wk=currentWeek(),list=(b.weeks[wk-1]||[]).filter(q=>q&&q.type&&q.q&&!(q.type==='team'&&typeof q.ans==='string'&&byName[q.ans]===undefined));return {wk,qs:(list.length?list:(W[1]||[])).map(q=>prepQ(q,pool))}}
+function buildQS(pool){const wk=currentWeek(),list=weekPlan(wk).filter(q=>q&&q.type&&q.q&&!(q.type==='team'&&typeof q.ans==='string'&&byName[q.ans]===undefined));return {wk,qs:(list.length?list:GEN[0]).map(q=>prepQ(q,pool))}}
 
 const DIRS={choice:['👆','Tap one answer'],room:['👆','Tap what you think most people will pick'],team:['🕵️','Tap the teammate you think it is'],num:['⌨️','Type a number, then press Enter'],word:['⌨️','Type the word, then press Enter. One letter off still scores']};
 const CATCOL={choice:'var(--blue)',room:'var(--berry)',team:'var(--lime)',num:'var(--violet)',word:'var(--coral)'};
@@ -3754,7 +3838,7 @@ function question(i){
  phase='q';hurried=false;const Q=QS[i];
  $('qtag').textContent=Q.tag;$('qtag').className='tag '+({room:'room',num:'num',word:'word',team:'team'}[Q.type]||'');
  const m=$('qmode');if(i<WARM){m.className='tag safe';m.textContent=`Warm-up ${i+1} of ${WARM}: nobody leaves`}else if(i===QS.length-1){m.className='tag elim';m.textContent='Final question'}else{m.className='tag elim';m.textContent='Lowest total leaves after this one'}
- const q=$('qtext');q.textContent=Q.q;q.style.animation='none';void q.offsetWidth;q.style.animation='';
+ const q=$('qtext');q.textContent=Q.q;setQBy(Q,false);q.style.animation='none';void q.offsetWidth;q.style.animation='';
  const [ic,dir]=DIRS[Q.type];$('direction').innerHTML=`<i>${ic}</i>${dir}`;
  $('scene').innerHTML=scene(Q.sc,Q);
  $('status').textContent=MODE==='host'?'📱 Answer on your phone now!':ME()&&ME().out?'You are on the sideline. Answer anyway for half points.':'';$('status').className='status';
@@ -3799,7 +3883,7 @@ function loop(){const Q=QS[ri],el=(performance.now()-qStart)/1000/SPEED,left=Mat
 function lev(a,b){const d=[...Array(b.length+1)].map((_,i)=>i);for(let i=1;i<=a.length;i++){let prev=d[0];d[0]=i;for(let j=1;j<=b.length;j++){const tmp=d[j];d[j]=Math.min(d[j]+1,d[j-1]+1,prev+(a[i-1]===b[j-1]?0:1));prev=tmp}}return d[b.length]}
 function fmt(n){return n.toLocaleString()}
 
-function endQ(){phase='reveal';cancelAnimationFrame(raf);bedStop();const Q=QS[ri];$('clock').textContent='0';$('tbar').style.width='0%';
+function endQ(){phase='reveal';cancelAnimationFrame(raf);bedStop();const Q=QS[ri];setQBy(Q,true);$('clock').textContent='0';$('tbar').style.width='0%';
  let maj=null;if(Q.type==='room'){const c=[0,0,0,0];P.forEach(p=>{if(p.cur)c[p.cur.a]++});maj=c.indexOf(Math.max(...c));Q.maj=maj}
  P.forEach(p=>{let pts=0,kind='none',label='No answer';
   if(p.cur){const a=p.cur.a,sp=Math.max(0,Math.round(5*(1-p.cur.t/Q.time)));
@@ -3809,6 +3893,7 @@ function endQ(){phase='reveal';cancelAnimationFrame(raf);bedStop();const Q=QS[ri
     if(d<=.02){pts=10+sp;kind='right';label=`+${pts} ${fmt(a)}`}else if(d<=.1){pts=6;kind='close';label=`+6 ${fmt(a)}`}else if(d<=.25){pts=3;kind='close';label=`+3 ${fmt(a)}`}else{pts=1;kind='wrong';label=`+1 ${fmt(a)}`}}
    else{const L=lev(a,Q.ans);if(L===0){pts=10+sp;kind='right';label=`+${pts} ${a}`}else if(L<=2){pts=3;kind='close';label=`+3 ${a}`}else{pts=1;kind='wrong';label=`+1 ${a}`}}
    p.answered++}
+  if(Q.by&&p.t.n===Q.by&&pts>1){if(kind==='right'){pts=5;label='+5 own question'}else pts=Math.min(pts,5)}
   if(p.out)pts=Math.ceil(pts/2);
   p.res={pts,kind,label,a:p.cur?p.cur.a:null,t:p.cur?p.cur.t:99};p.delta=pts;p.total+=pts});
  flash('#fff');
@@ -3961,7 +4046,7 @@ function broadcast(){if(MODE!=='host'||!room)return;
  s.taken={...claimed};s.rost=loadRoster();
  if(phase==='hlobby'||phase==='rules'){s.roster=Object.keys(claimed)}
  else if(P.length){const Q=QS[ri];
-  s.q={type:Q.type,tag:Q.tag,q:Q.q,opts:Q.opts||null,scr:Q.scr||null,time:Q.time};
+  s.q={type:Q.type,tag:Q.tag,q:Q.q,opts:Q.opts||null,scr:Q.scr||null,time:Q.time,by:Q.by||null,byHide:!!(Q.by&&Q.type==='team'&&Q.opts&&Q.opts[Q.ans]===Q.by)};
   if(phase==='q')s.rem=Math.max(0,Q.time-(performance.now()-qStart)/1000/SPEED);
   if(!['intro','q'].includes(phase)){s.ans=ansText(Q);const rk=rankList();s.res={};
    rk.forEach((p,k)=>{s.res[p.t.n]=[p.res?p.res.pts:0,p.res?p.res.kind:'none',p.total,k+1,p.out?1:0]});
@@ -3989,7 +4074,7 @@ function renderJoinBox(){const u=joinUrl(),jb=$('joinBox');if(!jb)return;if(NET=
  jb.innerHTML=`<div class="jcode"><span>Join code</span><b>${CODE}</b></div>${u?`<div class="jqr">${qrSVG(u)}<span>Scan to join</span></div>`:''}<div class="jhow"><b>On your phone:</b> open ${u?`<code>${esc(u.split('#')[0])}</code>`:'the Friday Arena page'}, tap <b>Join on my phone</b>, and enter <b>${CODE}</b>.</div>`}
 function renderSeason(){const b=$('seasonBox');if(b)b.innerHTML=seasonTable(loadSeason())}
 function renderRoster(){const SEA0=loadSeason();const n=Object.keys(claimed).length;$('joinedCount').textContent=n;$('alivePill').textContent=n+' phones connected';
- $('weekInfo').textContent=(()=>{const w=currentWeek(),b=loadBank();return w?`Playing week ${w}: ${(b.weeks[w-1]||[]).length} questions`:'No questions yet: open Admin'})();
+ $('weekInfo').textContent=(()=>{const w=currentWeek(),L=weekPlan(w),n=L.filter(q=>q.by).length;return `Playing week ${w}: ${L.length} questions${n?` (${n} from players)`:''}`})();
  $('roster').innerHTML=visible().map(i=>TEAM[i]).map(t=>{const on=!!claimed[t.n];const m=multFor(SEA0,t.n);return `<div class="pick ${on?'on':'off'}">${m>1?`<span class="mult">${m}x</span>`:''}${stage(t,on?'happy':'idle')}<b>${t.n}</b><small>${on?'Ready!':'Not here yet'}</small></div>`}).join('');
  $('hostStart').disabled=n<1}
 $('modeHost').addEventListener('click',()=>{ac();startHosting()});
@@ -4000,7 +4085,7 @@ $('hostStart').addEventListener('click',()=>{MODE='host';start()});
 $('hostRules').addEventListener('click',()=>showRules());
 $('hostAdmin').addEventListener('click',()=>{location.hash='admin'});
 $('modeAdmin').addEventListener('click',()=>{location.hash='admin'});
-addEventListener('hashchange',()=>{if(location.hash==='#admin')adminOpen()});
+addEventListener('hashchange',()=>{if(location.hash==='#admin')adminOpen();else if(location.hash==='#ask')askOpen()});
 $('practiceRules').addEventListener('click',()=>{MODE='practice';showRules()});
 let resetArm=0;$('seasonReset').addEventListener('click',e=>{const b=e.currentTarget;if(!resetArm){resetArm=1;b.textContent='Tap again to erase';setTimeout(()=>{resetArm=0;b.textContent='Reset season'},4000);return}resetArm=0;b.textContent='Reset season';saveSeasonData({games:[],tot:{}});renderSeason()});
 $('soundBtn').addEventListener('click',e=>{SND.on=!SND.on;e.currentTarget.textContent=SND.on?'🔊 Sound':'🔇 Muted';e.currentTarget.setAttribute('aria-label',SND.on?'Sound on':'Sound off');if(SND.on){ac();sfx('pop')}});
@@ -4029,7 +4114,7 @@ function phoneRender(force){const B=$('phoneBody'),s=PS;if(phoneEditing&&(!s||s.
  const r=s&&s.res&&s.res[myName];
  const rankLine=r?`<div class="prank">#${r[3]} of ${Object.keys(s.res).length} · ${r[2]} pts${r[4]?' · sideline':''}</div>`:'';
  const card=h=>`<div class="card">${h}</div>`;
- if(!s||s.ph==='hlobby'){B.innerHTML=card(`<div class="big">${stage(my,'happy')}</div><h2>You are in, ${esc(myName)}!</h2><p class="hint">Watch the big screen. The game starts when the host presses Start.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn blue" type="button" id="ph-change" style="font-size:15px">Not you? Change</button><button class="btn" type="button" id="ph-edit" style="font-size:15px">✏️ Edit my look</button></div>`);
+ if(!s||s.ph==='hlobby'){B.innerHTML=card(`<div class="big">${stage(my,'happy')}</div><h2>You are in, ${esc(myName)}!</h2><p class="hint">Watch the big screen. The game starts when the host presses Start.</p><div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap"><button class="btn blue" type="button" id="ph-change" style="font-size:15px">Not you? Change</button><button class="btn" type="button" id="ph-edit" style="font-size:15px">✏️ Edit my look</button></div><a class="asklink" href="#ask" target="_blank" rel="noopener">✍️ Add your own questions for future Fridays</a>`);
   $('ph-edit').onclick=()=>{ac();phoneEditing=true;const B2=$('phoneBody');B2.innerHTML='<div class="card" id="phLook"></div>';lookForm(myName,{target:$('phLook'),phone:true,done:m=>{phoneEditing=false;if(m){$('mePill').innerHTML=avatar(TEAM[byName[myName]],'idle')+'You: '+myName;sfx('pop')}pkey='';phoneRender(true)}})};
   $('ph-change').onclick=()=>{myName=null;room.presence({role:null,name:null,ans:null}).catch(()=>{});$('mePill').hidden=true;pkey='';phoneRender(true)};return}
  if(s.ph==='rules'){B.innerHTML=card(`<h2>How it works</h2><div class="prules"><p>⚡ Answer fast on this phone</p><p>⭐ Right +10, close +3 to +6, answering +1</p><p>🛡️ Questions 1 to 3: nobody leaves</p><p>🌉 Then the lowest score leaves after every question</p><p>🪑 Out? Keep answering for half points</p><p>🔁 Missed weeks multiply your first game back</p></div>`);return}
@@ -4042,7 +4127,7 @@ function phoneRender(force){const B=$('phoneBody'),s=PS;if(phoneEditing&&(!s||s.
   if(Q.type==='team')ui=`<div class="opts who">${Q.opts.map((o,k)=>`<button type="button" class="opt face" data-k="${k}">${stage(TEAM[byName[o]],'idle')}${esc(o)}</button>`).join('')}</div>`;
   else if(Q.opts)ui=`<div class="opts">${Q.opts.map((o,k)=>`<button type="button" class="opt" data-k="${k}"><kbd>${'ABCD'[k]}</kbd>${esc(o)}</button>`).join('')}</div>`;
   else ui=`${Q.scr?`<div class="tiles" style="justify-content:center">${Q.scr.split('').map(c=>`<span>${c}</span>`).join('')}</div>`:''}<form class="typer" id="pform"><input id="pin" ${Q.type==='num'?'inputmode="numeric"':'autocapitalize="characters" spellcheck="false"'} autocomplete="off" placeholder="${Q.type==='num'?'Your best guess':'Type the word'}" aria-label="Your answer"><button class="btn blue" type="submit">Lock in</button></form>`;
-  B.innerHTML=card(`<div style="display:flex;justify-content:space-between;align-items:center"><span class="tag" style="background:${CATCOL[Q.type]}">${esc(Q.tag)}</span><span class="clock" id="pclock"></span></div><h2 style="font-size:clamp(28px,7.5vw,40px);line-height:1.1;color:var(--ink)">${esc(Q.q)}</h2><div class="timer"><i id="ptbar"></i></div><div class="direction">${ic} ${dir}</div>${ui}`);
+  B.innerHTML=card(`<div style="display:flex;justify-content:space-between;align-items:center"><span class="tag" style="background:${CATCOL[Q.type]}">${esc(Q.tag)}</span><span class="clock" id="pclock"></span></div><h2 style="font-size:clamp(28px,7.5vw,40px);line-height:1.1;color:var(--ink)">${esc(Q.q)}</h2>${pqLine(s)}<div class="timer"><i id="ptbar"></i></div><div class="direction">${ic} ${dir}</div>${ui}`);
   B.querySelectorAll('.opt').forEach(b=>b.onclick=()=>phoneAnswer(+b.dataset.k));
   const f=$('pform');if(f){f.onsubmit=e=>{e.preventDefault();const v=$('pin').value;if(Q.type==='num'){const n=parseFloat(v.replace(/[^0-9.]/g,''));if(!isNaN(n))phoneAnswer(n)}else{const w=v.toUpperCase().replace(/[^A-Z]/g,'');if(w)phoneAnswer(w)}}}
   return}
@@ -4050,7 +4135,7 @@ function phoneRender(force){const B=$('phoneBody'),s=PS;if(phoneEditing&&(!s||s.
  const [pts,kind,tot,rk,out]=r,n=Object.keys(s.res).length;
  if(s.ph==='reveal'||s.ph==='party'){const mood={right:'happy',maj:'happy',close:'close',wrong:'oops',none:'nervous'}[kind];
   const word={right:'Nailed it!',maj:'You read the room!',close:'So close!',wrong:'Not this time',none:'No answer'}[kind];
-  B.innerHTML=card(`<div class="big">${stage(my,mood)}</div><div class="pres ${kind}">+${pts}</div><h2>${word}</h2><p class="hint">${Q.type==='room'?'The room picked':'Answer:'} <b>${esc(s.ans)}</b></p>${rankLine}`);if(kind==='right'||kind==='maj')confetti(80);return}
+  B.innerHTML=card(`<div class="big">${stage(my,mood)}</div><div class="pres ${kind}">+${pts}</div><h2>${word}</h2><p class="hint">${Q.type==='room'?'The room picked':'Answer:'} <b>${esc(s.ans)}</b></p>${pqLine(s)}${rankLine}`);if(kind==='right'||kind==='maj')confetti(80);return}
  if(s.ph==='board'||s.ph==='announce'){const danger=!out&&s.qi>=s.warm-1&&s.low&&s.low.includes(myName)&&s.qi<s.n-1;
   B.innerHTML=card(`<div class="big">${stage(my,out?'sad':rk===1?'win':rk<=3?'happy':danger?'nervous':'idle')}</div><div class="pres" style="color:var(--cobalt)">#${rk}</div><h2>${tot} points</h2>${danger&&s.qi>=s.warm?'<p class="status bad">Danger zone! Lowest score leaves next.</p>':''}${s.ph==='announce'?'<p class="status bad">Warm-up is over. From now on the lowest score leaves after every question.</p>':''}<p class="hint">${n} players · ${s.alive} still in the arena</p>`);return}
  if(s.ph==='elim'){const meOut=s.out===myName;
@@ -4153,6 +4238,7 @@ function multFor(s,name){if(s.games.some(g=>g.d===today()&&g.p.includes(name)))r
 let lastSeason=null;
 function recordSeason(){if(MODE!=='host'||!P.length)return null;const s=loadSeason();if(s.games.some(g=>g.id===GID))return lastSeason;
  const out={};P.forEach(p=>{const m=multFor(s,p.t.n),add=p.total*m;out[p.t.n]={m,add};s.tot[p.t.n]=(s.tot[p.t.n]||0)+add});
+ try{markPlayed(QS,WEEK)}catch(e){}
  s.games.push({id:GID,w:WEEK,d:today(),p:P.map(p=>p.t.n),s:Object.fromEntries(P.map(p=>[p.t.n,p.total]))});saveSeasonData(s);
  lastSeason={out,tot:s.tot,week:gameDays(s).length};return lastSeason}
 function seasonTable(s){const rows=Object.entries(s.tot).sort((a,b)=>b[1]-a[1]);if(!rows.length)return '<p class="hint">No games recorded yet. The first real game starts the season.</p>';
@@ -4216,7 +4302,7 @@ function joinUrl(){if(!/^https?:/.test(location.protocol))return '';return locat
 function qrSVG(text){try{const q=qrcode(0,'M');q.addData(text);q.make();return q.createSvgTag({cellSize:5,margin:2,scalable:true})}catch(e){return ''}}
 async function startHosting(){const note=$('modeNote');note.textContent='Opening a game room...';
  if(NET==='room'){hostLobby();return}
- if(NET==='fb'){try{if(!room){room=await fbHost();wireRoom()}hostLobby()}catch(e){note.textContent='Could not open the game room. Check the network and try again.'}return}
+ if(NET==='fb'){try{await needHostData();if(!room){room=await fbHost();wireRoom()}hostLobby()}catch(e){note.textContent='Could not open the game room. Check the network and try again.'}return}
  for(let tries=0;tries<3;tries++){CODE=mkCode();try{room=await peerHost(CODE);wireRoom();hostLobby();return}catch(e){if(!(e&&e.type==='unavailable-id'))break}}
  note.textContent='Could not open a game room. The network may be blocking the connection service.'}
 function joinScreen(err){MODE='phone';['mode','lobby','hostLobby','game','final'].forEach(id=>$(id).hidden=true);$('phone').hidden=false;$('alivePill').hidden=true;
@@ -4235,16 +4321,16 @@ const TOPS=['plain','collar','turtle','zip','blazer','suit','plaid'];
 const HAIRS=Object.keys(HAIR);
 function adminOpen(){ADM.prevMode=MODE;stopAll();hideOv();['mode','lobby','hostLobby','phone','game','final'].forEach(id=>$(id).hidden=true);$('admin').hidden=false;$('roundPill').textContent='Admin';
  if(!ADM.unlocked){$('admin').innerHTML=`<div class="card pinbox"><h1>Host admin</h1><p class="hint">Enter the host PIN to edit questions, scores, players and settings.</p><form id="pinForm" class="typer" style="justify-content:center"><input id="pinIn" type="password" inputmode="numeric" maxlength="8" autocomplete="off" aria-label="PIN" placeholder="PIN" style="text-align:center;letter-spacing:.4em;flex:0 1 200px"><button class="btn blue" type="submit">Unlock</button></form><p class="status bad" id="pinErr"></p><button class="btn" type="button" id="admBack" style="font-size:15px;padding:6px 14px">Back to the game</button></div>`;
-  $('pinForm').onsubmit=e=>{e.preventDefault();if($('pinIn').value===PIN){ADM.unlocked=true;adminRender()}else{$('pinErr').textContent='That PIN is not right.';$('pinIn').value=''}};
+  $('pinForm').onsubmit=e=>{e.preventDefault();if($('pinIn').value===PIN){ADM.unlocked=true;$('pinErr').className='status';$('pinErr').textContent='Loading...';needHostData().then(adminRender)}else{$('pinErr').textContent='That PIN is not right.';$('pinIn').value=''}};
   $('admBack').onclick=adminClose;setTimeout(()=>$('pinIn').focus(),50);return}
  adminRender()}
 function adminClose(){$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);if(ADM.prevMode==='host'&&room)hostLobby();else showMode()}
-function adminRender(){const tabs=[['questions','Questions'],['upload','Upload list'],['players','Players and scores'],['settings','Game settings'],['backup','Backup']];
+function adminRender(){const tabs=[['questions','Questions'],['upload','Upload list'],['players','Players and scores'],['pq','Player questions'],['settings','Game settings'],['backup','Backup']];
  $('admin').innerHTML=`<div class="card"><div class="admhead"><h1>Host admin</h1><div class="admtabs">${tabs.map(([k,l])=>`<button type="button" class="admtab ${ADM.tab===k?'on':''}" data-t="${k}">${l}</button>`).join('')}</div><button class="btn blue" type="button" id="admPractice" style="font-size:16px;padding:8px 16px">🎮 Practice solo</button><button class="btn" type="button" id="admDone" style="font-size:16px;padding:8px 16px">Done</button></div><div id="admBody"></div><p class="status" id="admMsg" aria-live="polite"></p></div>`;
  $('admin').querySelectorAll('.admtab').forEach(b=>b.onclick=()=>{ADM.tab=b.dataset.t;ADM.edit=null;adminRender()});
  $('admDone').onclick=adminClose;
  $('admPractice').onclick=()=>{$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);lobby()};
- ({questions:admQuestions,upload:admUpload,players:admPlayers,settings:admSettings,backup:admBackup})[ADM.tab]()}
+ ({questions:admQuestions,upload:admUpload,players:admPlayers,pq:admPQ,settings:admSettings,backup:admBackup})[ADM.tab]()}
 function admMsg(t,bad){const m=$('admMsg');if(m){m.className='status '+(bad?'bad':'good');m.textContent=t}}
 function ansLabel(q){if(q.type==='choice')return q.opts?q.opts[q.ans]:'';if(q.type==='room')return 'Majority wins';return String(q.ans)}
 /* questions */
@@ -4366,8 +4452,8 @@ function lookForm(name,o){o=o||{};const R=loadRoster(),base=name?TEAM[byName[nam
 /* settings */
 function admSettings(){const c=CFG,b=loadBank(),cw=currentWeek();
  $('admBody').innerHTML=`<form class="qform" id="cf"><h2>Game settings</h2>
- <div class="frow"><label>Week to play next<select id="c-week"><option value="0">Automatic by date (now week ${cw||1})</option>${b.weeks.map((_,i)=>`<option value="${i+1}" ${c.week===i+1?'selected':''}>Week ${i+1}</option>`).join('')}</select></label><label>Week 1 game day<input id="c-start" type="date" value="${c.start||DEF_CFG.start}"></label><label>Warm-up questions (nobody leaves)<input id="c-warm" type="number" min="0" max="9" value="${c.warm}"></label></div>
- <p class="hint">Schedule: ${b.weeks.map((_,i)=>`Week ${i+1} on ${weekDate(i+1)}`).join(' · ')}. Each week's questions show from the day after the previous game day. Pick a week above to override.</p>
+ <div class="frow"><label>Week to play next<select id="c-week"><option value="0">Automatic by date (now week ${cw||1})</option>${Array.from({length:totalWeeks()},(_,i)=>`<option value="${i+1}" ${c.week===i+1?'selected':''}>Week ${i+1}${i>=b.weeks.length?' (general questions)':''}</option>`).join('')}</select></label><label>Week 1 game day<input id="c-start" type="date" value="${c.start||DEF_CFG.start}"></label><label>Warm-up questions (nobody leaves)<input id="c-warm" type="number" min="0" max="9" value="${c.warm}"></label></div>
+ <p class="hint">Schedule: ${Array.from({length:Math.min(8,totalWeeks())},()=>0).map((_,i)=>`Week ${i+1} on ${weekDate(i+1)}`).join(' · ')}. Each week's questions show from the day after the previous game day. Pick a week above to override.</p>
  <h3>Seconds to answer, by question type</h3><div class="frow">${Object.keys(TAGS).map(k=>`<label>${TAGS[k]}<input id="c-t-${k}" type="number" min="5" max="120" value="${c.times[k]}"></label>`).join('')}</div>
  <h3>Pauses between questions (seconds)</h3><div class="frow"><label>Celebration screen<input id="c-cel" type="number" min="4" max="30" value="${c.celebrate}"></label><label>Scoreboard<input id="c-brd" type="number" min="4" max="30" value="${c.board}"></label><label>Elimination scene<input id="c-elim" type="number" min="5" max="20" step=".5" value="${c.elim}"></label></div>
  <p class="hint">A question's own seconds (set on the Questions tab) wins over the type default.</p>
@@ -4649,16 +4735,205 @@ sfx=function(k,at=0){if(k==='splash'){noise(.9,{ft:'lowpass',f:2600,fto:400,vol:
 EX_KINDS=[...EX_ATT,...EX20.map(e=>e[0]),...EX100.map(e=>e[0])].filter(k=>!EX_OFF.includes(k));exOrder=[...EX_KINDS];
 const _ex0=exScene;exScene=function(k,p,top){return EX20.some(e=>e[0]===k)?exScene20(k,p,top):EX100.some(e=>e[0]===k)?exScene100(k,p,top):_ex0(k,p,top)};
 
+/* ---------- Ask the Team: player questions ---------- */
+const SUBP='fridayArenaSub_',PQ_MAX=5;
+let needHostData=()=>Promise.resolve();
+let subStore={list(){const o=[];try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(SUBP)){const v=JSON.parse(localStorage.getItem(k));if(v)o.push({key:k,...v})}}}catch(e){}return o}};
+/* extra weeks of general questions, used after the written weeks run out */
+const GEN=[
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Mercury','Venus','Earth','Moon'],ans:3,why:'The Moon is the only one that is not a planet.'},
+  {type:'room',q:'Best way to spend a Friday night?',opts:['Out with friends','Couch and a movie','Cooking at home','Early to bed']},
+  {type:'num',q:'How many minutes are in one day?',ans:1440,why:'24 x 60 = 1,440.'},
+  {type:'choice',tag:'Sequence',q:'What comes next? 3, 6, 12, 24, ...',opts:['36','42','48','52'],ans:2,why:'Each number doubles.'},
+  {type:'choice',q:'How many sides does a hexagon have?',opts:['5','6','7','8'],ans:1},
+  {type:'num',q:'How many days are in a leap year?',ans:366},
+  {type:'choice',q:'Which planet is known as the Red Planet?',opts:['Venus','Mars','Jupiter','Saturn'],ans:1},
+  {type:'choice',tag:'Quick logic',q:'Which is heavier: a kilogram of feathers or a kilogram of steel?',opts:['Feathers','Steel','They weigh the same','It depends'],ans:2,why:'A kilogram is a kilogram.'},
+  {type:'num',q:'How many states are in the USA?',ans:50},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'TEAMWORK'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Square','Triangle','Circle','Cube'],ans:3,why:'A cube is the only 3D shape.'},
+  {type:'room',q:'Favorite season?',opts:['Spring','Summer','Fall','Winter']},
+  {type:'num',q:'How many hours are in a week?',ans:168,why:'7 x 24 = 168.'},
+  {type:'choice',tag:'Sequence',q:'What comes next? 1, 3, 6, 10, 15, ...',opts:['18','20','21','25'],ans:2,why:'The gaps grow by 1: +2, +3, +4, +5, then +6.'},
+  {type:'choice',q:'What is the largest ocean on Earth?',opts:['Atlantic','Indian','Arctic','Pacific'],ans:3},
+  {type:'num',q:'How many centimeters are in a meter?',ans:100},
+  {type:'choice',tag:'Quick logic',q:'How many months have exactly 30 days?',opts:['3','4','5','6'],ans:1,why:'April, June, September and November.'},
+  {type:'choice',q:'Which animal is the tallest in the world?',opts:['Elephant','Giraffe','Camel','Moose'],ans:1},
+  {type:'num',q:'How many players does one soccer team have on the field?',ans:11},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'LAPTOP'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Guitar','Violin','Drum','Cello'],ans:2,why:'The drum is the only one without strings.'},
+  {type:'room',q:'Sweet or salty snacks?',opts:['Sweet','Salty','Both','Neither']},
+  {type:'num',q:'How many seconds are in one hour?',ans:3600,why:'60 x 60 = 3,600.'},
+  {type:'choice',tag:'Sequence',q:'What comes next? 2, 4, 8, 16, ...',opts:['24','30','32','64'],ans:2,why:'Each number doubles.'},
+  {type:'choice',q:'At sea level, water boils at how many degrees Fahrenheit?',opts:['100','180','212','250'],ans:2},
+  {type:'num',q:'How many continents are there?',ans:7},
+  {type:'choice',tag:'Quick logic',q:'Mary\'s father has five daughters: Nana, Nene, Nini and Nono. What is the fifth daughter\'s name?',opts:['Nunu','Mary','Nina','Nancy'],ans:1,why:'It is Mary\'s father.'},
+  {type:'choice',q:'Which country has the largest population?',opts:['China','India','USA','Indonesia'],ans:1,why:'India passed China in 2023.'},
+  {type:'num',q:'How many legs does a spider have?',ans:8},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'WEEKEND'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Monday','Friday','March','Sunday'],ans:2,why:'March is a month, not a day.'},
+  {type:'room',q:'Dream vacation?',opts:['Beach','Mountains','Big city','Road trip']},
+  {type:'num',q:'How many feet are in a mile?',ans:5280},
+  {type:'choice',tag:'Sequence',q:'What comes next? A, C, E, G, ...',opts:['H','I','J','K'],ans:1,why:'Every other letter.'},
+  {type:'choice',q:'How many bones does a shark have?',opts:['0','50','206','300'],ans:0,why:'A shark skeleton is made of cartilage.'},
+  {type:'num',q:'How many years are in a century?',ans:100},
+  {type:'choice',tag:'Quick logic',q:'3 cats catch 3 mice in 3 minutes. How many cats catch 100 mice in 100 minutes?',opts:['1','3','33','100'],ans:1,why:'Each cat catches one mouse every 3 minutes.'},
+  {type:'choice',q:'Which gas do plants take in from the air?',opts:['Oxygen','Nitrogen','Carbon dioxide','Helium'],ans:2},
+  {type:'num',q:'How many strings does a standard guitar have?',ans:6},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'SPREADSHEET'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Eagle','Penguin','Sparrow','Bat'],ans:3,why:'The bat is the only one that is not a bird.'},
+  {type:'room',q:'Your coffee order?',opts:['Black','Latte','Iced','No coffee']},
+  {type:'num',q:'How many ounces are in a pound?',ans:16},
+  {type:'choice',tag:'Sequence',q:'What comes next? 1, 2, 4, 7, 11, ...',opts:['14','15','16','18'],ans:2,why:'The gaps grow by 1: +1, +2, +3, +4, then +5.'},
+  {type:'choice',q:'What is the smallest prime number?',opts:['0','1','2','3'],ans:2},
+  {type:'num',q:'How many teaspoons are in a tablespoon?',ans:3},
+  {type:'choice',tag:'Quick logic',q:'A rooster lays an egg on a barn roof. Which way does it roll?',opts:['Left','Right','Straight down','Roosters do not lay eggs'],ans:3},
+  {type:'choice',q:'Which planet is closest to the Sun?',opts:['Venus','Earth','Mercury','Mars'],ans:2},
+  {type:'num',q:'How many keys are on a full-size US computer keyboard?',ans:104},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'DASHBOARD'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Apple','Banana','Cherry','Broccoli'],ans:3,why:'Broccoli is the only vegetable.'},
+  {type:'room',q:'Pick a superpower',opts:['Fly','Be invisible','Read minds','Teleport']},
+  {type:'num',q:'How many weeks are in a year?',ans:52},
+  {type:'choice',tag:'Sequence',q:'What comes next? 100, 90, 81, 73, ...',opts:['64','65','66','67'],ans:2,why:'The gaps shrink by 1: -10, -9, -8, then -7.'},
+  {type:'choice',q:'How many hearts does an octopus have?',opts:['1','2','3','8'],ans:2},
+  {type:'num',q:'How many minutes are in one week?',ans:10080,why:'7 x 24 x 60 = 10,080.'},
+  {type:'choice',tag:'Quick logic',q:'What has keys but cannot open locks?',opts:['A map','A piano','A door','A car'],ans:1},
+  {type:'choice',q:'Which language has the most native speakers?',opts:['English','Spanish','Mandarin Chinese','Hindi'],ans:2},
+  {type:'num',q:'How many squares are on a chess board?',ans:64},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'MILESTONE'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Inch','Mile','Pound','Yard'],ans:2,why:'A pound measures weight, not length.'},
+  {type:'room',q:'Your morning starts with...',opts:['Phone','Coffee','Workout','Snooze button']},
+  {type:'num',q:'About how many miles is it around the Earth at the equator?',ans:24901},
+  {type:'choice',tag:'Sequence',q:'What comes next? 1, 8, 27, 64, ...',opts:['100','121','125','128'],ans:2,why:'They are cubes: 5 x 5 x 5 = 125.'},
+  {type:'choice',q:'What is the hardest natural substance?',opts:['Gold','Iron','Diamond','Quartz'],ans:2},
+  {type:'num',q:'How many dots are on a six-sided die in total?',ans:21,why:'1 + 2 + 3 + 4 + 5 + 6 = 21.'},
+  {type:'choice',tag:'Quick logic',q:'How many times can you subtract 5 from 25?',opts:['5 times','Once','4 times','20 times'],ans:1,why:'After the first time it is 20, not 25.'},
+  {type:'choice',q:'What is the longest river in Africa?',opts:['Congo','Niger','Nile','Zambezi'],ans:2},
+  {type:'num',q:'How many players does one basketball team have on the court?',ans:5},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'DEPLOYMENT'}],
+ [{type:'choice',tag:'Odd one out',q:'Which one does not belong?',opts:['Oak','Maple','Rose','Pine'],ans:2,why:'A rose is the only one that is not a tree.'},
+  {type:'room',q:'Best way to celebrate a team win?',opts:['Team lunch','Day off','Shout-out','Cake']},
+  {type:'num',q:'How many hours are in a year (not a leap year)?',ans:8760,why:'365 x 24 = 8,760.'},
+  {type:'choice',tag:'Sequence',q:'What comes next? 2, 3, 5, 7, 11, ...',opts:['12','13','14','15'],ans:1,why:'They are prime numbers.'},
+  {type:'choice',q:'What is the capital of Australia?',opts:['Sydney','Melbourne','Canberra','Perth'],ans:2},
+  {type:'num',q:'How many sides does a stop sign have?',ans:8},
+  {type:'choice',tag:'Quick logic',q:'One shirt takes 1 hour to dry in the sun. How long do 5 shirts take, laid out side by side?',opts:['1 hour','5 hours','30 minutes','2 hours'],ans:0},
+  {type:'choice',q:'How many time zones does the mainland USA (lower 48) have?',opts:['3','4','5','6'],ans:1},
+  {type:'num',q:'How many bones are in one human hand?',ans:27},
+  {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'INNOVATION'}]];
+function totalWeeks(){return loadBank().weeks.length+GEN.length}
+function weekList(w){const b=loadBank();if(w>=1&&w<=b.weeks.length)return (b.weeks[w-1]||[]).filter(q=>q&&q.type&&q.q);const g=GEN[((w-b.weeks.length-1)%GEN.length+GEN.length)%GEN.length];return g?g.map(q=>({...q})):[]}
+function pqAll(){const out=[];subStore.list().forEach(s=>(s.qs||[]).forEach((q,i)=>{if(q&&q.q&&!q.del)out.push({...q,by:s.by,created:s.created||0,key:s.key,idx:i})}));return out.sort((a,b)=>a.created-b.created||a.idx-b.idx)}
+function pqPlan(){const start=currentWeek()||1,all=pqAll(),plan={},cnt={},auth={};
+ const live=all.filter(q=>!q.played&&byName[q.by]!==undefined);
+ const put=(q,w)=>{plan[q.key+'#'+q.idx]=w;cnt[w]=(cnt[w]||0)+1;(auth[w]=auth[w]||new Set()).add(q.by)};
+ live.filter(q=>q.wk&&q.wk>=start).forEach(q=>put(q,q.wk));
+ live.filter(q=>!(q.wk&&q.wk>=start)).forEach(q=>{let w=start;while((cnt[w]||0)>=PQ_MAX||(auth[w]&&auth[w].has(q.by)))w++;put(q,w)});
+ return {plan,all,start}}
+function pqForWeek(w){const {plan,all}=pqPlan();return all.filter(q=>plan[q.key+'#'+q.idx]===w).sort((a,b)=>(b.wk?1:0)-(a.wk?1:0)).slice(0,PQ_MAX)}
+function pqToQ(q){const o={type:q.type,q:q.q,by:q.by,pqKey:q.key,pqIdx:q.idx,tag:q.type==='team'?'Who is it?':q.type==='num'?'Guess the number':q.tag||'Quick pick'};
+ if(q.type==='team')o.ans=q.by;else if(q.type==='num')o.ans=+q.ans;else{o.opts=q.opts;o.ans=+q.ans}if(q.why)o.why=q.why;return o}
+function weekPlan(w){const host=weekList(w),pq=pqForWeek(w).map(pqToQ);if(!pq.length)return host;
+ let F=null,H=[...host];if(H.length&&H[H.length-1].type==='word')F=H.pop();
+ const want=Math.max(0,(F?9:10)-pq.length);
+ for(const t of ['team','room'])while(H.length>want){const k=H.findIndex(q=>q.type===t);if(k<0)break;H.splice(k,1)}
+ while(H.length>want)H.splice(H.length-1,1);
+ const out=[];let i=0,j=0;while(i<H.length||j<pq.length){if((out.length%2===0&&i<H.length)||j>=pq.length)out.push(H[i++]);else out.push(pq[j++])}
+ if(F)out.push(F);return out}
+function markPlayed(qs,wk){const bykey={};qs.forEach(Q=>{if(Q.pqKey!=null)(bykey[Q.pqKey]=bykey[Q.pqKey]||[]).push(Q.pqIdx)});
+ for(const k in bykey){const s=subStore.list().find(x=>x.key===k);if(!s)continue;const o={by:s.by,created:s.created,qs:s.qs};bykey[k].forEach(i=>{if(o.qs[i])o.qs[i].played=wk});jset(k,o)}}
+function byBadge(Q,reveal){if(!Q||!Q.by)return '';const t=TEAM[byName[Q.by]];const hide=!reveal&&(Q.byHide||(Q.type==='team'&&Q.opts&&Q.ans!=null&&Q.opts[Q.ans]===Q.by));
+ return hide?`<span class="qby hide"><span class="qbym">?</span>Added by a mystery teammate</span>`:`<span class="qby">${t?avatar(t,'happy'):''}Added by ${esc(Q.by)}</span>`}
+function setQBy(Q,reveal){const el=$('qby');if(!el)return;el.innerHTML=byBadge(Q,reveal);el.hidden=!(Q&&Q.by)}
+function pqLine(s){const Q=s&&s.q;if(!Q||!Q.by)return '';const reveal=s.ph!=='q'&&s.ph!=='intro';
+ const mine=myName&&Q.by===myName;return `<div class="pqline">${byBadge(Q,reveal)}${mine&&s.ph==='q'?'<span class="pqmine">Your question: a right answer is worth 5 points.</span>':''}</div>`}
+
+/* ---------- the #ask page for players ---------- */
+let ASK={me:null,drafts:[],step:'start',type:null,edit:-1};
+const ASKT={team:['About me','"Who on the team...?" Everyone guesses you. Best way to share a fun fact.'],num:['Guess my number','A number about you, like how many countries you have visited.'],choice:['Quick pick','Your own question with 4 answers, one right.'],brain:['Brain teaser','A logic puzzle or general knowledge question, 4 answers.']};
+const IDEAS=['Who on the team has lived in another country?','Who on the team once met a celebrity?','Who on the team has a hidden talent for...','Who on the team ran a marathon?','Who on the team had the most unusual first job?','Who on the team has been to more than 20 countries?'];
+function askOpen(){MODE='ask';stopAll&&stopAll();hideOv&&hideOv();['mode','lobby','hostLobby','game','final','admin'].forEach(id=>$(id).hidden=true);$('phone').hidden=false;$('alivePill').hidden=true;$('roundPill').textContent='Add questions';askRender()}
+function askMe(){$('mePill').hidden=!ASK.me;if(ASK.me)$('mePill').innerHTML=avatar(TEAM[byName[ASK.me]],'idle')+'You: '+esc(ASK.me)}
+function askRender(){const B=$('phoneBody');askMe();const card=h=>`<div class="card ask">${h}</div>`;
+ if(ASK.step==='start'){B.innerHTML=card(`<h2>Add your questions</h2><p class="lead">Help the team get to know you. Write a question about yourself, or a brain teaser. It goes into the Friday Arena question bank and pops up in a future Friday game with your name on it.</p>
+  <ol class="askhow"><li>Tap your face</li><li>Write one question at a time</li><li>Add as many as you like, then tap Submit</li></ol>
+  <div class="locknote">🔒 Once you submit, your questions are locked. Nobody can see them before the game, not even you.</div>
+  <button class="btn" type="button" id="askGo">Start</button>`);$('askGo').onclick=()=>{ac();ASK.step=ASK.me?'type':'face';askRender()};return}
+ if(ASK.step==='face'){B.innerHTML=card(`<h2>Tap your face</h2><div class="pnames">${TEAM.filter(t=>!HIDDEN.has(t.n)).map(t=>`<button type="button" class="pick" data-n="${esc(t.n)}">${stage(t,'idle')}<b>${esc(t.n)}</b></button>`).join('')}</div>`);
+  B.querySelectorAll('.pick').forEach(b=>b.onclick=()=>{ASK.me=b.dataset.n;ASK.step=ASK.drafts.length?'list':'type';sfx('pop');askRender()});return}
+ if(ASK.step==='type'){B.innerHTML=card(`<h2>What kind of question?</h2><div class="asktypes">${Object.entries(ASKT).map(([k,[h,p]])=>`<button type="button" class="asktype t-${k}" data-k="${k}">${k==='team'?'<span class="best">Best for the team</span>':''}<b>${h}</b><span>${p}</span></button>`).join('')}</div>
+  <div class="askrow">${ASK.drafts.length?`<button class="btn blue" type="button" id="askList">Back to my list (${ASK.drafts.length})</button>`:''}<button class="skip" type="button" id="askNotMe">Not ${esc(ASK.me)}? Change</button></div>`);
+  B.querySelectorAll('.asktype').forEach(b=>b.onclick=()=>{ASK.type=b.dataset.k;ASK.edit=-1;ASK.step='write';askRender()});
+  const l=$('askList');if(l)l.onclick=()=>{ASK.step='list';askRender()};$('askNotMe').onclick=()=>{ASK.me=null;ASK.drafts=[];ASK.step='face';askRender()};return}
+ if(ASK.step==='write'){const t=ASK.type,d=ASK.edit>=0?ASK.drafts[ASK.edit]:{q:'',opts:['','','',''],ans:t==='num'?'':-1};const [h]=ASKT[t];
+  const optsHTML=(t==='choice'||t==='brain')?`<span class="lab">Answers (tap the circle next to the right one)</span>${[0,1,2,3].map(k=>`<label class="optrow"><input type="radio" name="aR" value="${k}" ${+d.ans===k?'checked':''} aria-label="Answer ${'ABCD'[k]} is right"><span class="ab">${'ABCD'[k]}</span><input type="text" id="aO${k}" maxlength="60" value="${esc(d.opts[k]||'')}" placeholder="Answer ${'ABCD'[k]}" autocomplete="off"></label>`).join('')}`:'';
+  B.innerHTML=card(`<span class="lab">${h}${ASK.edit>=0?' · editing':''}</span>
+  ${t==='team'?`<div class="ideas">${IDEAS.map(x=>`<button type="button" class="idea" data-t="${esc(x)}">${esc(x.replace('Who on the team ','...'))}</button>`).join('')}</div>`:''}
+  <label class="lab" for="aQ">Your question</label><textarea id="aQ" maxlength="160" rows="3" placeholder="${t==='team'?'Who on the team has ...?':t==='num'?'How many countries has '+esc(ASK.me)+' visited?':t==='brain'?'What comes next? 2, 4, 8, ...':'Which city was '+esc(ASK.me)+' born in?'}">${esc(d.q)}</textarea>
+  ${t==='team'?`<div class="autoans">${avatar(TEAM[byName[ASK.me]],'happy')}<span>The answer is you, ${esc(ASK.me)}. The game adds 3 other teammates as choices.</span></div>`:''}
+  ${t==='num'?`<label class="lab" for="aN">The right number</label><input id="aN" inputmode="decimal" autocomplete="off" value="${esc(d.ans)}" placeholder="For example 14"><p class="tip">Close guesses still score points.</p>`:''}
+  ${optsHTML}
+  <p class="status bad" id="aErr"></p>
+  <div class="askrow"><button class="btn" type="button" id="aAdd">${ASK.edit>=0?'Save changes':'Add to my list'}</button><button class="skip" type="button" id="aBack">Back</button></div><p class="tip">Keep it work friendly. Max 160 characters.</p>`);
+  B.querySelectorAll('.idea').forEach(b=>b.onclick=()=>{const a=$('aQ');a.value=b.dataset.t.replace('...','');a.focus()});
+  $('aBack').onclick=()=>{ASK.step=ASK.edit>=0?'list':'type';askRender()};
+  $('aAdd').onclick=()=>{const q=$('aQ').value.trim().replace(/\s+/g,' '),err=m=>{$('aErr').textContent=m};
+   if(q.length<8)return err('Write a question first (at least 8 characters).');
+   const o={type:t==='brain'?'choice':t,brain:t==='brain'?1:0,q};
+   if(t==='num'){const n=parseFloat(String($('aN').value).replace(/[^0-9.\-]/g,''));if(isNaN(n))return err('Type the right number.');o.ans=n}
+   if(t==='choice'||t==='brain'){const opts=[0,1,2,3].map(k=>$('aO'+k).value.trim());if(opts.some(x=>!x))return err('Fill in all 4 answers.');const r=B.querySelector('input[name=aR]:checked');if(!r)return err('Tap the circle next to the right answer.');o.opts=opts;o.ans=+r.value}
+   if(ASK.edit>=0)ASK.drafts[ASK.edit]=o;else ASK.drafts.push(o);ASK.edit=-1;ASK.step='list';sfx('pop');askRender()};
+  setTimeout(()=>{const a=$('aQ');if(a)a.focus()},60);return}
+ if(ASK.step==='list'){const n=ASK.drafts.length;const tl={team:'About me',num:'Guess my number',choice:'Quick pick'};
+  B.innerHTML=card(`<h2>Ready to submit</h2><p class="askcount">${n} question${n===1?'':'s'} ready</p>
+  <div class="dlist">${ASK.drafts.map((d,i)=>`<div class="ditem"><span class="dt">${d.brain?'Brain teaser':tl[d.type]}</span><b>${esc(d.q)}</b><small>Answer: ${esc(d.type==='team'?ASK.me:d.type==='num'?String(d.ans):d.opts[d.ans])}</small><span class="dbtns"><button type="button" class="skip" data-e="${i}">Edit</button><button type="button" class="skip danger" data-r="${i}">Remove</button></span></div>`).join('')}</div>
+  <div class="askrow"><button class="btn blue" type="button" id="aMore">+ Add another question</button><button class="btn" type="button" id="aSend" ${n?'':'disabled'}>Submit ${n} question${n===1?'':'s'}</button></div>
+  <p class="tip">You can still edit these until you tap Submit. After that they are locked.</p><p class="status bad" id="aErr"></p>`);
+  B.querySelectorAll('[data-e]').forEach(b=>b.onclick=()=>{ASK.edit=+b.dataset.e;const d=ASK.drafts[ASK.edit];ASK.type=d.brain?'brain':d.type;ASK.step='write';askRender()});
+  B.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{ASK.drafts.splice(+b.dataset.r,1);askRender()});
+  $('aMore').onclick=()=>{ASK.step='type';askRender()};
+  $('aSend').onclick=()=>{if(!ASK.drafts.length)return;const id=Date.now().toString(36)+Math.random().toString(36).slice(2,7);
+   const qs=ASK.drafts.map(d=>{const o={type:d.type,q:d.q,ans:d.type==='team'?ASK.me:d.ans};if(d.opts)o.opts=d.opts;if(d.brain)o.tag='Brain teaser';return o});
+   jset(SUBP+id,{by:ASK.me,created:Date.now(),qs});ASK.sent=n;ASK.drafts=[];ASK.step='sent';sfx('correct');askRender()};return}
+ if(ASK.step==='sent'){B.innerHTML=card(`<div class="sentok">✓</div><h2>${ASK.sent} question${ASK.sent===1?'':'s'} added!</h2><p class="lead">They are now in the Friday Arena question bank and will pop up in a future Friday game with your name on the big screen.</p>
+  <div class="locknote">🔒 Your questions are locked. Nobody can see them before the game, not even you. If you get your own question right, you earn 5 points.</div>
+  <div class="askrow"><button class="btn" type="button" id="aAgain">Write more questions</button></div>`);$('aAgain').onclick=()=>{ASK.step='type';askRender()};try{confetti&&confetti()}catch(e){}return}}
+
+/* ---------- Host admin: Player questions tab ---------- */
+function admPQ(){const {plan,all,start}=pqPlan();const live=all.filter(q=>!q.played),played=all.filter(q=>q.played);
+ const people=new Set(all.map(q=>q.by)).size,maxW=Math.max(start+11,...Object.values(plan));
+ const weeks=[];for(let w=start;w<=maxW;w++)weeks.push(w);
+ const cnt=w=>live.filter(q=>plan[q.key+'#'+q.idx]===w).length;
+ const wkOpts=(q)=>`<option value="0" ${!q.wk||q.wk<start?'selected':''}>Automatic (now week ${plan[q.key+'#'+q.idx]||'?'})</option>${weeks.map(w=>`<option value="${w}" ${q.wk===w&&q.wk>=start?'selected':''}>Week ${w} · ${weekDate(w)}${cnt(w)>=PQ_MAX&&plan[q.key+'#'+q.idx]!==w?' (full)':''}</option>`).join('')}`;
+ const tn=q=>q.type==='team'?'About me':q.type==='num'?'Guess my number':q.tag==='Brain teaser'?'Brain teaser':'Quick pick';
+ const row=q=>{const id=q.key+'#'+q.idx,t=TEAM[byName[q.by]];return `<div class="pqrow" data-id="${esc(id)}"><div class="pqwho">${t?stage(t,'idle'):''}<b>${esc(q.by)}</b><span>${tn(q)}</span></div><div class="pqedit">
+  <textarea data-f="q" rows="2" maxlength="160">${esc(q.q)}</textarea>
+  ${q.type==='choice'?`<div class="pqopts">${q.opts.map((o,k)=>`<label><input type="radio" name="r-${esc(id)}" value="${k}" ${+q.ans===k?'checked':''}><input type="text" data-o="${k}" value="${esc(o)}" maxlength="60"></label>`).join('')}</div>`:q.type==='num'?`<label class="pqnum">Right number <input type="text" data-f="ans" value="${esc(q.ans)}"></label>`:`<p class="hint">Answer: ${esc(q.by)} (about the author)</p>`}
+  <div class="frow"><label>Plays in<select data-f="wk">${wkOpts(q)}</select></label><button class="btn blue sm" type="button" data-a="save">Save</button><button class="skip danger" type="button" data-a="del">Delete</button></div></div></div>`};
+ $('admBody').innerHTML=`<div class="qform"><h2>Player questions</h2>
+  <div class="pqstats"><div><b>${all.length}</b><span>questions added</span></div><div><b>${people}</b><span>people</span></div><div><b>${live.length}</b><span>waiting to play</span></div><div><b>${played.length}</b><span>already played</span></div></div>
+  <p class="hint">Players add questions at <code>${esc((location.href.split('#')[0]))}#ask</code>. They go live automatically. Up to ${PQ_MAX} play each week (half the game), one per person per week, oldest first. Fix typos here or move a question to another week.</p>
+  <div class="pqweeks">${weeks.slice(0,8).map(w=>`<span class="${cnt(w)?'on':''}">Week ${w}<b>${cnt(w)}/${PQ_MAX}</b></span>`).join('')}</div>
+  ${weeks.filter(w=>cnt(w)).map(w=>`<h3 class="pqwh">Week ${w} · ${weekDate(w)}${w===start?' · next game':''}</h3>${live.filter(q=>plan[q.key+'#'+q.idx]===w).map(row).join('')}`).join('')||'<p class="hint">No player questions yet. Share the link above.</p>'}
+  ${played.length?`<details class="pqplayed"><summary>Already played (${played.length})</summary>${played.map(q=>`<div class="pqp"><b>${esc(q.by)}</b> · week ${q.played}: ${esc(q.q)}</div>`).join('')}</details>`:''}</div>`;
+ $('admBody').querySelectorAll('.pqrow').forEach(r=>{const id=r.dataset.id,[key,idx]=[id.slice(0,id.lastIndexOf('#')),+id.slice(id.lastIndexOf('#')+1)];
+  const get=()=>{const s=subStore.list().find(x=>x.key===key);return s?{by:s.by,created:s.created,qs:JSON.parse(JSON.stringify(s.qs))}:null};
+  r.querySelector('[data-a=save]').onclick=()=>{const s=get();if(!s)return;const q=s.qs[idx];q.q=r.querySelector('[data-f=q]').value.trim()||q.q;
+   if(q.type==='num'){const n=parseFloat(String(r.querySelector('[data-f=ans]').value).replace(/[^0-9.\-]/g,''));if(isNaN(n))return admMsg('The right number must be a number.',1);q.ans=n}
+   if(q.type==='choice'){q.opts=[...r.querySelectorAll('[data-o]')].map((x,k)=>x.value.trim()||q.opts[k]);const c=r.querySelector('input[type=radio]:checked');if(c)q.ans=+c.value}
+   const w=+r.querySelector('[data-f=wk]').value;if(w)q.wk=w;else delete q.wk;jset(key,s);admPQ();admMsg(w?`Saved. ${s.by}'s question now plays in week ${w}.`:'Saved.')};
+  r.querySelector('[data-a=del]').onclick=e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again to delete';return}const s=get();if(!s)return;s.qs[idx].del=1;jset(key,s);admPQ();admMsg('Question deleted.')}})}
+
 /* ---------- boot ---------- */
 function showMode(){$('alivePill').hidden=false;stopAll();hideOv();['admin','lobby','hostLobby','phone','game','final'].forEach(id=>$(id).hidden=true);$('mode').hidden=false;$('roundPill').textContent='Welcome';$('alivePill').textContent=TEAM.length+' players'}
 async function boot(){showMode();const hostB=$('modeHost'),joinB=$('modeJoin'),note=$('modeNote');hostB.disabled=true;joinB.disabled=true;
  note.textContent='Connecting to the game server...';
  const ok=await fbLoadData(10000);applyBase();CFG=loadCfg();applyRoster(loadRoster());showMode();
- if(ok){NET='fb';fbWatch();hostB.disabled=false;joinB.disabled=false;
+ if(ok){NET='fb';fbWatch();fbActivate();hostB.disabled=false;joinB.disabled=false;
   note.textContent=visible().length?'Host: open Projector screen on the laptop you share. Everyone else: Join on my phone, then tap your face.':'Connected. No players yet: open Host admin to add them.'}
  else{NET='none';note.textContent='Could not reach the game server. Check the Wi-Fi or VPN and reload the page.'}
  phoneTick();
- if(location.hash==='#admin')adminOpen();else if((location.hash==='#play'||/^#join/.test(location.hash))&&NET==='fb')fbJoinStart()}
+ if(location.hash==='#ask'&&NET==='fb')askOpen();else if(location.hash==='#admin')adminOpen();else if((location.hash==='#play'||/^#join/.test(location.hash))&&NET==='fb')fbJoinStart()}
 boot();
 </script>
 </body></html>
