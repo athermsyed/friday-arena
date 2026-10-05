@@ -788,6 +788,153 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 @keyframes bubble{0%{transform:none;opacity:0}20%{opacity:1}100%{transform:translate(var(--bx),-22vmin);opacity:0}}
 
 .phonelook{display:block}.phonelook .lkprev{max-width:220px;margin:0 auto 8px}.phonelook .frow{flex-wrap:wrap}.phonelook .frow>label{flex:1 1 140px}
+/* ===== 100 more exits (template scenes) ===== */
+.x100{position:absolute;inset:0;--s1:#72c8ff;--s2:#dff3ff;--g:#7cc41f;--g2:#5aa33a;--liq:rgba(10,111,176,.82)}
+.x100 .xsky{position:absolute;inset:0;background:linear-gradient(var(--s1),var(--s2))}
+.x100 .xground{position:absolute;left:0;right:0;bottom:0;height:14%;background:var(--g);box-shadow:inset 0 1.4vmin 0 var(--g2);z-index:5}
+.x100 .xdeco{position:absolute;right:4%;top:16%;font-size:30vmin;opacity:.13;line-height:1;transform:rotate(-12deg);z-index:1;font-family:system-ui}
+.x100 .xv{position:absolute;left:42%;bottom:13%;width:18vmin;z-index:4}
+.x100 .xv .ea{position:relative;width:100%}
+.x100 .xp{position:absolute;font-size:18vmin;line-height:1;z-index:6;opacity:0;font-family:system-ui;left:42%;bottom:14%}
+.x100 .xp .xi{display:inline-block}
+.x100 .boom{left:38%}
+.xt-digital{--s1:#0b2340;--s2:#1b3f7a;--g:#12305e;--g2:#1f4c8f}
+.xt-office{--s1:#cfe9f8;--s2:#ffffff;--g:#c9b38f;--g2:#b49b74}
+.xt-sky{--s1:#5bbcf7;--s2:#e3f5ff;--g:#7cc41f;--g2:#5aa33a}
+.xt-night{--s1:#0b1a3a;--s2:#2a2f6e;--g:#1f3d2a;--g2:#2c5a3c}
+.xt-space{--s1:#05060f;--s2:#1b1446;--g:#3a3550;--g2:#4d4770}
+.xt-ocean{--s1:#7fd3f5;--s2:#c8eeff;--g:#0a6fb0;--g2:#35b4f0}
+.xt-beach{--s1:#8fd8ff;--s2:#fff1c9;--g:#f3d38a;--g2:#e5bd62}
+.xt-desert{--s1:#ffb85c;--s2:#ffe9c2;--g:#d9a35c;--g2:#c08640;--liq:rgba(196,140,70,.92)}
+.xt-farm{--s1:#9fdcff;--s2:#eef9ff;--g:#8bc34a;--g2:#6a9d33}
+.xt-island{--s1:#ff8a5c;--s2:#ffe0b8;--g:#4a3b30;--g2:#6b5545}
+.xt-forest{--s1:#9ad6a4;--s2:#eaf8e8;--g:#3f7f3a;--g2:#56a04e}
+.xt-snow{--s1:#bfe2ff;--s2:#ffffff;--g:#eef5fb;--g2:#d6e6f3}
+.xt-kitchen{--s1:#fff0cf;--s2:#ffe2c2;--g:#b97a47;--g2:#9a5f33}
+.xt-city{--s1:#a9d2f0;--s2:#f0f6fb;--g:#6b7785;--g2:#8a96a4}
+.xt-stage{--s1:#3a0b2d;--s2:#7a1f4a;--g:#6b3a1f;--g2:#8a5230}
+.xt-field{--s1:#86ccff;--s2:#e6f6ff;--g:#3fa34d;--g2:#2f8a3c}
+.xt-space .xsky::after,.xt-night .xsky::after{content:"";position:absolute;inset:0;background-image:radial-gradient(circle,#fff 1px,transparent 1.5px),radial-gradient(circle,#fff 1px,transparent 1.5px);background-size:9vmin 9vmin,13vmin 13vmin;background-position:0 0,4vmin 6vmin;opacity:.55}
+.xt-stage .xsky::after{content:"";position:absolute;left:30%;right:30%;top:0;bottom:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,240,180,.35),transparent 70%)}
+
+.ex:has(.x100.xlt) .cap{color:#0b2340;text-shadow:0 3px 0 rgba(255,255,255,.9),0 0 18px rgba(255,255,255,.8)}
+.x100.xlt .ea b{color:#0b2340;text-shadow:0 2px 0 rgba(255,255,255,.85)}
+
+/* beam */
+.xa-beam .xp{left:41%;bottom:auto;top:12%;animation:x-dropin 1s cubic-bezier(.3,1.4,.5,1) .2s both,x-hover 1.6s ease-in-out 1.2s infinite alternate}
+.xa-beam .xbeam{position:absolute;left:39%;width:24vmin;top:26%;bottom:13%;background:linear-gradient(rgba(255,250,170,.75),rgba(255,250,170,.15));clip-path:polygon(35% 0,65% 0,100% 100%,0 100%);z-index:3;opacity:0;animation:x-fade .3s ease 1.1s both,x-flick .25s linear 1.4s infinite alternate}
+.xa-beam .xv{animation:x-beamup 2.4s ease-in 1.6s both}
+@keyframes x-beamup{0%{transform:none}20%{transform:translateY(-4vh) rotate(-6deg)}100%{transform:translateY(-48vh) scale(.15) rotate(20deg);opacity:0}}
+
+/* carry */
+.xa-carry .xp,.xa-zoom .xp,.xa-slide .xp,.xa-sweep .xp{left:-24vw}
+.xa-carry .xp .xi,.xa-zoom .xp .xi,.xa-slide .xp .xi,.xa-sweep .xp .xi{transform:scaleX(-1)}
+.xa-carry .xp{bottom:auto;top:30vh;animation:x-carry 3.8s ease-in-out .5s both}
+@keyframes x-carry{0%{opacity:1;transform:translate(0,0)}35%{transform:translate(64vw,4vh)}45%{transform:translate(66vw,0)}100%{opacity:1;transform:translate(140vw,-48vh)}}
+.xa-carry .xv{animation:x-lifted 2.5s ease-in 1.85s both}
+@keyframes x-lifted{0%{transform:none}100%{transform:translate(74vw,-62vh) rotate(25deg)}}
+
+/* drop */
+.xa-drop .xhole{position:absolute;left:39.5%;bottom:10.5%;width:23vmin;height:5vmin;border-radius:50%;background:radial-gradient(#000 55%,#1a1a1a 70%,transparent 72%);z-index:6;transform:scaleX(0);animation:x-hole .5s cubic-bezier(.3,1.6,.5,1) .8s both}
+@keyframes x-hole{to{transform:scaleX(1)}}
+.xa-drop .xv{z-index:4;animation:x-fall 1.1s cubic-bezier(.6,0,.9,.6) 1.6s both}
+@keyframes x-fall{0%{transform:none}25%{transform:translateY(-3vh)}100%{transform:translateY(42vh) rotate(18deg)}}
+.xa-drop .xp{left:44%;bottom:18%;font-size:14vmin;animation:x-popin .5s cubic-bezier(.3,1.6,.5,1) 2.8s both}
+
+/* launch */
+.xa-launch .xp{left:42.5%;bottom:11%;font-size:15vmin;animation:x-popin .4s cubic-bezier(.3,1.6,.5,1) .4s both,x-shake .12s linear .8s 6}
+.xa-launch .xv{animation:x-launch 1.7s cubic-bezier(.4,0,.8,.6) 1.5s both}
+@keyframes x-launch{0%{transform:none}100%{transform:translateY(-118vh) rotate(540deg) scale(.7)}}
+
+/* spin */
+.xa-spin .xvortex{position:absolute;left:35.5%;bottom:6%;width:36vmin;height:36vmin;border-radius:50%;background:repeating-conic-gradient(rgba(255,255,255,.55) 0 12deg,rgba(0,87,184,.35) 12deg 24deg);z-index:3;opacity:0;animation:x-fade .5s ease .5s both,x-rot 1.2s linear infinite}
+.xa-spin .xv{animation:x-spin 2.1s ease-in 1.4s both}
+@keyframes x-spin{0%{transform:none}100%{transform:translateY(-6vh) rotate(1080deg) scale(0);opacity:.2}}
+.xa-spin .xp{left:44%;bottom:20%;font-size:13vmin;animation:x-popin .5s cubic-bezier(.3,1.6,.5,1) 3.4s both}
+
+/* poof */
+.xa-poof .xsmoke{position:absolute;left:38%;bottom:12%;width:26vmin;height:26vmin;z-index:7}
+.xa-poof .xsmoke i{position:absolute;width:13vmin;height:13vmin;border-radius:50%;background:#fff;opacity:0;animation:x-puff 1.2s ease-out 1.6s both}
+.xa-poof .xsmoke i:nth-child(1){left:0;top:30%}.xa-poof .xsmoke i:nth-child(2){left:40%;top:10%;animation-delay:1.7s}.xa-poof .xsmoke i:nth-child(3){left:55%;top:45%;animation-delay:1.75s}.xa-poof .xsmoke i:nth-child(4){left:20%;top:55%;animation-delay:1.8s}
+@keyframes x-puff{0%{transform:scale(.2);opacity:0}30%{opacity:.95}100%{transform:scale(1.6);opacity:0}}
+.xa-poof .xv{animation:x-shake .1s linear .8s 8,x-vanish .1s linear 1.85s both}
+.xa-poof .xp{left:43%;bottom:14%;font-size:17vmin;animation:x-popin .6s cubic-bezier(.3,1.6,.5,1) 2.1s both,x-hover 1s ease-in-out 2.8s infinite alternate}
+
+/* slide */
+.xa-slide .xp{bottom:12%;font-size:15vmin;animation:x-slide 3.2s cubic-bezier(.4,0,.6,1) .3s both}
+@keyframes x-slide{0%{opacity:1;transform:none}40%{transform:translateX(60vw)}100%{opacity:1;transform:translateX(140vw)}}
+.xa-slide .xv{animation:x-pushed 1.4s cubic-bezier(.4,0,.8,.6) 1.55s both}
+@keyframes x-pushed{0%{transform:none}100%{transform:translate(72vw,-10vh) rotate(40deg)}}
+
+/* sink */
+.xa-sink .xliquid{position:absolute;left:0;right:0;bottom:0;height:24%;background:var(--liq);z-index:6;opacity:0;animation:x-fade .6s ease .4s both}
+.xa-sink .xliquid::before{content:"";position:absolute;left:-10%;right:-10%;top:-2.5vmin;height:5vmin;background:radial-gradient(circle at 50% 100%,transparent 60%,var(--liq) 61%) 0 0/8vmin 5vmin repeat-x;animation:waves 2s linear infinite}
+.xa-sink .xp{bottom:20%;left:-14vw;font-size:13vmin;z-index:7;animation:x-fin 3.2s ease-in-out .5s both}
+@keyframes x-fin{0%{opacity:1;transform:none}45%{transform:translateX(52vw)}60%{transform:translateX(56vw) translateY(4vh)}100%{opacity:0;transform:translateX(70vw) translateY(14vh)}}
+.xa-sink .xv{animation:x-sink 2s ease-in 1.9s both}
+@keyframes x-sink{0%{transform:none}20%{transform:translateY(-2vh) rotate(-8deg)}100%{transform:translateY(34vh) rotate(10deg)}}
+
+/* float */
+.xa-float .xp{left:43%;bottom:calc(13% + 22vmin);font-size:14vmin;animation:x-popin .5s cubic-bezier(.3,1.6,.5,1) .7s both,x-floatp 3.4s ease-in 1.5s forwards}
+@keyframes x-floatp{0%{opacity:1;transform:none}30%{opacity:1;transform:translate(2vw,-14vh) rotate(4deg)}60%{opacity:1;transform:translate(-2vw,-40vh) rotate(-4deg)}100%{opacity:1;transform:translate(6vw,-95vh) rotate(6deg)}}
+.xa-float .xv{animation:x-float 3.4s ease-in 1.5s both}
+@keyframes x-float{0%{transform:none}30%{transform:translate(2vw,-14vh) rotate(4deg)}60%{transform:translate(-2vw,-40vh) rotate(-4deg)}100%{transform:translate(6vw,-95vh) rotate(6deg)}}
+
+/* squash */
+.xa-squash .xp{left:40%;bottom:auto;top:-30vh;font-size:22vmin;animation:x-squashp .45s cubic-bezier(.6,0,.9,.6) 1.2s both}
+@keyframes x-squashp{0%{opacity:1;transform:none}100%{opacity:1;transform:translateY(calc(30vh + 100vh - 13vh - 22vmin))}}
+.xa-squash .xv{transform-origin:50% 100%;animation:x-squash .25s ease-out 1.62s both,x-vanish .3s linear 3.4s both}
+@keyframes x-squash{to{transform:scaleY(.18) scaleX(1.25)}}
+
+/* glitch */
+.xa-glitch .xscan{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.07) 0 2px,transparent 2px 6px);z-index:8;pointer-events:none;animation:x-flick .12s linear infinite alternate}
+.xa-glitch .xv{animation:x-glitch 2.6s steps(14) .6s both}
+@keyframes x-glitch{0%{transform:none;filter:none;opacity:1}20%{transform:translateX(-2vmin);filter:hue-rotate(90deg) saturate(3)}35%{transform:translateX(2vmin) skewX(12deg);opacity:.6}50%{transform:translate(-1vmin,1vmin);filter:invert(1);opacity:1}65%{transform:scaleY(.6) skewX(-20deg);filter:hue-rotate(200deg);opacity:.5}80%{transform:scaleY(.1) scaleX(1.6);opacity:.8}100%{transform:scaleY(0) scaleX(2);opacity:0}}
+.xa-glitch .xp{left:43%;bottom:16%;font-size:16vmin;animation:x-popin .4s cubic-bezier(.3,1.6,.5,1) 3.2s both}
+
+/* zoom */
+.xa-zoom .xp{bottom:12%;font-size:16vmin;animation:x-zoomin .9s ease-out .5s both,x-zoomaway 2.1s ease-in 1.9s forwards}
+@keyframes x-zoomin{0%{opacity:1;transform:none}100%{opacity:1;transform:translateX(51vw)}}
+@keyframes x-zoomaway{0%{opacity:1;transform:translateX(51vw)}100%{opacity:1;transform:translate(110vw,-14vh) scale(.15)}}
+.xa-zoom .xv{animation:x-zoomv 2.1s ease-in 1.9s both}
+@keyframes x-zoomv{0%{transform:none}100%{transform:translate(52vw,-16vh) scale(.15)}}
+
+/* freeze */
+.xa-freeze .xice{position:absolute;left:41%;bottom:12%;width:21vmin;height:27vmin;border-radius:2vmin;background:linear-gradient(135deg,rgba(220,245,255,.85),rgba(150,215,255,.55));border:.5vmin solid rgba(255,255,255,.9);z-index:5;transform:scale(0);transform-origin:50% 100%;animation:x-iceup .5s cubic-bezier(.3,1.6,.5,1) 1.4s both,x-iceslide 1.4s ease-in 3s forwards}
+@keyframes x-iceup{to{transform:scale(1)}}
+@keyframes x-iceslide{from{transform:scale(1)}to{transform:translateX(70vw) rotate(12deg)}}
+.xa-freeze .xv{animation:x-freezev .4s linear 1.5s both,x-iceslidev 1.4s ease-in 3s forwards}
+@keyframes x-freezev{to{filter:saturate(.3) brightness(1.2) hue-rotate(160deg)}}
+@keyframes x-iceslidev{from{filter:saturate(.3) brightness(1.2) hue-rotate(160deg)}to{filter:saturate(.3) brightness(1.2) hue-rotate(160deg);transform:translateX(70vw) rotate(12deg)}}
+.xa-freeze .xp{left:24%;bottom:auto;top:28%;font-size:12vmin;animation:x-popin .4s ease .8s both}
+
+/* roll */
+.xa-roll .xp{left:40%;bottom:12%;font-size:24vmin;z-index:3;animation:x-popin .5s ease .5s both,x-roll 2.6s ease-in 1.4s forwards}
+.xa-roll .xv{animation:x-roll 2.6s ease-in 1.4s both}
+@keyframes x-roll{0%{opacity:1;transform:none}100%{opacity:1;transform:translateX(75vw) rotate(1080deg)}}
+
+/* sweep */
+.xa-sweep .xp{bottom:auto;top:44vh;font-size:16vmin;animation:x-sweep 3s ease-in-out .3s both}
+@keyframes x-sweep{0%{opacity:1;transform:none}45%{transform:translateX(56vw)}100%{opacity:1;transform:translateX(130vw) translateY(-20vh)}}
+.xa-sweep .xv{animation:x-swept 2.2s ease-in 1.5s both}
+@keyframes x-swept{0%{transform:none}100%{transform:translate(72vw,-42vh) rotate(720deg) scale(.6)}}
+.x100 .xlines{position:absolute;inset:0;z-index:2;pointer-events:none}
+.x100 .xlines i{position:absolute;left:-30%;height:.8vmin;width:30%;border-radius:1vmin;background:rgba(255,255,255,.75);animation:x-streak 1s linear infinite}
+.x100 .xlines i:nth-child(1){top:35%}.x100 .xlines i:nth-child(2){top:52%;animation-delay:.35s}.x100 .xlines i:nth-child(3){top:68%;animation-delay:.7s}
+.xt-office .xlines i,.xt-snow .xlines i,.xt-sky .xlines i,.xt-city .xlines i,.xt-field .xlines i,.xt-farm .xlines i,.xt-beach .xlines i,.xt-ocean .xlines i,.xt-kitchen .xlines i,.xt-desert .xlines i,.xt-forest .xlines i{background:rgba(0,87,184,.25)}
+@keyframes x-streak{to{left:110%}}
+
+/* shared */
+@keyframes x-dropin{from{opacity:1;transform:translateY(-40vh)}to{opacity:1;transform:none}}
+@keyframes x-hover{from{margin-top:0}to{margin-top:-1.6vmin}}
+@keyframes x-fade{from{opacity:0}to{opacity:1}}
+@keyframes x-flick{from{filter:brightness(1)}to{filter:brightness(1.35)}}
+@keyframes x-popin{0%{opacity:0;transform:scale(.2)}100%{opacity:1;transform:none}}
+@keyframes x-shake{0%,100%{translate:0 0}50%{translate:.6vmin -.4vmin}}
+@keyframes x-rot{to{rotate:360deg}}
+@keyframes x-vanish{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion:reduce){.x100 *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
 /* scenes */
 .sc *{transform-box:fill-box}
 .sc .chomp{transform-origin:5% 90%;animation:chomp 1s ease-in-out infinite}
@@ -4357,8 +4504,150 @@ sfx=function(k,at=0){const A=x=>at+x;switch(k){
  case 'vacuum':noise(3,{f:700,q:6,vol:.2,swell:1,peak:.3,at});tone(180,3,{type:'sawtooth',vol:.05,at});break;
  default:_sfx0(k,at)}};
 
-EX_KINDS=[...EX_ATT,...EX20.map(e=>e[0]).filter(k=>!EX_OFF.includes(k))];exOrder=[...EX_KINDS];
-const _ex0=exScene;exScene=function(k,p,top){return EX20.some(e=>e[0]===k)?exScene20(k,p,top):_ex0(k,p,top)};
+/* ---------- 100 more exits ---------- */
+/* ===== 100 more exits (template scenes) ===== */
+/* [key, act, backdrop, prop, sound word, caption with {n}] */
+const EX100=[
+ ['vpn','glitch','digital','🔒','DISCONNECTED','{n} lost the VPN connection!'],
+ ['wifi','glitch','digital','📶','NO SIGNAL','The Wi-Fi dropped {n}!'],
+ ['signout','glitch','office','🔑','SIGNED OUT','{n} was signed out for inactivity!'],
+ ['password','glitch','digital','🔐','EXPIRED','{n}\'s password expired!'],
+ ['updates','spin','digital','⚙️','UPDATING','{n} is installing 47 updates!'],
+ ['undo','glitch','digital','↩️','CTRL+Z','{n} got undone!'],
+ ['notfound','glitch','digital','❓','404','Error 404: {n} not found!'],
+ ['muted','glitch','office','🔇','MUTED','{n} was muted by the host!'],
+ ['ticket','squash','office','📁','CLOSED','{n}\'s ticket was closed!'],
+ ['spam','drop','digital','🗑️','SPAM','{n} was marked as spam!'],
+ ['sticky','squash','office','📝','STICK!','{n} got sticky-noted!'],
+ ['nextmtg','zoom','office','📅','LATE!','{n} ran off to another meeting!'],
+ ['booked','squash','office','🗓️','DOUBLE BOOKED','{n} got double booked out of the arena!'],
+ ['slide74','spin','office','📊','SLIDE 74','{n} got lost on slide 74!'],
+ ['coffeerun','zoom','office','☕','BRB','{n} went on a coffee run and never came back!'],
+ ['firedrill','zoom','office','🚨','EVACUATE','{n} left for the fire drill!'],
+ ['archive','drop','office','🗄️','ARCHIVED','{n} was archived!'],
+ ['fax','glitch','office','📠','BEEEEP','{n} was faxed back to 1995!'],
+ ['sneeze','sweep','office','🤧','ACHOO','{n} got sneezed out of the arena!'],
+ ['fan','sweep','office','🌬️','WHOOSH','The office fan blew {n} away!'],
+ ['magnet','beam','office','🧲','CLANK','A giant magnet pulled {n} away!'],
+ ['conveyor','slide','office','📦','SHIPPED','{n} rode the conveyor belt to shipping!'],
+ ['hamster','roll','office','🐹','SQUEAK','{n} ran off in a hamster wheel!'],
+ ['snailmail','zoom','forest','🐌','SLOWWW','{n} was sent by snail mail!'],
+ ['cloud','beam','sky','☁️','UPLOADED','{n} was uploaded to the cloud!'],
+ ['voicemail','drop','digital','📞','BEEP','{n} went straight to voicemail!'],
+ ['onhold','spin','digital','🎵','ON HOLD','{n} is on hold forever!'],
+ ['satellite','beam','space','🛰️','UPLINK','{n} was uplinked to a satellite!'],
+ ['airplane','float','sky','✈️','AIRPLANE MODE','{n} switched to airplane mode!'],
+ ['textsent','launch','digital','💬','SENT','{n} was sent by text message!'],
+ ['roaming','zoom','sky','🧳','ROAMING','{n} switched to international roaming!'],
+ ['ufo','beam','night','🛸','ZAP','{n} was abducted by a UFO!'],
+ ['eagle','carry','sky','🦅','SWOOP','An eagle carried {n} off!'],
+ ['balloons','float','sky','🎈','BYE!','{n} floated away on party balloons!'],
+ ['kite','float','sky','🪁','WHEEE','A runaway kite lifted {n} away!'],
+ ['skydive','drop','sky','🪂','GERONIMO','{n} skydived out of the arena!'],
+ ['heli','beam','sky','🚁','AIRLIFT','{n} was airlifted out!'],
+ ['dragon','carry','night','🐉','WHOOSH','{n} rode off on a dragon!'],
+ ['circus','launch','stage','🎪','KA-BOOM','{n} was fired from the circus cannon!'],
+ ['trampoline','launch','sky','🤸','BOING','{n} bounced off the trampoline!'],
+ ['fireworks','launch','night','🎆','BOOM','{n} went out with the fireworks!'],
+ ['bubble','float','sky','🫧','POP','{n} floated off in a giant bubble!'],
+ ['blackhole','spin','space','🌀','SLURP','{n} fell into a black hole!'],
+ ['moon','launch','space','🌙','LIFTOFF','{n} moved to the moon!'],
+ ['comet','carry','space','☄️','WHOOSH','{n} hitched a ride on a comet!'],
+ ['alien','poof','space','👽','BEEP BOOP','{n} was swapped with an alien!'],
+ ['mars','launch','space','🪐','NEXT STOP: MARS','{n} got sent to Mars!'],
+ ['timemachine','glitch','space','⏳','1999','{n} traveled back to 1999!'],
+ ['shark','sink','ocean','🦈','DUN DUN','{n} met a very curious shark!'],
+ ['whale','launch','ocean','🐳','SPLOOSH','A whale sprayed {n} into the sky!'],
+ ['whirlpool','spin','ocean','🌀','GLUG GLUG','{n} got sucked into a whirlpool!'],
+ ['surf','slide','beach','🏄','SURF\'S UP','{n} surfed out of the arena!'],
+ ['octopus','carry','ocean','🐙','SPLASH','An octopus hugged {n} away!'],
+ ['submarine','sink','ocean','⚓','DIVE DIVE','{n} dove down in a submarine!'],
+ ['bottle','float','ocean','🍾','MAILED','{n} was mailed away in a bottle!'],
+ ['reeled','beam','ocean','🎣','REEL IT IN','{n} got reeled in!'],
+ ['tumbleweed','roll','desert','🌵','TUMBLE','{n} rolled off like a tumbleweed!'],
+ ['cattle','slide','desert','🐂','MOOO','{n} got swept up in a cattle drive!'],
+ ['lasso','carry','desert','🤠','YEEHAW','{n} got lassoed out of the arena!'],
+ ['brisket','zoom','desert','🍖','BBQ!','{n} left early for brisket!'],
+ ['quicksand','sink','desert','🏜️','GLOOP','{n} stepped in quicksand!'],
+ ['genie','spin','desert','🪔','POOF','{n} was sucked into a magic lamp!'],
+ ['hayride','zoom','farm','🚜','ALL ABOARD','{n} hopped on the hay ride!'],
+ ['goat','slide','farm','🐐','BAAA','A goat headbutted {n} off the field!'],
+ ['volcano','launch','island','🌋','KABOOM','A volcano launched {n}!'],
+ ['geyser','launch','forest','⛲','WHOOSH','{n} rode a geyser into the sky!'],
+ ['snowball','roll','snow','⛄','BRRR','{n} rolled away in a giant snowball!'],
+ ['frozen','freeze','snow','🧊','FROZEN','{n} got frozen solid!'],
+ ['avalanche','sweep','snow','🏔️','RUMBLE','An avalanche swept {n} away!'],
+ ['sled','slide','snow','🛷','WHEEE','{n} sledded out of the arena!'],
+ ['penguins','slide','snow','🐧','SLIDE','{n} belly slid away with the penguins!'],
+ ['rabbithole','drop','forest','🐇','THUNK','{n} fell down a rabbit hole!'],
+ ['bees','zoom','forest','🐝','BZZZZ','{n} ran from a swarm of bees!'],
+ ['frog','poof','forest','🐸','RIBBIT','{n} was turned into a frog!'],
+ ['banana','slide','kitchen','🍌','WHOOPS','{n} slipped on a banana peel!'],
+ ['cake','squash','kitchen','🎂','SPLAT','{n} got caked!'],
+ ['popcorn','launch','kitchen','🍿','POP','{n} popped like popcorn!'],
+ ['fortune','poof','kitchen','🥠','YOUR FORTUNE: OUT','{n} opened the wrong fortune cookie!'],
+ ['pizza','zoom','city','🍕','DELIVERED','{n} was delivered with the pizza!'],
+ ['bus','zoom','city','🚌','HONK HONK','{n} caught the last bus out!'],
+ ['taxi','zoom','city','🚕','TAXI!','{n} hailed a taxi out of here!'],
+ ['train','zoom','city','🚆','ALL ABOARD','{n} caught the 5:15 train!'],
+ ['manhole','drop','city','🕳️','CLANK','{n} fell down a manhole!'],
+ ['crane','beam','city','🏗️','LIFT','A construction crane picked {n} up!'],
+ ['skateboard','slide','city','🛹','KICKFLIP','{n} skated off into the sunset!'],
+ ['trapstage','drop','stage','🎭','TA-DA','{n} fell through the stage trapdoor!'],
+ ['karaoke','sweep','stage','🎤','ENCORE?','{n} got hooked off the karaoke stage!'],
+ ['confetti','launch','stage','🎉','POP','A confetti cannon blasted {n} out!'],
+ ['pinata','poof','stage','🪅','CANDY!','{n} turned into a piñata!'],
+ ['shipped','squash','office','📦','SHIPPED','{n} got boxed up and shipped!'],
+ ['chairs','drop','stage','🪑','NO CHAIR!','{n} lost musical chairs!'],
+ ['punt','launch','field','🏈','PUNT','{n} was punted out of the stadium!'],
+ ['slamdunk','launch','field','🏀','SWISH','{n} got slam dunked!'],
+ ['goal','launch','field','⚽','GOOOAL','{n} was kicked into the goal!'],
+ ['homerun','launch','field','⚾','HOME RUN','{n} was hit out of the park!'],
+ ['slapshot','slide','snow','🏒','SLAPSHOT','{n} was slapshot off the ice!'],
+ ['marathon','zoom','city','🏃','GO GO GO','{n} ran off to train for a marathon!'],
+ ['tugofwar','slide','field','🪢','PULL!','{n} lost the tug of war!'],
+ ['nap','float','night','💤','ZZZ','{n} fell asleep and floated away!'],
+ ['retire','zoom','beach','🏝️','ALOHA','{n} retired to a tropical island!']];
+const EX100_SND={
+ beam:[['riser',.6],['twinkle',2.2],['cheer',4.2]],
+ carry:[['whoosh',.9],['wind',1.7],['whoosh',2.2],['cheer',4]],
+ drop:[['trapdoor',1.2],['fall',1.6],['thud',3],['cheer',3.8]],
+ launch:[['riser',.4],['launch',1.5],['twinkle',3.2],['cheer',4]],
+ spin:[['vacuum',.6],['poof',3.2],['cheer',4]],
+ poof:[['twinkle',1.1],['poof',1.8],['cheer',3]],
+ slide:[['whoosh',1.2],['bump',1.6],['zip',2],['cheer',3.5]],
+ sink:[['splash',1.8],['bump',2.4],['splash',2.9],['cheer',4]],
+ float:[['twinkle',.8],['riser',1.4],['cheer',4]],
+ squash:[['whoosh',1.1],['stamp',1.5],['pop',3],['cheer',3.6]],
+ glitch:[['static',.5],['beep',1.5],['static',2.4],['hangup',3.2]],
+ zoom:[['zip',1.3],['whoosh',1.6],['cheer',3.6]],
+ freeze:[['wind',.5],['ding',1.6],['whoosh',3],['cheer',4]],
+ roll:[['rumble',.8],['whoosh',2],['thud',3.8]],
+ sweep:[['wind',.4],['whoosh',1.5],['bump',2.2],['cheer',3.6]]};
+EX100.forEach(([k,act])=>{EX_SND[k]=EX100_SND[act]});
+function exScene100(kind,p,top){const e=EX100.find(x=>x[0]===kind);if(!e)return {cap:'',h:''};
+ const [,act,bg,prop,word,c]=e,n=p.t.n,T=top.length?top:[p],t=k=>T[k%T.length];
+ const q=(k,st)=>ea(t(k),'happy','cheer',st);
+ const cap=c.replace('{n}',n);
+ let extra='';
+ if(act==='beam')extra='<div class="xbeam"></div>';
+ if(act==='drop')extra='<div class="xhole"></div>';
+ if(act==='spin')extra='<div class="xvortex"></div>';
+ if(act==='glitch')extra='<div class="xscan"></div>';
+ if(act==='freeze')extra='<div class="xice"></div>';
+ if(act==='sink')extra='<div class="xliquid"></div>';
+ if(act==='poof')extra='<div class="xsmoke"><i></i><i></i><i></i><i></i></div>';
+ if(act==='sweep'||act==='carry'||act==='zoom')extra='<div class="xlines"><i></i><i></i><i></i></div>';
+ const lt=['digital','night','space','stage','island'].includes(bg)?'':' xlt';
+ const h=`<div class="x100 xa-${act} xt-${bg}${lt}"><div class="xsky"></div><div class="xdeco">${prop}</div><div class="xground"></div>${extra}
+ ${q(0,'left:5%;bottom:13%')}${q(1,'left:19%;bottom:13%;animation-delay:.15s')}${q(2,'right:5%;bottom:13%;animation-delay:.1s')}
+ <div class="xv">${ea(p,'nervous','','position:relative')}</div><div class="xp">${prop}</div>${boom(word,act==='glitch'?1.3:1.7,'left:34%;top:24%')}</div>`;
+ return {cap,h}}
+const _sfx100=sfx;
+sfx=function(k,at=0){if(k==='splash'){noise(.9,{ft:'lowpass',f:2600,fto:400,vol:.45,at});tone(300,.25,{type:'sine',vol:.15,to:120,at});return}_sfx100(k,at)};
+
+EX_KINDS=[...EX_ATT,...EX20.map(e=>e[0]),...EX100.map(e=>e[0])].filter(k=>!EX_OFF.includes(k));exOrder=[...EX_KINDS];
+const _ex0=exScene;exScene=function(k,p,top){return EX20.some(e=>e[0]===k)?exScene20(k,p,top):EX100.some(e=>e[0]===k)?exScene100(k,p,top):_ex0(k,p,top)};
 
 /* ---------- boot ---------- */
 function showMode(){$('alivePill').hidden=false;stopAll();hideOv();['admin','lobby','hostLobby','phone','game','final'].forEach(id=>$(id).hidden=true);$('mode').hidden=false;$('roundPill').textContent='Welcome';$('alivePill').textContent=TEAM.length+' players'}
