@@ -984,7 +984,19 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 .qform .pqedit label.pqnum,.qform .pqopts label{flex-direction:row!important;flex:0 0 auto!important;align-items:center;height:auto}
 .qform .pqopts label input[type=radio]{width:20px;flex:none}
 .qform .pqnum input{width:160px}
+/* admin eliminations */
+.excgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
+.exc{background:var(--sky);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
+.exc b{font-size:14px;line-height:1.3}
+.exc.dead{opacity:.55}
+.exg{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+.exg[data-g="New"]{color:var(--berry)}.exg[data-g="AT&T original"]{color:var(--cobalt)}.exg[data-g="Elimination Lab"]{color:var(--violet)}
 /* admin player questions */
+.pqbox{background:#fde3ec;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
+.pqbox>b{color:var(--berry);font-family:var(--display);font-size:19px}
+.pqb{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:6px 10px}
+.pqb svg{width:40px;height:auto;flex:none;border-radius:50%;background:var(--sky)}
+.pqb span{display:flex;flex-direction:column}.pqb small{color:var(--dim)}
 .pqstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
 @media (max-width:600px){.pqstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 .pqstats div{background:var(--sky);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column}
@@ -3989,8 +4001,9 @@ let EX_KINDS=[...EX_ATT];
 let exOrder=[...EX_KINDS],exCount=0,lastCap='';
 const XKEY='fridayArenaExits';
 function exLog(){const l=jget(XKEY,[]);return Array.isArray(l)?l:[]}
+function exLive(){const off=new Set(CFG.exOff||[]);const L=EX_KINDS.filter(k=>!off.has(k));return L.length?L:[...EX_ATT]}
 function shuffleEx(){const log=exLog(),last=k=>log.lastIndexOf(k);
- exOrder=[...EX_KINDS].map(k=>[k,last(k),Math.random()]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).map(x=>x[0]);exCount=0}
+ exOrder=exLive().map(k=>[k,last(k),Math.random()]).sort((a,b)=>a[1]-b[1]||a[2]-b[2]).map(x=>x[0]);exCount=0}
 function logEx(kind){if(MODE!=='host')return;const l=exLog().filter(k=>k!==kind);l.push(kind);jset(XKEY,l.slice(-60))}
 function ea(p,mood,cls,style){return `<div class="ea ${cls||''}" style="${style||''}">${avatar(p.t,mood)}<b>${p.t.n}</b></div>`}
 function boom(txt,delay,style){return `<div class="boom" style="animation-delay:${delay}s;${style||''}">${txt}</div>`}
@@ -4325,22 +4338,23 @@ function adminOpen(){ADM.prevMode=MODE;stopAll();hideOv();['mode','lobby','hostL
   $('admBack').onclick=adminClose;setTimeout(()=>$('pinIn').focus(),50);return}
  adminRender()}
 function adminClose(){$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);if(ADM.prevMode==='host'&&room)hostLobby();else showMode()}
-function adminRender(){const tabs=[['questions','Questions'],['upload','Upload list'],['players','Players and scores'],['pq','Player questions'],['settings','Game settings'],['backup','Backup']];
+function adminRender(){const tabs=[['questions','Questions'],['upload','Upload list'],['players','Players and scores'],['pq','Player questions'],['ex','Eliminations'],['settings','Game settings'],['backup','Backup']];
  $('admin').innerHTML=`<div class="card"><div class="admhead"><h1>Host admin</h1><div class="admtabs">${tabs.map(([k,l])=>`<button type="button" class="admtab ${ADM.tab===k?'on':''}" data-t="${k}">${l}</button>`).join('')}</div><button class="btn blue" type="button" id="admPractice" style="font-size:16px;padding:8px 16px">🎮 Practice solo</button><button class="btn" type="button" id="admDone" style="font-size:16px;padding:8px 16px">Done</button></div><div id="admBody"></div><p class="status" id="admMsg" aria-live="polite"></p></div>`;
  $('admin').querySelectorAll('.admtab').forEach(b=>b.onclick=()=>{ADM.tab=b.dataset.t;ADM.edit=null;adminRender()});
  $('admDone').onclick=adminClose;
  $('admPractice').onclick=()=>{$('admin').hidden=true;if(location.hash==='#admin')history.replaceState(null,'',location.pathname+location.search);lobby()};
- ({questions:admQuestions,upload:admUpload,players:admPlayers,pq:admPQ,settings:admSettings,backup:admBackup})[ADM.tab]()}
+ ({questions:admQuestions,upload:admUpload,players:admPlayers,pq:admPQ,ex:admEx,settings:admSettings,backup:admBackup})[ADM.tab]()}
 function admMsg(t,bad){const m=$('admMsg');if(m){m.className='status '+(bad?'bad':'good');m.textContent=t}}
 function ansLabel(q){if(q.type==='choice')return q.opts?q.opts[q.ans]:'';if(q.type==='room')return 'Majority wins';return String(q.ans)}
 /* questions */
 function admQuestions(){const b=loadBank(),pw=playedWeeks(),cw=currentWeek();if(ADM.week>b.weeks.length)ADM.week=Math.max(1,b.weeks.length);
  const list=b.weeks[ADM.week-1]||[];
- $('admBody').innerHTML=`<div class="wkbar">${b.weeks.map((w,i)=>`<button type="button" class="wkchip ${ADM.week===i+1?'on':''}" data-w="${i+1}">Week ${i+1}<small>${w.length} q${pw.has(i+1)?' · played':''}${cw===i+1?' · next up':''}</small></button>`).join('')}<button type="button" class="wkchip add" id="wkAdd">+ Add week</button></div>
+ $('admBody').innerHTML=`<div class="wkbar">${b.weeks.map((w,i)=>`<button type="button" class="wkchip ${ADM.week===i+1?'on':''}" data-w="${i+1}">Week ${i+1}<small>${w.length} q${pw.has(i+1)?' · played':''}${cw===i+1?' · next up':''}${(()=>{try{const n=pqForWeek(i+1).length;return n?` · +${n} player`:''}catch(e){return ''}})()}</small></button>`).join('')}<button type="button" class="wkchip add" id="wkAdd">+ Add week</button></div>
  ${b.weeks.length?`<div class="admrow"><h2>Week ${ADM.week}</h2><span class="hint">${list.length} questions. Questions 1 to ${CFG.warm} are the warm-up; the last one is the final.</span><span style="flex:1"></span><button class="btn blue sm" type="button" id="qAdd">+ Add question</button><button class="skip" type="button" id="wkDel">Delete this week</button></div>
- <div id="qForm"></div>
+ <div id="qForm"></div>${pqWeekBox(ADM.week)}
  <div class="qlist">${list.map((q,i)=>`<div class="qrow"><span class="qn">${i+1}</span><span class="tag ${({room:'room',num:'num',word:'word',team:'team'})[q.type]||''}">${q.tag||TAGS[q.type]}</span><div class="qt"><b>${esc(q.q)}</b><span>Answer: ${esc(ansLabel(q))}${q.time?` · ${q.time}s`:''}</span></div><div class="qbtns"><button type="button" class="skip" data-a="up" data-i="${i}" ${i?'':'disabled'} aria-label="Move up">▲</button><button type="button" class="skip" data-a="down" data-i="${i}" ${i<list.length-1?'':'disabled'} aria-label="Move down">▼</button><button type="button" class="skip" data-a="edit" data-i="${i}">Edit</button><button type="button" class="skip danger" data-a="del" data-i="${i}">Delete</button></div></div>`).join('')||'<p class="hint">No questions yet. Add one, or use Upload list.</p>'}</div>`:'<p class="hint">No weeks yet. Add a week to start.</p>'}`;
  $('admBody').querySelectorAll('.wkchip[data-w]').forEach(c=>c.onclick=()=>{ADM.week=+c.dataset.w;ADM.edit=null;admQuestions()});
+ {const g=$('pqGo');if(g)g.onclick=()=>{ADM.tab='pq';adminRender()}}
  $('wkAdd').onclick=()=>{b.weeks.push([]);saveBank(b);ADM.week=b.weeks.length;admQuestions();admMsg(`Week ${b.weeks.length} added.`)};
  if(!b.weeks.length)return;
  $('qAdd').onclick=()=>qForm(null);
@@ -4822,7 +4836,7 @@ const GEN=[
   {type:'num',q:'How many bones are in one human hand?',ans:27},
   {type:'word',tag:'Final: figure out the word',q:'Unscramble and type the word',ans:'INNOVATION'}]];
 function totalWeeks(){return loadBank().weeks.length+GEN.length}
-function weekList(w){const b=loadBank();if(w>=1&&w<=b.weeks.length)return (b.weeks[w-1]||[]).filter(q=>q&&q.type&&q.q);const g=GEN[((w-b.weeks.length-1)%GEN.length+GEN.length)%GEN.length];return g?g.map(q=>({...q})):[]}
+function weekList(w){const b=loadBank();if(w>=1&&w<=b.weeks.length){const L=(b.weeks[w-1]||[]).filter(q=>q&&q.type&&q.q);if(L.length)return L}const g=GEN[((w-b.weeks.length-1)%GEN.length+GEN.length)%GEN.length];return g?g.map(q=>({...q})):[]}
 function pqAll(){const out=[];subStore.list().forEach(s=>(s.qs||[]).forEach((q,i)=>{if(q&&q.q&&!q.del)out.push({...q,by:s.by,created:s.created||0,key:s.key,idx:i})}));return out.sort((a,b)=>a.created-b.created||a.idx-b.idx)}
 function pqPlan(){const start=currentWeek()||1,all=pqAll(),plan={},cnt={},auth={};
  const live=all.filter(q=>!q.played&&byName[q.by]!==undefined);
@@ -4831,6 +4845,8 @@ function pqPlan(){const start=currentWeek()||1,all=pqAll(),plan={},cnt={},auth={
  live.filter(q=>!(q.wk&&q.wk>=start)).forEach(q=>{let w=start;while((cnt[w]||0)>=PQ_MAX||(auth[w]&&auth[w].has(q.by)))w++;put(q,w)});
  return {plan,all,start}}
 function pqForWeek(w){const {plan,all}=pqPlan();return all.filter(q=>plan[q.key+'#'+q.idx]===w).sort((a,b)=>(b.wk?1:0)-(a.wk?1:0)).slice(0,PQ_MAX)}
+function pqWeekBox(w){let pq=[];try{pq=pqForWeek(w)}catch(e){}if(!pq.length)return '';const plan=weekPlan(w),host=weekList(w),out=host.filter(q=>!plan.some(x=>!x.by&&x.q===q.q&&x.type===q.type));
+ return `<div class="pqbox"><b>This week's game: ${plan.length} questions, ${pq.length} from players</b>${pq.map(q=>{const t=TEAM[byName[q.by]];return `<div class="pqb">${t?avatar(t,'idle'):''}<span><b>${esc(q.q)}</b><small>Player question by ${esc(q.by)}${q.wk?' · moved here by you':' · added automatically'}</small></span></div>`}).join('')}${out.length?`<p class="hint">Left out this week to make room: ${out.map(q=>esc(q.q)).join(' · ')}</p>`:''}<button class="skip" type="button" id="pqGo">Fix or move player questions</button></div>`}
 function pqToQ(q){const o={type:q.type,q:q.q,by:q.by,pqKey:q.key,pqIdx:q.idx,tag:q.type==='team'?'Who is it?':q.type==='num'?'Guess the number':q.tag||'Quick pick'};
  if(q.type==='team')o.ans=q.by;else if(q.type==='num')o.ans=+q.ans;else{o.opts=q.opts;o.ans=+q.ans}if(q.why)o.why=q.why;return o}
 function weekPlan(w){const host=weekList(w),pq=pqForWeek(w).map(pqToQ);if(!pq.length)return host;
@@ -4923,6 +4939,21 @@ function admPQ(){const {plan,all,start}=pqPlan();const live=all.filter(q=>!q.pla
    if(q.type==='choice'){q.opts=[...r.querySelectorAll('[data-o]')].map((x,k)=>x.value.trim()||q.opts[k]);const c=r.querySelector('input[type=radio]:checked');if(c)q.ans=+c.value}
    const w=+r.querySelector('[data-f=wk]').value;if(w)q.wk=w;else delete q.wk;jset(key,s);admPQ();admMsg(w?`Saved. ${s.by}'s question now plays in week ${w}.`:'Saved.')};
   r.querySelector('[data-a=del]').onclick=e=>{const b=e.currentTarget;if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again to delete';return}const s=get();if(!s)return;s.qs[idx].del=1;jset(key,s);admPQ();admMsg('Question deleted.')}})}
+
+
+/* ---------- Host admin: Eliminations tab ---------- */
+function exGroup(k){return EX_ATT.includes(k)?'AT&T original':(typeof EXN!=='undefined'&&EXN.some(e=>e[0]===k))?'New':(typeof EX100!=='undefined'&&EX100.some(e=>e[0]===k))?'Quick':'Elimination Lab'}
+function exCaption(k){const P0=TEAM.slice(0,5).map((t,i)=>({t,i,total:10,out:false}));try{return exScene(k,P0[0],P0.slice(1)).cap.replace(P0[0].t.n,'Name')}catch(e){return k}}
+function exPreview(k){const P0=visible().slice(0,6).map(i=>({t:TEAM[i],i,total:10+i,out:false}));if(!P0.length)return;const vi=Math.floor(Math.random()*P0.length);ri=5;
+ showEx(k,P0[vi],P0.filter((_,i)=>i!==vi),false,9000);try{if(SND.on){ac();exSound(k)}}catch(e){}
+ const ex=$('ex');if(ex){const sk=ex.querySelector('.skip');if(sk)sk.textContent='Close';ex.addEventListener('click',e=>{e.stopPropagation();clearEx()},true);setTimeout(()=>{if($('ex')===ex)clearEx()},9500)}}
+function admEx(){const off=new Set(CFG.exOff||[]),on=EX_KINDS.filter(k=>!off.has(k)),gone=EX_KINDS.filter(k=>off.has(k));
+ const card=(k,dead)=>`<div class="exc ${dead?'dead':''}"><span class="exg" data-g="${exGroup(k)}">${exGroup(k)}</span><b>${esc(exCaption(k))}</b><div class="qbtns"><button class="skip" type="button" data-p="${k}">▶ Preview</button>${dead?`<button class="skip" type="button" data-r="${k}">Restore</button>`:`<button class="skip danger" type="button" data-d="${k}">Delete</button>`}</div></div>`;
+ $('admBody').innerHTML=`<div class="qform"><h2>Eliminations</h2><p class="hint">${on.length} in rotation. These are what players see on the big screen. Tap Preview to watch one (tap the scene to close). Deleted ones never play and can be restored.</p>
+  <div class="excgrid">${on.map(k=>card(k,0)).join('')}</div>${gone.length?`<h3 style="margin-top:14px">Deleted (${gone.length})</h3><div class="excgrid">${gone.map(k=>card(k,1)).join('')}</div>`:''}</div>`;
+ $('admBody').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>exPreview(b.dataset.p));
+ $('admBody').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again';return}if(on.length<=3)return admMsg('Keep at least 3 eliminations in rotation.',1);CFG={...CFG,exOff:[...off,b.dataset.d]};saveCfg(CFG);admEx();admMsg('Deleted. It will not play any more.')});
+ $('admBody').querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{CFG={...CFG,exOff:[...off].filter(x=>x!==b.dataset.r)};saveCfg(CFG);admEx();admMsg('Restored.')})}
 
 /* ---------- boot ---------- */
 function showMode(){$('alivePill').hidden=false;stopAll();hideOv();['admin','lobby','hostLobby','phone','game','final'].forEach(id=>$(id).hidden=true);$('mode').hidden=false;$('roundPill').textContent='Welcome';$('alivePill').textContent=TEAM.length+' players'}
