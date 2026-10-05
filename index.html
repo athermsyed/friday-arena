@@ -995,6 +995,7 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 .pqbox{background:#fde3ec;border-radius:16px;padding:12px 14px;display:flex;flex-direction:column;gap:8px;margin:6px 0 10px}
 .pqbox>b{color:var(--berry);font-family:var(--display);font-size:19px}
 .pqb{display:flex;gap:10px;align-items:center;background:#fff;border-radius:12px;padding:6px 10px}
+.gord .gq{flex:1;min-width:0;display:flex;flex-direction:column}.gord .gq small{color:#6b6f86}.gord .gbtn{display:flex;gap:4px}.gord .gbtn button{min-width:34px;padding:4px 8px}.gord .qn{font-weight:800;width:22px;text-align:center}.gord svg{width:34px;height:34px;flex:none}
 .pqb svg{width:40px;height:auto;flex:none;border-radius:50%;background:var(--sky)}
 .pqb span{display:flex;flex-direction:column}.pqb small{color:var(--dim)}
 .pqstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
@@ -4583,7 +4584,7 @@ function admQuestions(){const b=loadBank(),pw=playedWeeks(),cw=currentWeek();if(
  <div id="qForm"></div>${pqWeekBox(ADM.week)}
  <div class="qlist">${list.map((q,i)=>`<div class="qrow"><span class="qn">${i+1}</span><span class="tag ${({room:'room',num:'num',word:'word',team:'team'})[q.type]||''}">${q.tag||TAGS[q.type]}</span><div class="qt"><b>${esc(q.q)}</b><span>Answer: ${esc(ansLabel(q))}${q.time?` · ${q.time}s`:''}</span></div><div class="qbtns"><button type="button" class="skip" data-a="up" data-i="${i}" ${i?'':'disabled'} aria-label="Move up">▲</button><button type="button" class="skip" data-a="down" data-i="${i}" ${i<list.length-1?'':'disabled'} aria-label="Move down">▼</button><button type="button" class="skip" data-a="edit" data-i="${i}">Edit</button><button type="button" class="skip danger" data-a="del" data-i="${i}">Delete</button></div></div>`).join('')||'<p class="hint">No questions yet. Add one, or use Upload list.</p>'}</div>`:'<p class="hint">No weeks yet. Add a week to start.</p>'}`;
  $('admBody').querySelectorAll('.wkchip[data-w]').forEach(c=>c.onclick=()=>{ADM.week=+c.dataset.w;ADM.edit=null;admQuestions()});
- {const g=$('pqGo');if(g)g.onclick=()=>{ADM.tab='pq';adminRender()}}
+ {const g=$('pqGo');if(g)g.onclick=()=>{ADM.tab='pq';adminRender()}}gameOrderWire(ADM.week);
  $('wkAdd').onclick=()=>{b.weeks.push([]);saveBank(b);ADM.week=b.weeks.length;admQuestions();admMsg(`Week ${b.weeks.length} added.`)};
  if(!b.weeks.length)return;
  $('qAdd').onclick=()=>qForm(null);
@@ -5075,18 +5076,26 @@ function pqPlan(){const start=currentWeek()||1,all=pqAll(),plan={},cnt={},auth={
  live.filter(q=>!(q.wk&&q.wk>=start)).forEach(q=>{let w=start;while((cnt[w]||0)>=cap(w)||(auth[w]&&auth[w].has(q.by)))w++;put(q,w)});
  return {plan,all,start,cap}}
 function pqForWeek(w){const {plan,all,cap}=pqPlan();const L=all.filter(q=>plan[q.key+'#'+q.idx]===w).sort((a,b)=>(b.wk?1:0)-(a.wk?1:0));return L.slice(0,Math.max(cap(w),L.filter(q=>q.wk).length))}
-function pqWeekBox(w){let pq=[];try{pq=pqForWeek(w)}catch(e){}if(!pq.length)return '';const plan=weekPlan(w),host=weekList(w),out=host.filter(q=>!plan.some(x=>!x.by&&x.q===q.q&&x.type===q.type));
- return `<div class="pqbox"><b>This week's game: ${plan.length} questions, ${pq.length} from players</b>${pq.map(q=>{const t=TEAM[byName[q.by]];return `<div class="pqb">${t?avatar(t,'idle'):''}<span><b>${esc(q.q)}</b><small>Player question by ${esc(q.by)}${q.wk?' · moved here by you':' · added automatically'}</small></span></div>`}).join('')}${out.length?`<p class="hint">Left out this week to make room: ${out.map(q=>esc(q.q)).join(' · ')}</p>`:''}<button class="skip" type="button" id="pqGo">Fix or move player questions</button></div>`}
+function pqWeekBox(w){let pq=[];try{pq=pqForWeek(w)}catch(e){}if(!pq.length)return '';const plan=weekPlan(w),host=weekList(w),out=host.filter(q=>!plan.some(x=>!x.by&&x.q===q.q&&x.type===q.type)),own=new Set(host.map(qId));
+ return `<div class="pqbox"><b>This week's game: ${plan.length} questions, ${pq.length} from players</b><span class="hint">This is the order the game plays. Use the arrows to move any question, including player questions.</span>${plan.map((q,i)=>{const t=q.by?TEAM[byName[q.by]]:null;const src=q.by?`Player question by ${esc(q.by)}`:own.has(qId(q))?'Your question':'General question (fills an open spot)';
+  return `<div class="pqb gord"><span class="qn">${i+1}</span>${t?avatar(t,'idle'):''}<span class="gq"><b>${esc(q.q)}</b><small>${esc(q.tag||TAGS[q.type]||'')} · ${src}</small></span><span class="gbtn"><button type="button" class="skip" data-go="up" data-gi="${i}" ${i?'':'disabled'} aria-label="Move up">▲</button><button type="button" class="skip" data-go="down" data-gi="${i}" ${i<plan.length-1?'':'disabled'} aria-label="Move down">▼</button></span></div>`}).join('')}${out.length?`<p class="hint">Left out this week to make room: ${out.map(q=>esc(q.q)).join(' · ')}</p>`:''}<div class="frow"><button class="skip" type="button" id="pqGo">Fix or move player questions</button><button class="skip" type="button" id="ordReset">Reset to automatic order</button></div></div>`}
+function gameOrderWire(w){const B=$('admBody');if(!B)return;
+ B.querySelectorAll('[data-go]').forEach(x=>x.onclick=()=>{const i=+x.dataset.gi,j=x.dataset.go==='up'?i-1:i+1,L=weekPlan(w).map(qId);if(j<0||j>=L.length)return;[L[i],L[j]]=[L[j],L[i]];const b=loadBank();b.ord=b.ord||{};b.ord[w]=L;saveBank(b);admQuestions();admMsg('Order saved.')});
+ const r=$('ordReset');if(r)r.onclick=()=>{const b=loadBank();if(b.ord){delete b.ord[w];saveBank(b)}admQuestions();admMsg('Back to the automatic order.')}}
 function pqToQ(q){const o={type:q.type,q:q.q,by:q.by,pqKey:q.key,pqIdx:q.idx,tag:q.type==='team'?'Who is it?':q.type==='num'?'Guess the number':q.tag||'Quick pick'};
  if(q.type==='team')o.ans=q.by;else if(q.type==='num')o.ans=+q.ans;else{o.opts=q.opts;o.ans=+q.ans}if(q.why)o.why=q.why;return o}
-function weekPlan(w){const host=weekList(w),pq=pqForWeek(w).map(pqToQ);if(!pq.length&&host.length>=10)return host;
+function qId(q){return q.by&&q.pqKey!=null?'p:'+q.pqKey+'#'+q.pqIdx:'h:'+q.type+':'+q.q}
+function pqOrder(w,L){let o=null;try{const b=loadBank();o=b.ord&&b.ord[w]}catch(e){}if(!o||!o.length)return L;
+ const pos=new Map(o.map((id,i)=>[id,i])),known=L.filter(q=>pos.has(qId(q))).sort((a,b)=>pos.get(qId(a))-pos.get(qId(b))),out=[...known];
+ L.forEach((q,i)=>{if(!pos.has(qId(q)))out.splice(Math.min(i,out.length),0,q)});return out}
+function weekPlan(w){const host=weekList(w),pq=pqForWeek(w).map(pqToQ);if(!pq.length&&host.length>=10)return pqOrder(w,host);
  let F=null,H=[...host];if(H.length&&H[H.length-1].type==='word')F=H.pop();
  const want=Math.max(0,(F?9:10)-pq.length);
  for(const t of ['team','room'])while(H.length>want){const k=H.findIndex(q=>q.type===t);if(k<0)break;H.splice(k,1)}
  while(H.length>want)H.splice(H.length-1,1);
  if(H.length<want){const used=new Set([...H,...pq].map(q=>q.q));for(let g=GEN.length-1;g>=0&&H.length<want;g--)for(const q of GEN[g]){if(H.length>=want)break;if(q.type!=='word'&&!used.has(q.q)){H.push({...q});used.add(q.q)}}}
  const out=[];let i=0,j=0;while(i<H.length||j<pq.length){if((out.length%2===0&&i<H.length)||j>=pq.length)out.push(H[i++]);else out.push(pq[j++])}
- if(F)out.push(F);return out}
+ if(F)out.push(F);return pqOrder(w,out)}
 function markPlayed(qs,wk){const bykey={};qs.forEach(Q=>{if(Q.pqKey!=null)(bykey[Q.pqKey]=bykey[Q.pqKey]||[]).push(Q.pqIdx)});
  for(const k in bykey){const s=subStore.list().find(x=>x.key===k);if(!s)continue;const o={by:s.by,created:s.created,qs:s.qs};bykey[k].forEach(i=>{if(o.qs[i])o.qs[i].played=wk});jset(k,o)}}
 function byBadge(Q,reveal){if(!Q||!Q.by)return '';const t=TEAM[byName[Q.by]];const hide=!reveal&&(Q.byHide||(Q.type==='team'&&Q.opts&&Q.ans!=null&&Q.opts[Q.ans]===Q.by));
