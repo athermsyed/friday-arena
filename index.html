@@ -985,6 +985,17 @@ canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:30;width:100%;heigh
 .qform .pqopts label input[type=radio]{width:20px;flex:none}
 .qform .pqnum input{width:160px}
 /* admin eliminations */
+.exfil{display:flex;flex-wrap:wrap;gap:6px}
+.exchip{border:0;border-radius:999px;padding:6px 12px;background:var(--sky);color:var(--cobalt);font:inherit;font-weight:700;font-size:13px;cursor:pointer}
+.exchip.on{background:var(--cobalt);color:#fff}
+.exbar{position:sticky;top:0;z-index:3;display:flex;flex-wrap:wrap;gap:6px;align-items:center;background:#fff7de;padding:8px 0;border-bottom:2px solid var(--sun)}
+.exbar b{margin-right:6px;font-size:15px}
+.exbar .skip{font-size:13px;padding:6px 12px}
+.exbar button:disabled{opacity:.4;cursor:default}
+.exc{cursor:pointer;border:3px solid transparent}
+.exc.sel{border-color:var(--cobalt);background:#dbe9ff}
+.qform .exrow{flex-direction:row!important;flex:0 0 auto!important;align-items:center;gap:8px;cursor:pointer}
+.qform .exrow input{width:18px;height:18px;flex:none;accent-color:var(--cobalt);margin:0}
 .excgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:8px}
 .exc{background:var(--sky);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:6px}
 .exc b{font-size:14px;line-height:1.3}
@@ -5187,13 +5198,30 @@ function exCaption(k){const P0=TEAM.slice(0,5).map((t,i)=>({t,i,total:10,out:fal
 function exPreview(k){const P0=visible().slice(0,6).map(i=>({t:TEAM[i],i,total:10+i,out:false}));if(!P0.length)return;const vi=Math.floor(Math.random()*P0.length);ri=5;
  showEx(k,P0[vi],P0.filter((_,i)=>i!==vi),false,9000);try{if(SND.on){ac();exSound(k)}}catch(e){}
  const ex=$('ex');if(ex){const sk=ex.querySelector('.skip');if(sk)sk.textContent='Close';ex.addEventListener('click',e=>{e.stopPropagation();clearEx()},true);setTimeout(()=>{if($('ex')===ex)clearEx()},9500)}}
+let EXSEL=new Set(),EXF='All';
 function admEx(){const off=new Set(CFG.exOff||[]),on=EX_KINDS.filter(k=>!off.has(k)),gone=EX_KINDS.filter(k=>off.has(k));
- const card=(k,dead)=>`<div class="exc ${dead?'dead':''}"><span class="exg" data-g="${exGroup(k)}">${exGroup(k)}</span><b>${esc(exCaption(k))}</b><div class="qbtns"><button class="skip" type="button" data-p="${k}">▶ Preview</button>${dead?`<button class="skip" type="button" data-r="${k}">Restore</button>`:`<button class="skip danger" type="button" data-d="${k}">Delete</button>`}</div></div>`;
- $('admBody').innerHTML=`<div class="qform"><h2>Eliminations</h2><p class="hint">${on.length} in rotation. These are what players see on the big screen. Tap Preview to watch one (tap the scene to close). Deleted ones never play and can be restored.</p>
-  <div class="excgrid">${on.map(k=>card(k,0)).join('')}</div>${gone.length?`<h3 style="margin-top:14px">Deleted (${gone.length})</h3><div class="excgrid">${gone.map(k=>card(k,1)).join('')}</div>`:''}</div>`;
- $('admBody').querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>exPreview(b.dataset.p));
- $('admBody').querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again';return}if(on.length<=3)return admMsg('Keep at least 3 eliminations in rotation.',1);CFG={...CFG,exOff:[...off,b.dataset.d]};saveCfg(CFG);admEx();admMsg('Deleted. It will not play any more.')});
- $('admBody').querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{CFG={...CFG,exOff:[...off].filter(x=>x!==b.dataset.r)};saveCfg(CFG);admEx();admMsg('Restored.')})}
+ EXSEL=new Set([...EXSEL].filter(k=>EX_KINDS.includes(k)));
+ const G=['All','AT&T original','Elimination Lab','Quick','New'],inF=k=>EXF==='All'||exGroup(k)===EXF;
+ const cnt=g=>g==='All'?EX_KINDS.length:EX_KINDS.filter(k=>exGroup(k)===g).length;
+ const card=(k,dead)=>`<div class="exc ${dead?'dead':''} ${EXSEL.has(k)?'sel':''}" data-k="${k}"><label class="exrow"><input type="checkbox" data-c="${k}" ${EXSEL.has(k)?'checked':''}><span class="exg" data-g="${exGroup(k)}">${exGroup(k)}</span></label><b>${esc(exCaption(k))}</b><div class="qbtns"><button class="skip" type="button" data-p="${k}">▶ Preview</button>${dead?`<button class="skip" type="button" data-r="${k}">Restore</button>`:`<button class="skip danger" type="button" data-d="${k}">Delete</button>`}</div></div>`;
+ const onF=on.filter(inF),goneF=gone.filter(inF);
+ $('admBody').innerHTML=`<div class="qform"><h2>Eliminations</h2><p class="hint">${on.length} in rotation, ${gone.length} deleted. Tick a box or tap a card to select it, then tap Delete selected (twice). Tap Preview to watch one (tap the scene to close). Deleted ones never play and can be restored.</p>
+  <div class="exfil">${G.map(g=>`<button type="button" class="exchip ${EXF===g?'on':''}" data-f="${g}">${g==='Quick'?'Quick 100':g} (${cnt(g)})</button>`).join('')}</div>
+  <div class="exbar"><b id="exN">0 selected</b><button class="skip" type="button" id="exAll">Select all shown</button><button class="skip" type="button" id="exNone">Clear</button><button class="skip danger" type="button" id="exDel">Delete selected</button><button class="skip" type="button" id="exRes">Restore selected</button></div>
+  <h3>In rotation (${onF.length})</h3><div class="excgrid">${onF.map(k=>card(k,0)).join('')||'<p class="hint">None in this group.</p>'}</div>${goneF.length?`<h3 style="margin-top:14px">Deleted (${goneF.length})</h3><div class="excgrid">${goneF.map(k=>card(k,1)).join('')}</div>`:''}</div>`;
+ const B=$('admBody');
+ const upd=()=>{const sOn=[...EXSEL].filter(k=>!off.has(k)),sOff=[...EXSEL].filter(k=>off.has(k));$('exN').textContent=EXSEL.size+' selected';const d=$('exDel');d.disabled=!sOn.length;delete d.dataset.arm;d.textContent=sOn.length?`Delete selected (${sOn.length})`:'Delete selected';const r=$('exRes');r.disabled=!sOff.length;r.textContent=sOff.length?`Restore selected (${sOff.length})`:'Restore selected';B.querySelectorAll('.exc').forEach(c=>{const s=EXSEL.has(c.dataset.k);c.classList.toggle('sel',s);const x=c.querySelector('input[data-c]');if(x)x.checked=s})};
+ B.querySelectorAll('[data-c]').forEach(x=>x.onchange=()=>{x.checked?EXSEL.add(x.dataset.c):EXSEL.delete(x.dataset.c);upd()});
+ B.querySelectorAll('.exc').forEach(c=>c.onclick=e=>{if(e.target.closest('button,label,input'))return;const k=c.dataset.k;EXSEL.has(k)?EXSEL.delete(k):EXSEL.add(k);upd()});
+ B.querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{EXF=b.dataset.f;admEx()});
+ $('exAll').onclick=()=>{B.querySelectorAll('.exc').forEach(c=>EXSEL.add(c.dataset.k));upd()};
+ $('exNone').onclick=()=>{EXSEL.clear();upd()};
+ $('exDel').onclick=()=>{const b=$('exDel'),s=[...EXSEL].filter(k=>!off.has(k));if(!s.length)return;if(on.length-s.length<3)return admMsg('Keep at least 3 eliminations in rotation.',1);if(!b.dataset.arm){b.dataset.arm=1;b.textContent=`Tap again to delete ${s.length}`;return}CFG={...CFG,exOff:[...off,...s]};saveCfg(CFG);EXSEL.clear();admEx();admMsg(`Deleted ${s.length}. They will not play any more.`)};
+ $('exRes').onclick=()=>{const s=new Set([...EXSEL].filter(k=>off.has(k)));if(!s.size)return;CFG={...CFG,exOff:[...off].filter(x=>!s.has(x))};saveCfg(CFG);EXSEL.clear();admEx();admMsg(`Restored ${s.size}.`)};
+ upd();
+ B.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>exPreview(b.dataset.p));
+ B.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{if(!b.dataset.arm){b.dataset.arm=1;b.textContent='Tap again';return}if(on.length<=3)return admMsg('Keep at least 3 eliminations in rotation.',1);EXSEL.delete(b.dataset.d);CFG={...CFG,exOff:[...off,b.dataset.d]};saveCfg(CFG);admEx();admMsg('Deleted. It will not play any more.')});
+ B.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>{EXSEL.delete(b.dataset.r);CFG={...CFG,exOff:[...off].filter(x=>x!==b.dataset.r)};saveCfg(CFG);admEx();admMsg('Restored.')})}
 
 /* ---------- 10 new eliminations (Oct 5) ---------- */
 /* ===== 10 new hand-built exits ===== */
