@@ -1474,6 +1474,50 @@ svg.st-sad{filter:saturate(.45) brightness(.96)}
 .ex-tumblewd .cap,.ex-paperjet .cap,.ex-breakpop .cap,.ex-rtsender .cap,.ex-captchafail .cap,.ex-heatwave .cap{color:#0b2340;text-shadow:0 4px 0 rgba(255,255,255,.7)}
 .xs{position:absolute;inset:0;overflow:hidden;font-family:var(--display)}
 
+/* birthday week intro */
+#bdayOv{position:fixed;inset:0;z-index:9999;background:#071A33;display:flex;align-items:center;justify-content:center}
+#bdayOv .bd-scene{width:100%;height:100%;display:block}
+#bdayOv .bd-skip{position:absolute;right:max(16px,env(safe-area-inset-right,0px));top:max(14px,env(safe-area-inset-top,0px));font-size:14px;padding:8px 16px;opacity:.85}
+.bd-scene .bd-mover,.bd-scene .bd-hop{transform-origin:0 0}
+.bd-scene .bd-hand{transition:transform .3s}
+.bd-scene .bd-flame{transform-box:fill-box;transform-origin:50% 100%;animation:bd-flicker .16s infinite alternate}
+@keyframes bd-flicker{to{transform:scale(.9,1.1) rotate(3deg)}}
+.bd-scene .bd-glow{transform-box:fill-box;transform-origin:center;animation:bd-pulse 1.2s ease-in-out infinite alternate}
+@keyframes bd-pulse{to{transform:scale(1.2);opacity:.6}}
+.bd-scene .bd-candle.out .bd-flame,.bd-scene .bd-candle.out .bd-glow{animation:none;transform:scale(0);opacity:0;transition:transform .25s,opacity .25s}
+.bd-scene .bd-smoke{opacity:0}
+.bd-scene .bd-candle.out .bd-smoke{animation:bd-smoke 1.8s ease-out forwards}
+@keyframes bd-smoke{0%{opacity:.85;transform:none}100%{opacity:0;transform:translateY(-70px)}}
+.bd-scene .bd-wind{opacity:0;stroke-dasharray:10 12}
+.bd-scene .bd-bubble{opacity:0;transform-box:fill-box;transform:scale(.5);transform-origin:50% 100%;transition:transform .22s cubic-bezier(.3,1.6,.6,1),opacity .15s}
+.bd-scene .bd-bubble.show{opacity:1;transform:none}
+.bd-scene .bd-lyric{transition:opacity .25s}
+.bd-scene .bd-card{opacity:0;transition:opacity .6s}
+.bd-run .bd-side.L .bd-mover{animation:bd-walkL 1.25s cubic-bezier(.2,.8,.3,1) both;animation-delay:var(--d)}
+.bd-run .bd-side.R .bd-mover{animation:bd-walkR 1.25s cubic-bezier(.2,.8,.3,1) both;animation-delay:var(--d)}
+@keyframes bd-walkL{from{transform:translateX(-900px)}}
+@keyframes bd-walkR{from{transform:translateX(900px)}}
+.bd-run .bd-side .bd-hop{animation:bd-hopk .31s ease-in-out 4;animation-delay:var(--d)}
+@keyframes bd-hopk{0%,100%{transform:none}50%{transform:translateY(-16px)}}
+.bd-run .bd-trio .bd-mover{animation:bd-rise 1s cubic-bezier(.2,1.3,.4,1) both;animation-delay:var(--d)}
+@keyframes bd-rise{from{transform:translateY(340px)}}
+.bd-run .bd-banner{animation:bd-drop .9s cubic-bezier(.2,1.4,.5,1) both .2s}
+@keyframes bd-drop{from{transform:translateY(-260px)}}
+.bd-clap .bd-side .bd-hand.l{animation:bd-clapL var(--bdbeat,.5s) ease-in-out infinite}
+.bd-clap .bd-side .bd-hand.r{animation:bd-clapR var(--bdbeat,.5s) ease-in-out infinite}
+@keyframes bd-clapL{0%,100%{transform:translateX(0)}45%{transform:translateX(22px)}}
+@keyframes bd-clapR{0%,100%{transform:translateX(0)}45%{transform:translateX(-22px)}}
+.bd-blow .bd-trio .av .m{display:none}
+.bd-blow .bd-trio .av .m-o{display:inline}
+.bd-blow .bd-trio .av .cheek{opacity:1}
+.bd-blow .bd-trio .av .rig{animation:none}
+.bd-blow .bd-trio .bd-hop{transform:translateY(8px);transition:transform .3s}
+.bd-blow .bd-wind{opacity:.9;animation:bd-dash .35s linear infinite}
+@keyframes bd-dash{to{stroke-dashoffset:-44}}
+.bd-cheer .bd-trio .bd-hand.l{transform:translate(-10px,-92px)}
+.bd-cheer .bd-trio .bd-hand.r{transform:translate(10px,-92px)}
+.bd-done .bd-card{opacity:1}
+@media (prefers-reduced-motion:reduce){.bd-run .bd-side .bd-mover,.bd-run .bd-trio .bd-mover,.bd-run .bd-side .bd-hop,.bd-run .bd-banner{animation:none}.bd-scene .bd-flame,.bd-scene .bd-glow,.bd-scene .av .rig{animation:none!important}}
 </style>
 
 <div class="bar">
@@ -4101,7 +4145,7 @@ function fbJoin(){return new Promise((res,rej)=>{
 async function fbJoinStart(){MODE='phone';if(room){phoneMode();return}try{room=await fbJoin();wireRoom();phoneMode()}catch(e){room=null;phoneMode()}}
 
 const BKEY='fridayArenaBank',CKEY='fridayArenaConfig',RKEY='fridayArenaRoster';
-const DEF_CFG={start:'2026-10-02',warm:3,times:{choice:20,room:15,team:20,num:25,word:40},week:0,celebrate:10,board:10,elim:9.5};
+const DEF_CFG={start:'2026-10-02',warm:3,times:{choice:20,room:15,team:20,num:25,word:40},week:0,celebrate:10,board:10,elim:9.5,bday:1,bdayNames:'Davis, Sher, Courtney'};
 function loadBank(){const b=jget(BKEY,{weeks:Object.keys(W).sort((x,y)=>x-y).map(k=>W[k]).filter(Array.isArray)});if(!Array.isArray(b.weeks))b.weeks=[];return b}
 function saveBank(b){jset(BKEY,b)}
 function loadCfg(){const c=jget(CKEY,DEF_CFG);c.times={...DEF_CFG.times,...(c.times||{})};for(const k in DEF_CFG)if(c[k]===undefined)c[k]=DEF_CFG[k];return c}
@@ -4164,7 +4208,123 @@ function start(){
  else{const vis=visible();if(!vis.includes(me))vis.push(me);const bots=vis.filter(i=>i!==me).sort(()=>Math.random()-.5),lazy=new Set(bots.slice(0,2));
   P=vis.map(i=>({t:TEAM[i],i,total:0,out:false,answered:0,skill:rnd(.5,.9),engage:lazy.has(i)?.25:rnd(.88,1),mood:'',cur:null,res:null,delta:0}))}
  prevRank={};lastOut='';lastSeason=null;shuffleEx();$('game').hidden=false;
- buildArena();scrollTo({top:0,behavior:'smooth'});intro(0)}
+ buildArena();scrollTo({top:0,behavior:'smooth'});bdayIntro(()=>intro(0))}
+/* ---------- birthday week intro (plays before Question 1) ---------- */
+let BD=null;
+function bdayNames(){return String(CFG.bdayNames||'').split(',').map(x=>x.trim()).filter(Boolean)}
+function bdayIntro(done){
+ const names=bdayNames(),trio=names.map(n=>TEAM.find(t=>t.n===n)).filter(Boolean);
+ if(!CFG.bday||!trio.length){done();return}
+ const tn=trio.map(t=>t.n),others=TEAM.filter(t=>!HIDDEN.has(t.n)&&!tn.includes(t.n));
+ phase='bday';ri=0;hideOv();broadcast();
+ const esc2=x=>String(x).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+ const list=a=>a.length<2?a.join(''):a.slice(0,-1).join(', ')+' and '+a[a.length-1];
+ function bust(t,mood){
+  const a=avatar(t,mood).replace('<svg class="av','<svg x="-100" y="-222" width="200" height="222" overflow="visible" class="av');
+  const sk=t.skin,sl=t.tc,d=shade(sk,-.25);
+  const hand=side=>`<g class="bd-hand ${side}"><g transform="translate(${side==='l'?-46:46},-30)"><rect x="-15" y="2" width="30" height="34" rx="12" fill="${sl}"/><ellipse cx="0" cy="-6" rx="17" ry="19" fill="${sk}" stroke="${d}" stroke-width="2.5"/><path d="M${side==='l'?8:-8} -18 q${side==='l'?8:-8} 8 0 16" stroke="${d}" stroke-width="2" fill="none" opacity=".7"/></g></g>`;
+  return a+hand('l')+hand('r')}
+ function bubble(text,y){const w=text.length*15.5+36;
+  return `<g transform="translate(0,${y})"><g class="bd-bubble"><rect x="${-w/2}" y="-32" width="${w}" height="52" rx="22" fill="#fff" stroke="#009FDB" stroke-width="3"/><path d="M-10 18 L0 34 L12 18 Z" fill="#fff"/><text x="0" y="3" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="27" fill="#071A33">${text}</text></g></g>`}
+ function tag(name,y){const w=name.length*13+34;
+  return `<g transform="translate(0,${y})"><rect x="${-w/2}" y="-18" width="${w}" height="36" rx="18" fill="rgba(7,26,51,.9)" stroke="#009FDB" stroke-width="2.5"/><text x="0" y="8" text-anchor="middle" font-family="Figtree,Segoe UI,sans-serif" font-weight="800" font-size="22" fill="#EAF4FF">${esc2(name)}</text></g>`}
+ /* crowd: two rows on each side */
+ const half=Math.ceil(others.length/2),spots=[];
+ [[others.slice(0,half),'L'],[others.slice(half),'R']].forEach(([lst,side])=>{
+  const nb=Math.floor(lst.length/2),back=lst.slice(0,nb),front=lst.slice(nb);
+  const place=(arr,y,s,x0,x1,row)=>arr.forEach((t,i)=>{const x=arr.length===1?(x0+x1)/2:x0+(x1-x0)*i/(arr.length-1);
+   const X=side==='L'?x:1600-x;spots.push({t,x:X,y,s,row,side,d:(Math.abs(800-X)/800*.6+(row==='front'?0:.15)).toFixed(2)})});
+  place(back,712,.7,85,430,'back');place(front,858,.84,70,445,'front')});
+ const sideG=p=>`<g class="bd-pp bd-side ${p.side}" style="--d:${p.d}s" transform="translate(${p.x},${p.y}) scale(${p.s})"><g class="bd-mover"><g class="bd-hop">${bust(p.t,'idle')}${bubble('Happy Birthday!',-262)}</g></g></g>`;
+ const tagsG=row=>spots.filter(p=>p.row===row).map(p=>`<g class="bd-side ${p.side}" style="--d:${p.d}s" transform="translate(${p.x},${p.y}) scale(${p.s})"><g class="bd-mover">${tag(p.t.n,row==='back'?-236:22)}</g></g>`).join('');
+ /* the birthday people */
+ const k=trio.length,TS=k>3?1.22*3/k:1.22,TY=604,gap=Math.min(198,560/Math.max(1,k-1)),TX=trio.map((t,i)=>800+(i-(k-1)/2)*gap);
+ const order=trio.map((t,i)=>i).sort((a,b)=>Math.abs(TX[b]-800)-Math.abs(TX[a]-800));
+ const trioG=order.map(i=>`<g class="bd-pp bd-trio" style="--d:${(.9+i*.08).toFixed(2)}s" transform="translate(${TX[i]},${TY}) scale(${TS})"><g class="bd-mover"><g class="bd-hop">${bust(trio[i],'idle')}</g></g></g>`).join('');
+ const CX=trio.map((t,i)=>800+(i-(k-1)/2)*40),mouthY=TY-82*TS,cakeW=Math.max(208,k*40+88);
+ const winds=TX.map((x,i)=>`<path class="bd-wind" d="M${x} ${mouthY+8} Q${(x+CX[i])/2} ${mouthY+14} ${CX[i]} 548" fill="none" stroke="#CFF1FF" stroke-width="4" stroke-linecap="round"/>`).join('');
+ const candles=CX.map((x,i)=>`<g class="bd-candle" data-i="${i}"><circle class="bd-glow" cx="${x}" cy="548" r="22" fill="url(#bdFlameGlow)"/><rect x="${x-6}" y="558" width="12" height="28" rx="3" fill="${['#7FD3F7','#FFF3B0','#FF9EC4'][i%3]}"/><path d="M${x-6} 566 l12 -5 M${x-6} 576 l12 -5" stroke="#fff" stroke-width="3" opacity=".7"/><g class="bd-flame"><path d="M${x} 532 C${x+10} 545 ${x+9} 556 ${x} 558 C${x-9} 556 ${x-10} 545 ${x} 532 Z" fill="#FF9F1C"/><path d="M${x} 542 C${x+5} 549 ${x+4} 555 ${x} 557 C${x-4} 555 ${x-5} 549 ${x} 542 Z" fill="#FFF3B0"/></g><path class="bd-smoke" d="M${x} 556 c-8 -12 8 -20 0 -32 c-8 -12 8 -20 0 -30" fill="none" stroke="#C8D3E0" stroke-width="5" stroke-linecap="round"/></g>`).join('');
+ const icing=(x0,w,y)=>{let p=`M${x0} ${y+8} q0 -8 8 -8 h${w-16} q8 0 8 8`;for(let x=x0+w;x>x0+1;x-=20)p+=` q-10 10 -20 0`;return p+' Z'};
+ let scallop='';for(let x=500;x<1100;x+=40)scallop+=`<path d="M${x} 622 q20 26 40 0" fill="#FFFFFF"/>`;
+ let bunting='',sparkles='';
+ for(let i=0;i<17;i++){const x=20+i*96,c=['#009FDB','#FFC93C','#FF6FA5','#18B49B','#FF7A1A'][i%5];bunting+=`<path d="M${x} ${22+Math.sin(i/16*Math.PI)*26} l40 4 l-22 46 Z" fill="${c}"/>`}
+ for(let i=0;i<40;i++){sparkles+=`<circle cx="${(i*397)%1600}" cy="${(i*131)%330+10}" r="${(i%3)+1.2}" fill="#fff" opacity="${.15+(i%4)*.1}"/>`}
+ const plate=Math.min(172,gap-14);
+ const svgH=`<svg class="bd-scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Happy Birthday Week for ${esc2(list(tn))}">
+<defs><radialGradient id="bdSpot" cx="50%" cy="58%" r="55%"><stop offset="0" stop-color="#2B6FB8" stop-opacity=".9"/><stop offset=".55" stop-color="#123A6B" stop-opacity=".5"/><stop offset="1" stop-color="#071A33" stop-opacity="0"/></radialGradient>
+<linearGradient id="bdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#06162C"/><stop offset="1" stop-color="#0D2B52"/></linearGradient>
+<linearGradient id="bdRiser" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0E4A86"/><stop offset="1" stop-color="#061A35"/></linearGradient>
+<radialGradient id="bdFlameGlow"><stop offset="0" stop-color="#FFD66B" stop-opacity=".9"/><stop offset="1" stop-color="#FFD66B" stop-opacity="0"/></radialGradient>
+<linearGradient id="bdCloth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#009FDB"/><stop offset="1" stop-color="#005E8C"/></linearGradient></defs>
+<rect width="1600" height="900" fill="url(#bdSky)"/>${sparkles}<ellipse cx="800" cy="560" rx="760" ry="420" fill="url(#bdSpot)"/>
+<g class="bd-banner">${bunting}
+<text x="800" y="150" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="96" fill="#071A33" opacity=".5" transform="translate(5,7)">Happy Birthday Week</text>
+<text x="800" y="150" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="96" fill="#FFFFFF" stroke="#009FDB" stroke-width="3" paint-order="stroke">Happy Birthday Week</text>
+<text x="800" y="200" text-anchor="middle" font-family="Figtree,Segoe UI,sans-serif" font-weight="800" font-size="32" fill="#FFC93C" letter-spacing="2">${esc2(tn.join('  ·  ').toUpperCase())}</text></g>
+<text class="bd-lyric" x="800" y="252" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="38" fill="#7FD3F7" opacity="0"></text>
+<g>${spots.filter(p=>p.row==='back').map(sideG).join('')}</g>
+<path d="M0 700 H500 L520 900 H0 Z M1600 700 H1100 L1080 900 H1600 Z" fill="url(#bdRiser)"/><path d="M0 700 H500 M1600 700 H1100" stroke="#009FDB" stroke-width="4"/>
+<g>${tagsG('back')}</g>
+<g>${trioG}</g>
+<g><rect x="490" y="598" width="620" height="24" rx="6" fill="#E8F4FF"/><rect x="490" y="618" width="620" height="290" fill="url(#bdCloth)"/>${scallop}
+${TX.map((x,i)=>`<g transform="translate(${x},720)"><rect x="${-plate/2}" y="-26" width="${plate}" height="52" rx="14" fill="#FFC93C"/><text x="0" y="11" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="${Math.min(32,plate/Math.max(4,tn[i].length)*1.6)}" fill="#071A33">${esc2(tn[i])}</text></g>`).join('')}
+<rect x="${800-cakeW/2}" y="584" width="${cakeW}" height="22" rx="8" fill="#FFB3CF"/><rect x="${800-cakeW/2+20}" y="566" width="${cakeW-40}" height="24" rx="8" fill="#7FD3F7"/>
+<path d="${icing(800-cakeW/2+20,cakeW-40,566)}" fill="#FFFFFF"/><path d="${icing(800-cakeW/2,cakeW,584)}" fill="#FFF3F8"/>
+${candles}${winds}</g>
+<g>${spots.filter(p=>p.row==='front').map(sideG).join('')}</g>
+<path d="M0 852 H515 L520 900 H0 Z M1600 852 H1085 L1080 900 H1600 Z" fill="#0A2A52"/><path d="M0 852 H515 M1600 852 H1085" stroke="#FFC93C" stroke-width="4"/>
+<g>${tagsG('front')}</g><g class="bd-confetti"></g>
+<g class="bd-card"><rect x="0" y="0" width="1600" height="900" fill="#071A33" opacity=".55"/><g transform="translate(800,450)"><rect x="-330" y="-110" width="660" height="220" rx="32" fill="#FFFFFF"/>
+<text x="0" y="-38" text-anchor="middle" font-family="Figtree,Segoe UI,sans-serif" font-weight="800" font-size="26" fill="#0072A8" letter-spacing="3">FRIDAY ARENA</text>
+<text x="0" y="30" text-anchor="middle" font-family="Baloo 2,Arial Rounded MT Bold,sans-serif" font-weight="800" font-size="58" fill="#071A33">Question 1 is up next</text></g></g></svg>`;
+ const el=document.createElement('div');el.id='bdayOv';el.innerHTML=svgH+'<button class="skip bd-skip" type="button">Skip</button>';document.body.appendChild(el);
+ const svg=el.querySelector('svg'),lyric=svg.querySelector('.bd-lyric');
+ const T=[];let chorus=null,finished=false,bus=null;
+ const at=(sec,fn)=>T.push(setTimeout(fn,sec*1000));
+ const setLy=txt=>{lyric.style.opacity=0;setTimeout(()=>{lyric.textContent=txt;lyric.style.opacity=txt?1:0},180)};
+ const pop=(g,ms)=>{const b=g&&g.querySelector('.bd-bubble');if(!b)return;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),ms)};
+ const mood=(sel,m)=>svg.querySelectorAll(sel+' svg.av').forEach(a=>a.setAttribute('class','av st-'+m));
+ function finish(){if(finished)return;finished=true;T.forEach(clearTimeout);clearInterval(chorus);
+  if(bus&&SND.ctx){try{bus.gain.cancelScheduledValues(SND.ctx.currentTime);bus.gain.setTargetAtTime(0,SND.ctx.currentTime,.05);setTimeout(()=>{try{bus.disconnect()}catch(e){}},400)}catch(e){}}
+  el.remove();BD=null;done()}
+ BD={finish};
+ el.querySelector('.bd-skip').onclick=finish;
+ /* sound */
+ try{ac();const c=SND.ctx;if(c){if(c.state==='suspended')c.resume();
+  bus=c.createGain();bus.gain.value=.9;bus.connect(SND.master||c.destination);
+  const nb=c.createBuffer(1,c.sampleRate,c.sampleRate),nd=nb.getChannelData(0);for(let i=0;i<nd.length;i++)nd[i]=Math.random()*2-1;
+  const mtof=m=>440*Math.pow(2,(m-69)/12);
+  const tn2=(m,t,d,o={})=>{const{type='triangle',vol=.25,att=.012,rel=.25}=o;const os=c.createOscillator(),g=c.createGain();os.type=type;os.frequency.value=mtof(m);
+   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+att);g.gain.exponentialRampToValueAtTime(vol*.35,t+Math.max(d*.8,att+.02));g.gain.exponentialRampToValueAtTime(.0001,t+d+rel);
+   os.connect(g);g.connect(bus);os.start(t);os.stop(t+d+rel+.05)};
+  const nz=(t,d,o={})=>{const{freq=2000,q=.9,vol=.1,type='bandpass'}=o;const s=c.createBufferSource(),f=c.createBiquadFilter(),g=c.createGain();s.buffer=nb;f.type=type;f.frequency.value=freq;f.Q.value=q;
+   g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol,t+.005);g.gain.exponentialRampToValueAtTime(.0001,t+d);s.connect(f);f.connect(g);g.connect(bus);s.start(t,Math.random()*.5);s.stop(t+d+.05)};
+  const B=.5,t0=c.currentTime+.05,s0=t0+1.7;
+  const MEL=[[67,.75],[67,.25],[69,1],[67,1],[72,1],[71,2],[67,.75],[67,.25],[69,1],[67,1],[74,1],[72,2],[67,.75],[67,.25],[79,1],[76,1],[72,1],[71,1],[69,2],[77,.75],[77,.25],[76,1],[72,1],[74,1],[72,3]];
+  const CH={C:[48,52,55],G:[43,47,50,53],F:[41,45,48],C7:[48,52,55,58]},BARS=[[1,'C'],[4,'G'],[7,'G'],[10,'C'],[13,'C7'],[16,'F'],[19,'C'],[22,'G'],[23,'C']];
+  let b=0;MEL.forEach(([m,d])=>{const t=s0+b*B;tn2(m,t,d*B*.92,{vol:.26});tn2(m+12,t,d*B*.6,{type:'sine',vol:.05});b+=d});
+  BARS.forEach(([a,ch],i)=>{const len=(BARS[i+1]?BARS[i+1][0]:26)-a,t=s0+a*B;tn2(CH[ch][0]-12,t,B*.9,{type:'sine',vol:.22});for(let j=1;j<Math.min(len,3);j++)CH[ch].slice(1).forEach(n=>tn2(n,t+j*B,B*.4,{type:'sine',vol:.05}))});
+  for(let j=0;j<26;j++)nz(s0+(j+.45)*B,.06,{freq:2200,vol:.07});
+  nz(t0+14.9,1,{type:'lowpass',freq:900,q:.3,vol:.22});
+  const ch=t0+16.2;[60,64,67,72,76,79].forEach((m,i)=>tn2(m,ch+i*.07,.25,{vol:.18}));
+  for(let i=0;i<170;i++)nz(ch+Math.random()*3.3,.03+Math.random()*.04,{freq:1400+Math.random()*2400,vol:.03+Math.random()*.05});
+  [72,76,79,84].forEach((m,i)=>tn2(m,t0+19.8+i*.09,.3,{vol:.14}))}}catch(e){}
+ /* timeline */
+ void svg.getBoundingClientRect();svg.classList.add('bd-run');
+ at(1.7,()=>{svg.classList.add('bd-clap');mood('.bd-side','happy');mood('.bd-trio','proud')});
+ [[0,'Happy birthday to you'],[6,'Happy birthday to you'],[12,'Happy birthday, dear '+list(tn)],[19,'Happy birthday to you!']].forEach(([b,t])=>at(1.7+b*.5-.15,()=>setLy(t)));
+ at(14.9,()=>{svg.classList.add('bd-blow');mood('.bd-trio','idle');setLy('Make a wish...')});
+ CX.forEach((x,i)=>at(15.5+i*.2,()=>{const c=svg.querySelector(`.bd-candle[data-i="${i}"]`);if(c)c.classList.add('out')}));
+ at(16.2,()=>{svg.classList.remove('bd-blow');svg.classList.add('bd-cheer');svg.style.setProperty('--bdbeat','.28s');setLy('');mood('.bd-trio','win');
+  if(!matchMedia('(prefers-reduced-motion: reduce)').matches){const box=svg.querySelector('.bd-confetti'),cols=['#009FDB','#FFC93C','#FF6FA5','#18B49B','#FF7A1A','#FFFFFF','#8E5BD8'];
+   for(let i=0;i<150;i++){const r=document.createElementNS('http://www.w3.org/2000/svg','rect'),w=8+Math.random()*10,h=6+Math.random()*8;
+    r.setAttribute('x',-w/2);r.setAttribute('y',-h/2);r.setAttribute('width',w);r.setAttribute('height',h);r.setAttribute('rx',2);r.setAttribute('fill',cols[i%cols.length]);box.appendChild(r);
+    const x=Math.random()*1600,y0=-30-Math.random()*260,dr=(Math.random()-.5)*240,sp=360+Math.random()*720;
+    const a=r.animate([{transform:`translate(${x}px,${y0}px) rotate(0deg)`},{transform:`translate(${x+dr}px,960px) rotate(${sp}deg)`}],{duration:2600+Math.random()*2200,delay:Math.random()*700,easing:'cubic-bezier(.3,.1,.6,1)',fill:'both'});a.onfinish=()=>r.remove()}}
+  const sides=[...svg.querySelectorAll('.bd-pp.bd-side')];let j=0;if(sides.length)chorus=setInterval(()=>{pop(sides[(j*5)%sides.length],1100);j++},260)});
+ at(19.8,()=>{clearInterval(chorus);svg.classList.remove('bd-clap');svg.classList.add('bd-done')});
+ at(21.8,finish)}
+
 function ME(){return P.find(p=>p.i===me)}
 function tileHTML(p){return `<div class="tile ${p.i===me?'you':''}" id="tile-${p.i}"><span class="chip y">YOU</span><span class="chip l">LOCKED</span><span class="chip d">DANGER</span><span class="avw"></span><b>${p.t.n}</b><span class="tot">${p.total} pts</span><span class="res none" style="visibility:hidden">.</span></div>`}
 function addPlayer(n){const i=byName[n],p={t:TEAM[i],i,total:0,out:false,answered:0,mood:'',cur:null,res:null,delta:0};P.push(p);$('arena').insertAdjacentHTML('beforeend',tileHTML(p));setMood(p,'idle');return p}
@@ -4402,7 +4562,7 @@ function broadcast(){if(MODE!=='host'||!room)return;
  else if(P.length){const Q=QS[ri];
   s.q={type:Q.type,tag:Q.tag,q:Q.q,opts:Q.opts||null,scr:Q.scr||null,time:Q.time,by:Q.by||null,byHide:!!(Q.by&&Q.type==='team'&&Q.opts&&Q.opts[Q.ans]===Q.by)};
   if(phase==='q')s.rem=Math.max(0,Q.time-(performance.now()-qStart)/1000/SPEED);
-  if(!['intro','q'].includes(phase)){s.ans=ansText(Q);const rk=rankList();s.res={};
+  if(!['intro','q','bday'].includes(phase)){s.ans=ansText(Q);const rk=rankList();s.res={};
    rk.forEach((p,k)=>{s.res[p.t.n]=[p.res?p.res.pts:0,p.res?p.res.kind:'none',p.total,k+1,p.out?1:0]});
    s.alive=alive().length;s.low=lowest().map(p=>p.t.n);s.out=lastOut;if(phase==='elim')s.excap=lastCap;if(phase==='final'){s.win=rk[0]?rk[0].t.n:'';if(lastSeason){s.sm={};for(const n in lastSeason.out)s.sm[n]=[lastSeason.out[n].m,lastSeason.out[n].add,lastSeason.tot[n]]}}}}
  room.emit('state',s).catch(()=>{})}
@@ -4472,6 +4632,7 @@ function phoneRender(force){const B=$('phoneBody'),s=PS;if(phoneEditing&&(!s||s.
   $('ph-edit').onclick=()=>{ac();phoneEditing=true;const B2=$('phoneBody');B2.innerHTML='<div class="card" id="phLook"></div>';lookForm(myName,{target:$('phLook'),phone:true,done:m=>{phoneEditing=false;if(m){$('mePill').innerHTML=avatar(TEAM[byName[myName]],'idle')+'You: '+myName;sfx('pop')}pkey='';phoneRender(true)}})};
   $('ph-change').onclick=()=>{myName=null;room.presence({role:null,name:null,ans:null}).catch(()=>{});$('mePill').hidden=true;pkey='';phoneRender(true)};return}
  if(s.ph==='rules'){B.innerHTML=card(`<h2>How it works</h2><div class="prules"><p>⚡ Answer fast on this phone</p><p>⭐ Right +10, close +3 to +6, answering +1</p><p>🛡️ Questions 1 to 3: nobody leaves</p><p>🌉 Then the lowest score leaves after every question</p><p>🪑 Out? Keep answering for half points</p><p>🔁 Missed weeks multiply your first game back</p></div>`);return}
+ if(s.ph==='bday'){B.innerHTML=card(`<div class="big">${stage(my,'happy')}</div><h2>🎂 Birthday break</h2><p class="hint">Look at the big screen. Question 1 starts right after.</p>`);return}
  if(!s.q){B.innerHTML=card(`<div class="big">${stage(my,'idle')}</div><h2>Watch the big screen</h2>`);return}
  const Q=s.q,[ic,dir]=DIRS[Q.type];
  if(s.ph==='intro'){B.innerHTML=card(`<div class="qn" style="font-family:var(--display);font-weight:800;color:var(--dim)">QUESTION ${s.qi+1} OF ${s.n}</div><div class="cat" style="background:${CATCOL[Q.type]};color:#fff;font-family:var(--display);font-weight:800;font-size:34px;border-radius:14px">${esc(Q.tag)}</div><div class="direction">${ic} ${dir}</div><div class="big">${stage(my,'idle')}</div><h2>Get ready!</h2>`);return}
@@ -4812,9 +4973,11 @@ function admSettings(){const c=CFG,b=loadBank(),cw=currentWeek();
  <h3>Seconds to answer, by question type</h3><div class="frow">${Object.keys(TAGS).map(k=>`<label>${TAGS[k]}<input id="c-t-${k}" type="number" min="5" max="120" value="${c.times[k]}"></label>`).join('')}</div>
  <h3>Pauses between questions (seconds)</h3><div class="frow"><label>Celebration screen<input id="c-cel" type="number" min="4" max="30" value="${c.celebrate}"></label><label>Scoreboard<input id="c-brd" type="number" min="4" max="30" value="${c.board}"></label><label>Elimination scene<input id="c-elim" type="number" min="5" max="20" step=".5" value="${c.elim}"></label></div>
  <p class="hint">A question's own seconds (set on the Questions tab) wins over the type default.</p>
+ <h3>Birthday intro</h3><div class="frow"><label><span><input id="c-bday" type="checkbox" ${c.bday?'checked':''}> Play the Happy Birthday Week intro before Question 1</span></label><label>Birthday names (comma between names)<input id="c-bdn" type="text" value="${esc(c.bdayNames||'')}"></label></div>
+ <p class="hint">The named people stand behind the cake and everyone else on the roster claps. Turn it off after the birthday week.</p>
  <div class="frow"><button class="btn blue sm" type="submit">Save settings</button><button class="skip" type="button" id="c-def">Back to defaults</button></div></form>`;
  $('cf').onsubmit=e=>{e.preventDefault();const n=(id,d)=>{const v=+$(id).value;return isNaN(v)?d:v};
-  CFG={...CFG,week:+$('c-week').value,start:/^\d{4}-\d{2}-\d{2}$/.test($('c-start').value)?$('c-start').value:DEF_CFG.start,warm:Math.max(0,Math.min(9,n('c-warm',3))),celebrate:n('c-cel',10),board:n('c-brd',10),elim:n('c-elim',9.5),times:Object.fromEntries(Object.keys(TAGS).map(k=>[k,Math.max(5,n('c-t-'+k,DEF_CFG.times[k]))]))};saveCfg(CFG);admMsg('Settings saved.')};
+  CFG={...CFG,week:+$('c-week').value,start:/^\d{4}-\d{2}-\d{2}$/.test($('c-start').value)?$('c-start').value:DEF_CFG.start,warm:Math.max(0,Math.min(9,n('c-warm',3))),celebrate:n('c-cel',10),board:n('c-brd',10),elim:n('c-elim',9.5),bday:$('c-bday').checked?1:0,bdayNames:$('c-bdn').value.trim(),times:Object.fromEntries(Object.keys(TAGS).map(k=>[k,Math.max(5,n('c-t-'+k,DEF_CFG.times[k]))]))};saveCfg(CFG);admMsg('Settings saved.')};
  $('c-def').onclick=()=>{CFG=JSON.parse(JSON.stringify(DEF_CFG));saveCfg(CFG);admSettings();admMsg('Settings back to defaults.')}}
 /* backup */
 function admBackup(){const data=()=>JSON.stringify({v:1,bank:loadBank(),cfg:CFG,roster:loadRoster(),season:loadSeason()});
