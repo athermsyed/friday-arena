@@ -4656,6 +4656,7 @@ const SND=(function(){
       if(s%2===1)noise(.04,{type:'highpass',f:7000,vol:.12,at});if(bass[s])tone(midi(bass[s]),s16*1.6,{type:'sawtooth',vol:.11,at,lp:700});
       next+=s16;step++}},25)}
   function beatStop(){if(beatId){clearInterval(beatId);beatId=null}}
+  function cur(){return song}
   function songPlay(url,start){songStop();if(!on||!url)return false;try{song=new Audio(url);song.currentTime=+start||0;song.volume=.9;const p=song.play();if(p&&p.catch)p.catch(()=>{beatStart()});return true}catch(e){return false}}
   /* play only the last `secs` seconds of a song, so it finishes on the song's own ending */
   function songTail(url,secs){songStop();if(!on||!url)return false;try{const a=new Audio(url);song=a;a.volume=0;let started=false;
@@ -4665,7 +4666,7 @@ const SND=(function(){
     a.addEventListener('loadedmetadata',go);setTimeout(go,1500);a.load();return true}catch(e){return false}}
   function songStop(){if(song){try{song.pause()}catch(e){}song=null}beatStop()}
   function hold(v){try{if(song){v?song.pause():song.play()}if(ctx){v?ctx.suspend():ctx.resume()}}catch(e){}}
-  return {init,fx,beatStart,beatStop,songPlay,songTail,songStop,hold,set(v){on=v;if(!v){beatStop();songStop()}},get on(){return on}};
+  return {init,fx,beatStart,beatStop,songPlay,songTail,songStop,cur,hold,set(v){on=v;if(!v){beatStop();songStop()}},get on(){return on}};
 })();
 const FX=SND.fx;
 function say(t){if(!SND.on||!SET().voice)return;t=String(t).replace(/\b5G\b/gi,'five G').replace(/AT&T/g,'A T and T');try{const u=new SpeechSynthesisUtterance(t);u.pitch=.4;u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -4763,8 +4764,8 @@ function watchPlayers(){
   NET.on('live/react',v=>{v=v||{};for(const id in v){const r=v[id];if(!r||!r.ts)continue;if(G['re'+id]===r.ts)continue;G['re'+id]=r.ts;if(Date.now()-r.ts<8000)floatyReact(r.w,G.players[id])}});
 }
 async function loadHead(id){const h=await NET.get('live/heads/'+id);if(h&&G.players[id]){G.players[id].head=h;if(G.ph==='lobby')renderLobby()}}
-function floatyReact(w,p){const tv=$('tv');if(!tv||!tv.isConnected)return;const r=REACTS.find(x=>x[0]===w)||REACTS[1];const c=p&&p.team?TEAMS[p.team].c:'#ffcf3f';
-  const f=el(`<div class="floaty" style="left:${8+Math.random()*84}%;bottom:8%;color:${c}"><i>${r[1]}</i>${r[2]}${p&&p.n?`<small>${esc(p.n)}</small>`:''}</div>`);tv.appendChild(f);setTimeout(()=>f.remove(),2600)}
+function floatyReact(w,p){const tv=$('tv');if(!tv||!tv.isConnected)return;const r=REACTS.find(x=>x[0]===w)||REACTS[1];const c='#ffffff';
+  const f=el(`<div class="floaty" style="left:${8+Math.random()*84}%;bottom:8%;color:${c}"><i>${r[1]}</i>${r[2]}</div>`);tv.appendChild(f);setTimeout(()=>f.remove(),2600)}
 
 /* ---------------- practice bots ---------------- */
 function addBots(n){const bodies=freeBodies();const used=new Set(P().map(p=>p.n));let k=0;
@@ -4839,7 +4840,7 @@ async function hostLobby(){G.ph='lobby';hclear();tvEl().innerHTML='';broadcast('
 /* ---------------- game flow ---------------- */
 async function startGame(){
   if(G.running)return;const ps=P().filter(p=>p.head);if(ps.length<2){alert0('At least 2 fighters are needed.');return}
-  SND.init();G.running=true;G.paused=false;G.ko=0;G.roundNo=0;G.finalPips={};G.eliminatedOrder=[];G.teamsDone={};G.usedFins=[];G.seen={};G.tw=0;G.lastTwist='';G.usedTw=[];G.usedExits=[];G.duelUsed=[];G.pending={};
+  SND.init();G.running=true;G.paused=false;G.ko=0;G.roundNo=0;G.finalPips={};G.eliminatedOrder=[];G.teamsDone={};G.usedFins=[];G.seen={};G.tw=0;G.lastTwist='';G.usedTw=loadUsedTw();G.usedExits=[];G.duelUsed=[];G.pending={};
   P().forEach(p=>{p.score=0;p.ghost=false;p.out=0;p.team='';p.streak=0;p.nOk=0;p.fast=0;p.stopD=null;p.stopT=null});
   const sh=shuffle(P());sh.forEach((p,i)=>p.team=i%2?'blue':'red');
   showHostBar('game');
@@ -4915,8 +4916,7 @@ async function playQuestion(q,info){
   hostQuestionScene(G.q);
   botAnswers(G.q);
   const timeMs=secs*1000+(fmt==='falling'?0:0);
-  if(['classic','stones','doors','number','whack'].includes(fmt)){await waitUntil(()=>ps.every(p=>p.kicked||G.q.answers[p.id])&&Date.now()-(G.q.last||0)>5000,timeMs);await wait(900)}
-  else await wait(timeMs+300);
+  await wait(timeMs+300);
   // score
   const res=scoreQuestion(G.q);const extraLines=applyPending(G.q,res);
   broadcast('reveal',{q:qPublic(q),fmtData:extra,correct:q.correct,num:q.num,res,info:extra.info});
@@ -4960,7 +4960,7 @@ function onInput(id,v){
 function hostQuestionScene(Q){const q=Q.q,fmt=Q.fmt,ps=P();const head=topbar(`${Q.extra.info.label} &middot; ${FORMATS[fmt].n.toUpperCase()}`,Q.extra.info.warm?'NO KNOCKOUTS YET':`${alive().length} ALIVE &middot; ${ghosts().length} GHOSTS`,{classic:'',falling:'b',stones:'v',doors:'',whack:'l',number:'g'}[fmt],'d');
   const qtxt=`<div class="q" style="font-size:${q.text.length>80?2.2:2.6}cqw">${esc(q.text)}</div>`;const tb=`<div class="tbar"><i id="tb"></i></div>`;
   const strip=()=>{const n=ps.length;const cols=n>20?Math.ceil(n/2):n;return `<div class="strip" style="grid-template-columns:repeat(${cols},${Math.min(6.6,88/cols)}cqw)">${ps.map(p=>`<div class="m wait${p.ghost?' ghosty':''}" data-id="${p.id}">${svgAv(p,p.ghost?'ghost':'thinking',{anim:false,w:60,rim:false})}</div>`).join('')}</div>`};
-  const lockCnt=`<div class="cnt" id="lk">0 / ${ps.length} LOCKED IN</div>`;
+  const lockCnt=`<div class="cnt" id="lk">CHANGE YOUR ANSWER UNTIL TIME RUNS OUT</div>`;
   let tv;QV={n:0};
   if(fmt==='classic'){tv=scene(`<div class="tvin">${head}${tb}${qtxt}<div class="opts" id="opts">${arr(q.opts).map((t,i)=>`<div class="opt ${OPT_COL[i]}"><b>${LET[i]}</b><span>${esc(t)}</span><span class="n"></span><i class="fill"></i></div>`).join('')}</div>${lockCnt}${strip()}</div>`)}
   else if(fmt==='falling'){const L=Q.extra.lanes;const LX=[13,37.5,62,86.5];QV.LX=LX;
@@ -4990,13 +4990,13 @@ function hostQuestionScene(Q){const q=Q.q,fmt=Q.fmt,ps=P();const head=topbar(`${
       <div class="dallas"><div class="sky">${[8,14,10,18,12,22,9,15,11].map((h,i)=>`<i style="height:${h}cqw;left:${i*11}%"></i>`).join('')}</div><div class="pin"><b id="dn">?</b><span>DALLAS</span></div></div>
       <div class="nline" id="nl">${[0,1,2,3,4,5,6,7,8].map(k=>{const n=Math.round(k*(q.max||50)/8);return `<span style="left:${k/8*100}%">${n}</span>`}).join('')}</div><div id="pins"></div>`)}
   tv.insertAdjacentHTML('beforeend',venue(fmt));
+  /* keep the face strip shuffling so nobody can read anything into where a face sits */
+  const stp=tv.querySelector('.strip');if(stp){const sh=setInterval(()=>{if(!stp.isConnected){clearInterval(sh);return}const ms=[...stp.children];for(let i=ms.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[ms[i],ms[j]]=[ms[j],ms[i]]}ms.forEach(m=>stp.appendChild(m))},2000);G.timers.push(sh)}
   const tbi=tv.querySelector('#tb');if(tbi){tbi.style.transition=`transform ${Q.secs}s linear`;requestAnimationFrame(()=>requestAnimationFrame(()=>tbi.style.transform='scaleX(0)'))}
   for(let s=0;s<Q.secs;s++)HT(()=>FX.tick(),s*1000);HT(()=>FX.riser(3),(Q.secs-3)*1000);
 }
-function liveAnswer(id,v){const tv=tvEl();const Q=G.q;if(!Q)return;const p=G.players[id];
-  const m=tv.querySelector(`.strip .m[data-id="${id}"]`);if(m&&m.classList.contains('wait')){m.classList.remove('wait');m.innerHTML=svgAv(p,p.ghost?'ghost':'lockedin',{anim:false,w:60,rim:false});FX.pop()}
-  const lk=tv.querySelector('#lk');if(lk){QV.locked=QV.locked||new Set();QV.locked.add(id);lk.textContent=`${QV.locked.size} / ${P().length} LOCKED IN`}
-}
+/* v1.9: answers stay secret until time runs out. The projector never shows who has answered or what they picked. */
+function liveAnswer(id,v){}
 async function hostReveal(Q,res){const tv=tvEl(),q=Q.q,fmt=Q.fmt,ps=P();const opts=arr(q.opts);const right=opts[q.correct];
   const ptsAt=(node,p)=>{const r=res[p.id];if(!r)return;placePts(node,'+'+r.p,r.ok?'g':'w');if(r.ok)FX.coin()};
   const counts=[0,0,0,0];vals(res).forEach(r=>{if(r.v!=null&&r.v>=0&&r.v<4)counts[r.v]++});
@@ -5073,13 +5073,18 @@ const TW_RULES={
   bet:{n:'Double or Nothing',icon:'&#127922;',do:['Bet 0, 5 or 10 points on your phone','The NEXT question comes right away','Right: +your bet. Wrong: minus your bet'],why:''},
   duel:{n:'Duel',icon:'&#9876;&#65039;',do:['Two players answer one question','Fastest right answer: +15','Everyone else: pick the winner for +3'],why:''},
   bounty:{n:'Bounty Hunt',icon:'&#129312;',do:['Next question: beat the leader','Faster right answer than the leader: take 2 points'],why:''}};
+function loadUsedTw(){try{const v=JSON.parse(localStorage.getItem('tl_usedTw')||'[]');return Array.isArray(v)?v.filter(k=>TWISTS[k]):[]}catch(e){return []}}
+function saveUsedTw(){try{localStorage.setItem('tl_usedTw',JSON.stringify(G.usedTw||[]))}catch(e){}}
 function twistOptions(isLast){const S=SET();const off=arr(S.twistsOff);let k=Object.keys(TWISTS).filter(x=>!off.includes(x));
   if(alive().length<=3)k=k.filter(x=>!TWISTS[x].out);if(isLast)k=k.filter(x=>!TWISTS[x].next);
   if(!duelQuestion()||alive().length<2)k=k.filter(x=>x!=='duel');if(alive().length<4)k=k.filter(x=>x!=='steal');if(P().length<3)k=k.filter(x=>x!=='potato');
-  G.usedTw=G.usedTw||[];let fresh=k.filter(x=>!G.usedTw.includes(x));if(!fresh.length){G.usedTw=[];fresh=k.filter(x=>x!==G.lastTwist)}if(!fresh.length)fresh=k;return {all:k,fresh}}
+  G.usedTw=G.usedTw||loadUsedTw();const pool=Object.keys(TWISTS).filter(x=>!off.includes(x));
+  /* a full cycle is over when every twist in play has been used: then start again, still never the same as last time */
+  if(pool.every(x=>G.usedTw.includes(x))){G.usedTw=[];saveUsedTw()}
+  let fresh=k.filter(x=>!G.usedTw.includes(x));if(!fresh.length)fresh=k.filter(x=>x!==G.lastTwist);if(!fresh.length)fresh=k;return {all:k,fresh}}
 async function wheelOfFate(isLast){const T=twistOptions(isLast);const opts=T.all;if(!opts.length)return null;
   if(!G.seen.wheel)await howTo('wheel',null,null,TW_RULES.wheel);else G.seen.wheel=1;
-  const bag=[];T.fresh.forEach(k=>{for(let i=0;i<TWISTS[k].w;i++)bag.push(k)});const pick=bag[Math.floor(Math.random()*bag.length)];G.lastTwist=pick;G.usedTw.push(pick);
+  const bag=[];T.fresh.forEach(k=>{for(let i=0;i<TWISTS[k].w;i++)bag.push(k)});const pick=bag[Math.floor(Math.random()*bag.length)];G.lastTwist=pick;G.usedTw.push(pick);saveUsedTw();
   const n=opts.length;broadcast('wheelf',{opts,pick});
   const tv=scene(`<div class="tvin" style="align-items:center">${topbar('WHEEL OF FATE','WHAT HAPPENS NEXT?','g','d')}
     <div class="fate"><div class="fptr"></div><div class="fdisc" id="fd" style="background:conic-gradient(${opts.map((k,i)=>`${TWISTS[k].c} ${i/n*360}deg ${(i+1)/n*360}deg`).join(',')})">${opts.map((k,i)=>`<div class="flab" style="transform:rotate(${(i+.5)/n*360-90}deg)"><span class="${(i+.5)/n>.5?'flip':''}">${TWISTS[k].ic} ${TWISTS[k].n}</span></div>`).join('')}</div><div class="fhub">&#127922;</div></div>
@@ -5424,10 +5429,14 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
   tv2.insertAdjacentHTML('beforeend',venue('dance'));G.dance_.t0=Date.now();const up=await NET.get('data/song');if(!SND.songPlay(up||DEF_SONG.url,up?S.songStart:0))SND.beatStart();
   lyr.forEach((l,i)=>{HT(()=>{tv2.querySelectorAll('#hl .ln').forEach(n=>n.classList.toggle('on',+n.dataset.i===i));const nx=lyr[i+1]?lyr[i+1].s:l.s+4.5;const ws=tv2.querySelectorAll(`#hl .ln[data-i="${i}"] span`);ws.forEach((w,k)=>HT(()=>w.classList.add('lit'),k*((nx-l.s)*1000-300)/ws.length))},l.s*1000)});
   const cl=tv2.querySelector('#cl');
-  cues.forEach((c,i)=>{if(c.t>secs*1000)return;HT(()=>{const mv=DMOVES.find(x=>x[0]===c.m)||DMOVES[0];const d=el(`<div class="cue" style="background:${DCOL[c.m]||'#fff'}">${mv[2]}<small>${mv[1]}</small></div>`);cl.appendChild(d);d.animate([{left:'100%'},{left:'8%'}],{duration:1800,easing:'linear',fill:'forwards'});setTimeout(()=>{d.classList.add('hit');setTimeout(()=>d.remove(),300)},1800)},Math.max(0,c.t-1800));
-    [dr,db].forEach(p=>HT(()=>{if(G.dance_.user[p.id])return;const rt=(p.bot||!G.dance_.user[p.id])?(Math.random()<(p.skill||.6)?'PERFECT':'GOOD'):'GOOD';danceHit(p.id,c.m,rt)},c.t+Math.random()*120))});
-  for(let i=0;i<secs*0.7;i++)HT(()=>{if(Math.random()<.5)floatyReact(['fire','wow','yes','go'][i%4],{team:i%2?'blue':'red'})},800+i*1400);
-  await wait(secs*1000+500);SND.songStop();
+  cues.forEach((c,i)=>{if(c.t>secs*1000)return;HT(()=>{if(G.dance_.over)return;const mv=DMOVES.find(x=>x[0]===c.m)||DMOVES[0];const d=el(`<div class="cue" style="background:${DCOL[c.m]||'#fff'}">${mv[2]}<small>${mv[1]}</small></div>`);cl.appendChild(d);d.animate([{left:'100%'},{left:'8%'}],{duration:1800,easing:'linear',fill:'forwards'});setTimeout(()=>{d.classList.add('hit');setTimeout(()=>d.remove(),300)},1800)},Math.max(0,c.t-1800));
+    [dr,db].forEach(p=>HT(()=>{if(G.dance_.over||G.dance_.user[p.id])return;const rt=(p.bot||!G.dance_.user[p.id])?(Math.random()<(p.skill||.6)?'PERFECT':'GOOD'):'GOOD';danceHit(p.id,c.m,rt)},c.t+Math.random()*120))});
+  for(let i=0;i<secs*0.7;i++)HT(()=>{if(!G.dance_.over&&Math.random()<.5)floatyReact(['fire','wow','yes','go'][i%4],{team:i%2?'blue':'red'})},800+i*1400);
+  /* the dance ends the moment the song ends (or at the time limit if there is no song) */
+  await wait(1500);await waitUntil(()=>{const a=SND.cur();return !!(a&&(a.ended||(isFinite(a.duration)&&a.currentTime>=a.duration-.05)))},secs*1000-1000);
+  G.dance_.over=true;SND.songStop();SND.beatStop();cl.querySelectorAll('.cue').forEach(c=>c.remove());
+  tv2.querySelectorAll('.dancer').forEach(d=>{d.classList.remove('groove');const f=d.querySelector('.fig');if(f){[...f.classList].filter(c=>c.startsWith('mv-')).forEach(c=>f.classList.remove(c));f.classList.add('mv-cheer')}});
+  banner('THE SONG IS OVER!');FX.cheer(2);await wait(2500);
   // vote
   G.vote_={votes:{},dancers:[dr.id,db.id]};broadcast('vote',{dancers:{red:dr.id,blue:db.id},timing:{[dr.id]:G.dance_.score[dr.id],[db.id]:G.dance_.score[db.id]}});
   const timeTxt=id=>{const h=G.dance_.hits[id];return `${h.filter(x=>x==='PERFECT').length} PERFECT &middot; ${h.filter(x=>x==='GOOD').length} GOOD`};
@@ -5442,7 +5451,7 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
   tv3.querySelectorAll('.vd').forEach(d=>{const p=G.players[d.dataset.id];setEmo(d.querySelector('.fig'),p,p.id===winId?'happy':'wrong',{anim:true});if(p.id===winId)d.querySelector('.fig').classList.add('mv-cheer')});
   await wait(2000);const list=team(wt);const row=el(`<div style="position:absolute;left:0;right:0;top:12%;display:flex;justify-content:center;gap:.4cqw;z-index:30">${list.map(p=>`<div class="rw" style="width:${Math.min(6.5,90/list.length)}cqw">${svgAv(p,p.ghost?'ghost':'happy',{anim:false,w:80,rim:false})}</div>`).join('')}</div>`);tv3.appendChild(row);
   row.querySelectorAll('.rw').forEach((d,i)=>HT(()=>{placePts(d,'+25','b');FX.coin()},i*130));HT(()=>banner('+25 TO EVERY '+TEAMS[wt].n+' FIGHTER'),list.length*130+300);await wait(list.length*130+3500)}
-function danceHit(id,m,rt){const tv=tvEl();const d=tv.querySelector(`.dancer[data-id="${id}"]`);if(!d||!G.dance_)return;const f=d.querySelector('.fig');if(!DMOVES.find(x=>x[0]===m))return;moveClass(f,'mv-'+m,m==='flip'?1050:950);
+function danceHit(id,m,rt){const tv=tvEl();const d=tv.querySelector(`.dancer[data-id="${id}"]`);if(!d||!G.dance_||G.dance_.over)return;const f=d.querySelector('.fig');if(!DMOVES.find(x=>x[0]===m))return;moveClass(f,'mv-'+m,m==='flip'?1050:950);
   const p=G.players[id];const left=d.style.left?27:73;const lab=el(`<div class="mvname" style="left:${left}%;color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${esc(rt||'FREESTYLE')}!</div>`);tv.appendChild(lab);setTimeout(()=>lab.remove(),950);
   G.dance_.hits[id].push(rt);G.dance_.score[id]+=rt==='PERFECT'?2:rt==='GOOD'?1:0;const h=tv.querySelector(`#hy-${p.team} i`);if(h)h.style.height=Math.min(100,10+G.dance_.score[id]*5)+'%';if(m==='flip'||m==='jump')FX.slideUp()}
 function voteLive(){const tv=tvEl();if(!G.vote_)return;G.vote_.dancers.forEach(id=>{const c=vals(G.vote_.votes).filter(v=>v===id).length;const tot=Math.max(1,P().length-2);const b=tv.querySelector('#vb-'+id),n=tv.querySelector('#vn-'+id),h=tv.querySelector('#vh-'+id);if(b)b.style.width=c/tot*100+'%';if(n)n.textContent=c;
