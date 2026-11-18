@@ -4588,33 +4588,42 @@ const DEF_SET={pin:'1111',title:'TEAM LIU TRIVIA',sub:'AT&T \u00b7 DALLAS EDITIO
   finishersOff:[],lyrics:DEF_LYR,songName:'',songStart:0,ghostHalf:true};
 const Q_SEED=[
  {text:'Rebecca Liu’s April theme of the month was “Operating with ______.”',format:'falling',opts:['Urgency','Caution','Consensus','Patience'],correct:0},
- {text:'In the AI Governance process, which step comes after “Solution Evaluation”?',format:'stones',opts:['Deployment','Risk Mitigation','Idea Intake','Monitoring'],correct:1},
- {text:'What type of organizational environment has AT&T started to adopt this year?',format:'doors',opts:['Matrix Culture','Market Based Culture','Startup Culture','Command and Control'],correct:1},
+ {text:'What is Rebecca\'s cat\'s name?',format:'stones',opts:['Oliver','Milo','Benji','Charlie'],correct:2},
+ {text:'Which Team Liu member is currently learning how to kitesurf?',format:'doors',opts:['Courtney Paquette','Mary Perez','Tara Stargell','Natalie Mitchell'],correct:1},
  {text:'Which of these is NOT one of AT&T’s Market Based Behaviors?',format:'whack',opts:['Serve Customer First','Move Faster','Ask for Permission','Win as One / Develop Talent'],correct:2},
- {text:'How many Team Liu team members are located in Dallas?',format:'number',num:null,max:50,note:'Add the real number before the game. This question is skipped until it has an answer.'},
+ {text:'Which Team Liu member accidentally ended up with a welding degree?',format:'classic',opts:['Flavia Mack','Marcos Rivera','Anna McLean','Joshua Thomas'],correct:2},
  {text:'What did the letters AT&T originally stand for?',format:'falling',opts:['American Telephone & Telegraph','American Telecom & Technology','Atlantic Telephone & Telegraph','American Tower & Transmission'],correct:0},
  {text:'In what year did Alexander Graham Bell make the first telephone call?',format:'classic',opts:['1851','1876','1901','1927'],correct:1},
- {text:'Which animal has three hearts?',format:'classic',opts:['Dolphin','Octopus','Shark','Penguin'],correct:1},
- {text:'Which planet has a day longer than its year?',format:'classic',opts:['Mars','Jupiter','Venus','Mercury'],correct:2},
- {text:'Which of these is NOT a Dallas area pro sports team?',format:'whack',opts:['Cowboys','Mavericks','Stars','Spurs'],correct:3},
- {text:'How tall is Reunion Tower, in feet?',format:'number',num:561,max:1000},
- {text:'Which animal can survive being frozen for months and come back to life?',format:'falling',opts:['Wood frog','Goldfish','Turtle','Penguin'],correct:0},
+ {text:'Which Team Liu member has a Great-Great-Great Grandfather who delivered Mark Twain?',format:'classic',opts:['Emery Porter','Davis Galleon','Brandon Beck','Teresa Brazil'],correct:2},
+ {text:'Which Team Liu member has been slimed on Nickelodeon?',format:'classic',opts:['Parker Alspach','Eva Mbote','Sher Pollard','Graham Amerson'],correct:2},
+ {text:'Which Team Liu member is technically an NFL owner through a share of the Green Bay Packers?',format:'whack',opts:['Reese Jefferies','Kevin Nicholas','Benjamin Fronberry','Brandon Beck'],correct:2},
+ {text:'What is Rebecca\'s go-to snack?',format:'classic',opts:['Flamin\' Hot Cheetos','Popcorn','Salt & vinegar chips','Pretzels'],correct:2},
+ {text:'Which Team Liu member participates in global Roast Battle leagues?',format:'falling',opts:['Sarkis Majarian','Myles Ward','Reese Jefferies','Kim Bryant'],correct:2},
  {text:'What was the original area code for Dallas?',format:'classic',role:'comeback',opts:['214','469','972','817'],correct:0},
  {text:'AT&T moved its headquarters to Dallas in 2008. From which city?',format:'classic',role:'final',opts:['Houston','San Antonio','Austin','Atlanta'],correct:1},
  {text:'Which NFL team plays its home games at AT&T Stadium?',format:'classic',role:'final',opts:['Houston Texans','Dallas Cowboys','New York Giants','Kansas City Chiefs'],correct:1},
- {text:'Which river runs through Dallas?',format:'classic',role:'final',opts:['Red River','Brazos River','Trinity River','Colorado River'],correct:2},
- {text:'What is the popular nickname of Dallas?',format:'classic',role:'final',opts:['Big D','The Lone City','Cowtown','The Bayou City'],correct:0},
- {text:'Which giant cowboy statue greets visitors at the State Fair of Texas?',format:'classic',role:'final',opts:['Big Tex','Tall Tom','Lone Star Larry','Cowboy Carl'],correct:0},
- {text:'Where do the Dallas Mavericks play their home games?',format:'classic',role:'final',opts:['AT&T Stadium','American Airlines Center','Globe Life Field','Fair Park'],correct:1}
+ {text:'What was the legacy IVR male voice\'s name?',format:'classic',opts:['Frank','Phil','Walter','George'],correct:1,role:'final'},
+ {text:'What did Rebecca want to be when she was a kid?',format:'classic',opts:['Teacher','Doctor','Singer','Veterinarian'],correct:1,role:'final'},
+ {text:'What was the name of the team llama Rebecca adopted?',format:'classic',opts:['Robbie','Jay','Larry','PJ'],correct:3,role:'final'},
+ {text:'Which Team Liu member was an Abercrombie & Fitch model in the \'90s?',format:'classic',opts:['Evette Williams','Chris Nelson','Billy Hamilton Jr','Mike McKelvaine'],correct:1,role:'final'}
 ];
 const DATA={questions:{},settings:null,season:{},ask:{},history:{}};
 function SET(){const d=DATA.settings||{};const s=Object.assign({},DEF_SET,d);const old=d.tv!==4;/* settings saved before the slower pacing update keep the new, slower defaults */s.timers=Object.assign({},DEF_SET.timers,old?{}:(d.timers||{}));if(old){s.finSecs=DEF_SET.finSecs;s.danceSecs=DEF_SET.danceSecs;s.tugSecs=DEF_SET.tugSecs;s.tv=4}s.lyrics=arr(s.lyrics).length?arr(s.lyrics).map(l=>({t:l.t||'',s:+l.s||0,m:arr(l.m)})):DEF_LYR;s.finishersOff=arr(s.finishersOff);if(!s.title||/^crowd clash$/i.test(String(s.title).trim()))s.title=DEF_SET.title;return s}
 function qList(){return vals(DATA.questions).filter(q=>q&&q.id).map(q=>({...q,opts:arr(q.opts)})).sort((a,b)=>(a.order||0)-(b.order||0))}
 function qValid(q){if(!q||q.off)return false;if(!q.text)return false;if(q.format==='number')return q.num!==null&&q.num!==undefined&&q.num!==''&&!isNaN(+q.num);const o=arr(q.opts).filter(x=>String(x).trim());return o.length>=2&&q.correct!=null&&o[q.correct]!=null}
 /* v1.5: swap three questions in games that were already set up, matched by their old wording. */
-const Q_SWAP=[[/live music and street murals/i,{text:'Which animal has three hearts?',format:'classic',opts:['Dolphin','Octopus','Shark','Penguin'],correct:1}],
-  [/3G, 4G/i,{text:'Which planet has a day longer than its year?',format:'classic',opts:['Mars','Jupiter','Venus','Mercury'],correct:2}],
-  [/call .the Ball/i,{text:'Which animal can survive being frozen for months and come back to life?',format:'falling',opts:['Wood frog','Goldfish','Turtle','Penguin'],correct:0}]];
+const Q_SWAP=[[/live music and street murals|three hearts/i,{text:'Which Team Liu member has a Great-Great-Great Grandfather who delivered Mark Twain?',format:'classic',opts:['Emery Porter','Davis Galleon','Brandon Beck','Teresa Brazil'],correct:2}],
+  [/3G, 4G|day longer than its year/i,{text:'Which Team Liu member has been slimed on Nickelodeon?',format:'classic',opts:['Parker Alspach','Eva Mbote','Sher Pollard','Graham Amerson'],correct:2}],
+  [/call .the Ball|frozen for months/i,{text:'Which Team Liu member participates in global Roast Battle leagues?',format:'falling',opts:['Sarkis Majarian','Myles Ward','Reese Jefferies','Kim Bryant'],correct:2}],
+  [/Solution\ Evaluation/i,{text:'What is Rebecca\'s cat\'s name?',format:'stones',opts:['Oliver','Milo','Benji','Charlie'],correct:2}],
+  [/located\ in\ Dallas/i,{text:'Which Team Liu member accidentally ended up with a welding degree?',format:'classic',opts:['Flavia Mack','Marcos Rivera','Anna McLean','Joshua Thomas'],correct:2,num:null,note:''}],
+  [/organizational\ environment/i,{text:'Which Team Liu member is currently learning how to kitesurf?',format:'doors',opts:['Courtney Paquette','Mary Perez','Tara Stargell','Natalie Mitchell'],correct:1}],
+  [/NOT\ a\ Dallas/i,{text:'Which Team Liu member is technically an NFL owner through a share of the Green Bay Packers?',format:'whack',opts:['Reese Jefferies','Kevin Nicholas','Benjamin Fronberry','Brandon Beck'],correct:2}],
+  [/Reunion\ Tower,\ in\ feet/i,{text:'What is Rebecca\'s go-to snack?',format:'classic',opts:['Flamin\' Hot Cheetos','Popcorn','Salt & vinegar chips','Pretzels'],correct:2,num:null,note:''}],
+  [/river\ runs\ through\ Dallas/i,{text:'What was the legacy IVR male voice\'s name?',format:'classic',opts:['Frank','Phil','Walter','George'],correct:1}],
+  [/nickname\ of\ Dallas/i,{text:'What did Rebecca want to be when she was a kid?',format:'classic',opts:['Teacher','Doctor','Singer','Veterinarian'],correct:1}],
+  [/cowboy\ statue/i,{text:'What was the name of the team llama Rebecca adopted?',format:'classic',opts:['Robbie','Jay','Larry','PJ'],correct:3}],
+  [/Mavericks\ play/i,{text:'Which Team Liu member was an Abercrombie & Fitch model in the \'90s?',format:'classic',opts:['Evette Williams','Chris Nelson','Billy Hamilton Jr','Mike McKelvaine'],correct:1}]];
 async function migrateQuestions(){const q=await NET.get('data/questions');if(!q)return;for(const id in q){const x=q[id];if(!x||!x.text)continue;const m=Q_SWAP.find(([re])=>re.test(x.text));if(m)await NET.set('data/questions/'+id,Object.assign({},x,m[1]))}}
 async function seedIfEmpty(){const q=await NET.get('data/questions');if(q&&Object.keys(q).length)return;const o={};Q_SEED.forEach((s,i)=>{const id=uid('q');o[id]={id,order:(i+1)*10,role:'round',...s,num:s.num===undefined?null:s.num}});await NET.set('data/questions',o)}
 function watchData(onChange){['questions','settings','season','ask'].forEach(k=>NET.on('data/'+k,v=>{DATA[k]=v||(k==='settings'?null:{});onChange&&onChange(k)}))}
