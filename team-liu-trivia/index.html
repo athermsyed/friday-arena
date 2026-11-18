@@ -4424,6 +4424,9 @@ var qrcode = function() {
   Object.keys(MORE).forEach(function (k) { SPECS[k] = MORE[k]; });
   Object.keys(SPECS).forEach(function (k) { A.addBody(k, build(SPECS[k])); });
   A.JOINTED = Object.keys(SPECS);
+  /* v2.1: gender-neutral sample outfit for the photo step preview only (not pickable) */
+  A.addBody('sample', build({ label: 'Sample', build: B('athletic', { sw: 44, hw: 36 }), outfit: 'tee', legs: 'long', shoe: 'sneaker', sleeve: 'short',
+    colors: { top: '#9aa3b5', pants: '#2f4a7a', shoe: '#f4f1ea', shoe2: '#5a6190', accent: '#ffffff' } }));
   /* only jointed bodies can be picked: they all share one rig, so dances and celebrations are identical for everyone */
   A.BODIES = A.JOINTED.slice();
   /* style group for the body picker filter: f = women's styles, m = men's styles */
@@ -5736,7 +5739,7 @@ async function cropImg(img,o){o=o||{};scrollTo(0,0);const IW=img.width,IH=img.he
   const reset=()=>{z=start.z;ox=start.ox;oy=start.oy;draw();live()};
   const draw=()=>{g.fillStyle='#0b1430';g.fillRect(0,0,CW,CH);const s=base*z;g.drawImage(img,cx-IW*s/2+ox,cy-IH*s/2+oy,IW*s,IH*s)};
   const makeHead=()=>{const h=document.createElement('canvas');h.width=220;h.height=300;const c=h.getContext('2d');c.save();c.filter='blur(2px)';c.beginPath();c.ellipse(110,150,104,144,0,0,Math.PI*2);c.fillStyle='#000';c.fill();c.restore();c.globalCompositeOperation='source-in';c.drawImage(cv,0,0,CW,CH,-10,-10,240,330);let d=h.toDataURL('image/webp',.85);if(!d.startsWith('data:image/webp'))d=h.toDataURL('image/png');return d};
-  let lt=null;const live=()=>{clearTimeout(lt);lt=setTimeout(()=>{const n=$('lf');if(!n)return;const body=ME.body||'designer';n.innerHTML=ArenaAvatar.render({body,head:makeHead(),skin:ME.skin||'#c08a64',team:'#ffcf3f',emotion:'happy',animate:false,width:84,headScale:1.2})},120)};
+  let lt=null;const live=()=>{clearTimeout(lt);lt=setTimeout(()=>{const n=$('lf');if(!n)return;const body='sample';n.innerHTML=ArenaAvatar.render({body,head:makeHead(),skin:ME.skin||'#c08a64',team:'#ffcf3f',emotion:'happy',animate:false,width:84,headScale:1.2})},120)};
   const zoomAt=(nz,mx,my)=>{nz=clamp(nz,0.4,6);const k=nz/z;ox=mx-cx-(mx-cx-ox)*k;oy=my-cy-(my-cy-oy)*k;z=nz;draw()};
   const cb=$('crop'),pts=new Map();let g0=null,lastTap=0;const toC=e=>{const r=cb.getBoundingClientRect();return [(e.clientX-r.left)*CW/r.width,(e.clientY-r.top)*CH/r.height]};
   const snapG=()=>{const a=[...pts.values()];if(a.length>=2){const d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);g0={two:true,d,z,ox,oy,mx:(a[0][0]+a[1][0])/2,my:(a[0][1]+a[1][1])/2}}else if(a.length===1)g0={two:false,x:a[0][0],y:a[0][1],ox,oy};else g0=null};
