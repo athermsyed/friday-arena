@@ -529,6 +529,52 @@ select.pin2{appearance:auto}
 .cambox{width:62%;aspect-ratio:220/300;border-radius:50%;border:3px dashed var(--lime);display:grid;place-items:center;color:var(--muted);font-weight:700}
 .cropbox{position:relative;width:min(80vw,300px);aspect-ratio:260/360;margin:0 auto;border-radius:18px;overflow:hidden;background:#000;touch-action:none;cursor:grab}
 .cropbox canvas{width:100%;height:100%;display:block}
+
+
+.pcue .ring.pf{animation:ringPf .45s ease-out}.pcue .ring.ok{animation:ringOk .45s ease-out}
+@keyframes ringPf{0%{border-color:#ffcf3f;box-shadow:0 0 0 0 rgba(255,207,63,.9);transform:translate(-50%,-50%) scale(1.25)}100%{box-shadow:0 0 0 18px rgba(255,207,63,0);transform:translate(-50%,-50%) scale(1)}}
+@keyframes ringOk{0%{border-color:#c6ff3a;box-shadow:0 0 0 0 rgba(198,255,58,.8);transform:translate(-50%,-50%) scale(1.15)}100%{box-shadow:0 0 0 14px rgba(198,255,58,0);transform:translate(-50%,-50%) scale(1)}}
+.cuelane .ring.hr{animation:ringHr .5s ease-out}.cuelane .ring.hb{animation:ringHb .5s ease-out}
+@keyframes ringHr{0%{border-color:#ff3d6e;box-shadow:0 0 0 0 rgba(255,61,110,.9);transform:translate(-50%,-50%) scale(1.3)}100%{box-shadow:0 0 0 3cqw rgba(255,61,110,0);transform:translate(-50%,-50%) scale(1)}}
+@keyframes ringHb{0%{border-color:#00b8ff;box-shadow:0 0 0 0 rgba(0,184,255,.9);transform:translate(-50%,-50%) scale(1.3)}100%{box-shadow:0 0 0 3cqw rgba(0,184,255,0);transform:translate(-50%,-50%) scale(1)}}
+.obc{position:absolute;bottom:8%;width:21%;text-align:center;font-family:var(--display);font-size:1.8cqw;z-index:5;text-shadow:0 .2cqw .6cqw rgba(0,0,0,.6)}.obc b{color:#fff;font-weight:400}
+.pob{position:absolute;top:22px;font:800 11px var(--util,sans-serif);letter-spacing:1px;z-index:6;background:rgba(0,0,0,.45);padding:3px 7px;border-radius:99px}.pob b{color:#fff}
+/* v2.0 practice mode */
+body.prmode .phwrap .ph{min-height:calc(100dvh - 26px)}body.prmode.hasstage .phwrap .ph{min-height:calc(69dvh - 26px)}body.hasstage .ph .lyr.lph{height:48px}body.hasstage .ph .stopbtn{min-height:120px}
+.prbar{position:sticky;top:0;z-index:50;background:#0a2a55;color:#ffd23f;font:800 12px var(--util,sans-serif);letter-spacing:1.5px;text-align:center;padding:6px}
+.pstage{position:sticky;top:26px;z-index:40;height:31vh;min-height:190px;max-width:480px;margin:0 auto;overflow:hidden;background:radial-gradient(ellipse at 50% 20%,#2a1f6b,#0a0c2a 70%);border-bottom:3px solid #ffd23f;container-type:inline-size}
+.pstage .dfloor{position:absolute;left:0;right:0;bottom:0;height:30%;display:grid;grid-template-columns:repeat(6,1fr);opacity:.6}
+.pstage .dfloor i{border:1px solid rgba(255,255,255,.12);background:linear-gradient(135deg,rgba(255,61,110,.25),rgba(0,159,219,.25))}
+.pstage .dancer{position:absolute;bottom:6%;width:27%}
+.pslab{position:absolute;left:8px;top:6px;font:800 10px sans-serif;letter-spacing:2px;color:rgba(255,255,255,.55);z-index:5}
+.phy{position:absolute;bottom:10%;width:8px;height:60%;border-radius:4px;background:rgba(255,255,255,.12);overflow:hidden}.phy.l{left:6px}.phy.r{right:6px}.phy i{position:absolute;left:0;right:0;bottom:0;height:10%;transition:height .3s}
+.mvname2{position:absolute;top:34%;transform:translateX(-50%);font-family:var(--display);font-size:20px;text-shadow:0 2px 8px #000;animation:mvUp .9s ease-out forwards;z-index:6}@keyframes mvUp{from{opacity:0;transform:translate(-50%,10px) scale(.7)}20%{opacity:1;transform:translate(-50%,0) scale(1.1)}to{opacity:0;transform:translate(-50%,-24px)}}
+.psmsg{position:absolute;left:50%;top:40%;transform:translateX(-50%);font-size:40px;opacity:0;z-index:6}.psmsg.pop{animation:mvUp 1s ease-out}
+.prchk{display:flex;gap:8px;align-items:center;justify-content:center;font-weight:700;font-size:14px;margin:4px 0}.prchk input{width:20px;height:20px}
+.prstats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%}.prstats div{background:rgba(0,0,0,.2);border-radius:12px;padding:10px 4px;font-weight:800;font-size:12px;letter-spacing:1px;display:grid;gap:2px}.prstats b{font-family:var(--display);font-size:30px;font-weight:400}
+/* v2.0 photo step */
+.facehero{position:relative;width:min(52vw,210px);aspect-ratio:220/300;margin:8px auto 2px}
+.facehero img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 18px rgba(0,0,0,.35))}
+.facehero .ring2{position:absolute;inset:-6px;border-radius:50%;border:3px solid var(--gold);animation:ringP 2.4s ease-in-out infinite}
+@keyframes ringP{0%,100%{transform:scale(1);opacity:.9}50%{transform:scale(1.04);opacity:.5}}
+.facesil{width:100%;height:100%;border-radius:50%;background:rgba(255,255,255,.1);display:grid;place-items:center;overflow:hidden;position:relative}
+.facesil i{position:absolute;top:24%;width:44%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.28)}
+.facesil b{position:absolute;bottom:-16%;width:80%;aspect-ratio:1;border-radius:50%;background:rgba(255,255,255,.2)}
+.tips3{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin:4px 0 6px}.tips3 span{font-size:12.5px;font-weight:700;background:rgba(255,255,255,.12);padding:6px 10px;border-radius:99px}
+.pbtn.big{font-size:18px;padding:16px}
+.cropbox.cam video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scaleX(-1)}
+.cropbox .oval{display:grid;place-items:end center}
+.ovtag{transform:translateY(130%);background:var(--lime);color:#0a2a55;font-weight:800;font-size:12px;padding:4px 10px;border-radius:99px;white-space:nowrap}
+.cropbox.flash::after{content:'';position:absolute;inset:0;background:#fff;animation:fl .3s ease-out forwards}@keyframes fl{to{opacity:0}}
+.cntdn{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:90px;color:#fff;text-shadow:0 4px 20px rgba(0,0,0,.6);pointer-events:none}
+.shutrow{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;margin-top:6px}
+.shutter{width:78px;height:78px;border-radius:50%;border:5px solid #fff;background:transparent;padding:5px;cursor:pointer}.shutter i{display:block;width:100%;height:100%;border-radius:50%;background:#fff;transition:transform .1s}.shutter:active i{transform:scale(.88)}
+.gest{position:absolute;left:50%;bottom:10px;transform:translateX(-50%);background:rgba(0,0,0,.6);color:#fff;font-weight:800;font-size:13px;padding:6px 12px;border-radius:99px;pointer-events:none;transition:opacity .4s;white-space:nowrap}.gest.gone{opacity:0}
+.zrow{display:flex;justify-content:center;align-items:center;gap:14px}
+.zb{width:44px;height:44px;border-radius:50%;border:2px solid rgba(255,255,255,.5);background:rgba(255,255,255,.08);color:#fff;font-size:24px;font-weight:800;line-height:1;cursor:pointer}
+.livefig{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:700;color:var(--muted)}.livefig #lf{width:84px;min-height:20px}
+.cropbox{width:min(74vw,290px)}
+
 .cropbox .oval{position:absolute;inset:3% 8% 8%;border-radius:50%;box-shadow:0 0 0 999px rgba(8,11,34,.55);border:3px solid var(--lime);pointer-events:none}
 input[type=range]{width:100%;accent-color:var(--gold);height:32px}
 .bcell{border:2px solid transparent;color:var(--fg);font:inherit;cursor:pointer}
@@ -4351,6 +4397,30 @@ var qrcode = function() {
     biker:     { g: 'm', label: 'The Biker', build: B('tank', { sw: 54 }), outfit: 'leather', legs: 'long', shoe: 'boot', sleeve: 'long', acc: [['chain', '#c9ced8']],
                  colors: { top: '#2b2b36', pants: '#1f2547', shoe: '#1c1c26', shoe2: '#ff7a1a', accent: '#ff7a1a' } }
   };
+  /* v2.0 additions: 10 more women's fighters */
+  var WOMEN2 = {
+    designer:  { g: 'f', label: 'The Designer', build: B('hourglass'), outfit: 'dress', long: { by: 338, bw: 70 }, legs: 'tights', shoe: 'flat', sleeve: 'short', acc: [['belt', '#ffcf3f']],
+                 colors: { top: '#d93a8e', tights: '#2c2a3e', shoe: '#ffcf3f', shoe2: '#b8860b', accent: '#ffcf3f' } },
+    analyst:   { g: 'f', label: 'The Analyst', build: B('slim', { sw: 38, hw: 34 }), outfit: 'cardigan', long: { by: 330, bw: 52 }, skirt: '#1f2547', legs: 'tights', shoe: 'flat', sleeve: 'long', wrist: ['watch', '#c9ced8'],
+                 colors: { top: '#8fb8e8', tights: '#2c2a3e', shoe: '#1c1c26', shoe2: '#000', accent: '#f4f1ea', accent2: '#1f2547' } },
+    runner:    { g: 'f', label: 'The Runner', build: B('petite', { sw: 38, hw: 32, armW: 23 }), outfit: 'singlet', legs: 'shorts', shoe: 'sneaker', sleeve: 'none', wrist: ['band', '#ff7a1a'],
+                 colors: { top: '#c6ff3a', pants: '#1b1f4f', shoe: '#ff7a1a', shoe2: '#f4f1ea', accent: '#1b1f4f' } },
+    teacher:   { g: 'f', label: 'The Teacher', build: B('curvy', { sw: 40, hw: 37 }), outfit: 'sweater', legs: 'long', shoe: 'flat', sleeve: 'long', acc: [['scarf', '#ffcf3f']],
+                 colors: { top: '#c43c3c', pants: '#2c3a6b', shoe: '#6b4226', shoe2: '#2a1a14', accent: '#f4f1ea', accent2: '#ffcf3f' } },
+    diva:      { g: 'f', label: 'The Diva', build: B('hourglass', { sw: 38 }), outfit: 'dress', long: { by: 384, bw: 78 }, legs: 'tights', shoe: 'flat', sleeve: 'none', acc: [['chain', '#ffcf3f']],
+                 colors: { top: '#8a1538', tights: '#8a1538', shoe: '#ffcf3f', shoe2: '#b8860b', accent: '#ffcf3f' } },
+    boss:      { g: 'f', label: 'The Boss', build: B('slim', { sw: 40, hw: 34 }), outfit: 'blazer', legs: 'long', shoe: 'flat', sleeve: 'long', wrist: ['watch', '#ffcf3f'], acc: [['bag', '#c41e3a']],
+                 colors: { top: '#f4f1ea', pants: '#f4f1ea', shoe: '#c41e3a', shoe2: '#7a1020', accent: '#1b1f4f', accent2: '#ffcf3f' } },
+    yogi:      { g: 'f', label: 'The Yogi', build: B('petite', { sw: 38, hw: 34 }), outfit: 'tee', legs: 'tights', shoe: 'bare', sleeve: 'none',
+                 colors: { top: '#2bb3a3', tights: '#4b2a7a', pants: '#4b2a7a', shoe: '#000', shoe2: '#000', accent: '#f4f1ea' } },
+    barista:   { g: 'f', label: 'The Barista', build: B('curvy', { sw: 40 }), outfit: 'polo', legs: 'long', shoe: 'sneaker', sleeve: 'short', acc: [['lanyard', '#2a8a50']],
+                 colors: { top: '#2a8a50', pants: '#2c2a3e', shoe: '#f4f1ea', shoe2: '#2a8a50', accent: '#f4f1ea' } },
+    ranger:    { g: 'f', label: 'The Ranger', build: B('athletic', { sw: 42, hw: 36 }), outfit: 'puffer', legs: 'long', shoe: 'boot', sleeve: 'long', acc: [['backpack', '#c43c3c']],
+                 colors: { top: '#3f7d4e', sleeve: '#356b42', pants: '#8a7a55', shoe: '#6b4226', shoe2: '#2a1a14', accent: '#ffcf3f' } },
+    captain:   { g: 'f', label: 'The Captain', build: B('petite', { sw: 39, hw: 34 }), outfit: 'jersey', long: { by: 322, bw: 54 }, skirt: '#009fdb', legs: 'tights', shoe: 'sneaker', sleeve: 'short',
+                 colors: { top: '#009fdb', tights: '#f4f1ea', shoe: '#f4f1ea', shoe2: '#009fdb', accent: '#f4f1ea', num: 7 } }
+  };
+  Object.keys(WOMEN2).forEach(function (k) { MORE[k] = WOMEN2[k]; });
   Object.keys(MORE).forEach(function (k) { SPECS[k] = MORE[k]; });
   Object.keys(SPECS).forEach(function (k) { A.addBody(k, build(SPECS[k])); });
   A.JOINTED = Object.keys(SPECS);
@@ -4547,7 +4617,7 @@ const NET={mode:'none',ready:null};
   NET.onDisconnectRemove=p=>{if(NET.mode==='fb')try{fdb.ref(NET.full(p)).onDisconnect().remove()}catch(e){}};
   NET.err=e=>{console.warn('Crowd Clash save failed',e);const m=$('netWarn');if(m){m.hidden=false;m.textContent='Could not reach the game server. Check Wi-Fi or VPN.'}};
   NET.ready=(async()=>{
-    const forceLocal=/[?&]local/.test(location.search)||location.protocol==='file:';
+    const forceLocal=/[?&]local/.test(location.search)||/^#practice/.test(location.hash)||location.protocol==='file:';
     if(!forceLocal&&fbInit()){
       const ok=await Promise.race([fdb.ref('.info/serverTimeOffset').once('value').then(()=>fdb.ref(ROOT+'/ping').once('value')).then(()=>true,()=>false),sleep(7000).then(()=>false)]);
       if(ok){NET.mode='fb';return 'fb'}
@@ -4581,7 +4651,7 @@ const ROLES={round:'Game round',final:'Final face-off',comeback:'Comeback Door'}
 /* Built-in Dance-Off song: the full "Under a Dallas Sky" (1:30, 123 BPM), one line every 8 beats.
    The lines are move calls timed to the beat; paste the real lyrics in Host admin, Dance-Off song, to show them instead. */
 const DEF_SONG={url:'dance-song.mp3',name:'Under a Dallas Sky'};
-const DEF_LYR=[{t:"Here we go, Big D!",s:0.4,m:['armsup']},{t:"Thunder, Lightning, step up now",s:4.3,m:['wave']},{t:"Kick it to the left",s:8.2,m:['kick']},{t:"Slide it to the right",s:12.1,m:['slide']},{t:"Robot under city lights",s:16.0,m:['robot']},{t:"Shimmy, shimmy, feel the beat",s:19.9,m:['shimmy']},{t:"Jump up, touch the sky",s:23.8,m:['jump']},{t:"Disco in Deep Ellum",s:27.7,m:['disco']},{t:"Hands up for the Dallas sky",s:31.6,m:['armsup', 'wave']},{t:"Kick and slide, kick and slide",s:35.5,m:['kick', 'slide']},{t:"Robot, robot, lock it in",s:39.4,m:['robot']},{t:"Shimmy to the Reunion ball",s:43.3,m:['shimmy', 'disco']},{t:"Jump with your team",s:47.2,m:['jump']},{t:"Big D, show your moves",s:51.1,m:['disco', 'armsup']},{t:"Wave it high, wave it low",s:55.0,m:['wave']},{t:"Backflip time!",s:58.9,m:['flip']},{t:"Slide across the stage",s:62.8,m:['slide', 'kick']},{t:"Robot, then a shimmy",s:66.7,m:['robot', 'shimmy']},{t:"Jump, jump, jump!",s:70.6,m:['jump']},{t:"Disco for the crowd",s:74.5,m:['disco']},{t:"Hands up, one more time",s:78.4,m:['armsup']},{t:"Under a Dallas sky",s:82.4,m:['wave', 'disco']},{t:"Big finish, take a bow!",s:86.3,m:['flip']}];
+const DEF_LYR=[{t:"Here we go, Big D!",s:0.4,m:['armsup']},{t:"Thunder, Lightning, step up now",s:4.3,m:['wave']},{t:"Kick it to the left",s:8.2,m:['kick']},{t:"Slide it to the right",s:12.1,m:['slide']},{t:"Robot under city lights",s:16.0,m:['robot']},{t:"Shimmy, shimmy, feel the beat",s:19.9,m:['shimmy']},{t:"Jump up, touch the sky",s:23.8,m:['jump']},{t:"Disco in Deep Ellum",s:27.7,m:['disco']},{t:"Hands up for the Dallas sky",s:31.6,m:['armsup', 'wave']},{t:"Kick and slide, kick and slide",s:35.5,m:['kick', 'slide']},{t:"Robot, robot, lock it in",s:39.4,m:['robot']},{t:"Shimmy to the Reunion ball",s:43.3,m:['shimmy', 'disco']},{t:"Jump with your team",s:47.2,m:['jump']},{t:"Big D, show your moves",s:51.1,m:['disco', 'armsup']},{t:"Wave it high, wave it low",s:55.0,m:['wave']},{t:"Star jump time!",s:58.9,m:['jump']},{t:"Slide across the stage",s:62.8,m:['slide', 'kick']},{t:"Robot, then a shimmy",s:66.7,m:['robot', 'shimmy']},{t:"Jump, jump, jump!",s:70.6,m:['jump']},{t:"Disco for the crowd",s:74.5,m:['disco']},{t:"Hands up, one more time",s:78.4,m:['armsup']},{t:"Under a Dallas sky",s:82.4,m:['wave', 'disco']},{t:"Big finish, take a bow!",s:86.3,m:['armsup']}];
 const DEF_SET={pin:'1111',title:'TEAM LIU TRIVIA',sub:'AT&T \u00b7 DALLAS EDITION',warmup:1,speed:5,voice:true,
   timers:{classic:25,falling:22,stones:22,doors:22,whack:22,number:25,final:18,comeback:18},tv:4,howSecs:14,howSecsRepeat:9,dodgeSecs:4,
   comeback:true,comebackAfterKO:3,comebackSpots:2,tug:true,stopHide:false,tugAfterKO:1,tugSecs:15,dance:true,danceAfterKO:2,danceSecs:90,finSecs:15,finalTo:3,
@@ -4608,7 +4678,7 @@ const Q_SEED=[
  {text:'Which Team Liu member was an Abercrombie & Fitch model in the \'90s?',format:'classic',opts:['Evette Williams','Chris Nelson','Billy Hamilton Jr','Mike McKelvaine'],correct:1,role:'final'}
 ];
 const DATA={questions:{},settings:null,season:{},ask:{},history:{}};
-function SET(){const d=DATA.settings||{};const s=Object.assign({},DEF_SET,d);const old=d.tv!==4;/* settings saved before the slower pacing update keep the new, slower defaults */s.timers=Object.assign({},DEF_SET.timers,old?{}:(d.timers||{}));if(old){s.finSecs=DEF_SET.finSecs;s.danceSecs=DEF_SET.danceSecs;s.tugSecs=DEF_SET.tugSecs;s.tv=4}s.lyrics=arr(s.lyrics).length?arr(s.lyrics).map(l=>({t:l.t||'',s:+l.s||0,m:arr(l.m)})):DEF_LYR;s.finishersOff=arr(s.finishersOff);if(!s.title||/^crowd clash$/i.test(String(s.title).trim()))s.title=DEF_SET.title;return s}
+function SET(){const d=DATA.settings||{};const s=Object.assign({},DEF_SET,d);if(Array.isArray(s.lyrics))s.lyrics=s.lyrics.map(l=>l&&/backflip/i.test(l.t||'')?Object.assign({},l,{t:'Star jump time!'}):l);const old=d.tv!==4;/* settings saved before the slower pacing update keep the new, slower defaults */s.timers=Object.assign({},DEF_SET.timers,old?{}:(d.timers||{}));if(old){s.finSecs=DEF_SET.finSecs;s.danceSecs=DEF_SET.danceSecs;s.tugSecs=DEF_SET.tugSecs;s.tv=4}s.lyrics=arr(s.lyrics).length?arr(s.lyrics).map(l=>({t:l.t||'',s:+l.s||0,m:arr(l.m)})):DEF_LYR;s.finishersOff=arr(s.finishersOff);if(!s.title||/^crowd clash$/i.test(String(s.title).trim()))s.title=DEF_SET.title;return s}
 function qList(){return vals(DATA.questions).filter(q=>q&&q.id).map(q=>({...q,opts:arr(q.opts)})).sort((a,b)=>(a.order||0)-(b.order||0))}
 function qValid(q){if(!q||q.off)return false;if(!q.text)return false;if(q.format==='number')return q.num!==null&&q.num!==undefined&&q.num!==''&&!isNaN(+q.num);const o=arr(q.opts).filter(x=>String(x).trim());return o.length>=2&&q.correct!=null&&o[q.correct]!=null}
 /* v1.5: swap three questions in games that were already set up, matched by their old wording. */
@@ -4727,7 +4797,7 @@ const DEF_IC={duck:'&#11015;&#65039;',jump:'&#11014;&#65039;',block:'&#128737;&#
 function finSay(k){const m=FIN_MOVES[k];return (m.say||m.n.toLowerCase())}
 const QUICK_EXITS=['trapdoor','slide','launch','sink'];
 const DMOVES=[['armsup','Arms up','&#128588;'],['wave','Wave','&#128075;'],['kick','High kick','&#129462;'],['disco','Disco','&#128378;'],['robot','Robot','&#129302;'],['shimmy','Shimmy','&#10024;'],['jump','Star jump','&#11088;'],['slide','Slide','&#8644;'],
-  ['twist','The Twist','&#127744;'],['runman','Running Man','&#127939;'],['clap','Clap','&#128079;'],['spin','Spin','&#128171;'],['dab','Dab','&#128170;'],['floss','Floss','&#12336;&#65039;'],['lasso','Lasso','&#129312;'],['drop','Drop it low','&#11015;&#65039;'],['twostep','Texas Two-Step','&#128098;'],['moonwalk','Moonwalk','&#127769;'],['flip','Backflip','&#128260;']];
+  ['twist','The Twist','&#127744;'],['runman','Running Man','&#127939;'],['clap','Clap','&#128079;'],['dab','Dab','&#128170;'],['floss','Floss','&#12336;&#65039;'],['lasso','Lasso','&#129312;'],['drop','Drop it low','&#11015;&#65039;'],['twostep','Texas Two-Step','&#128098;'],['moonwalk','Moonwalk','&#127769;']];
 const DCOL={armsup:'#ff3d6e',wave:'#ffffff',kick:'#ffcf3f',disco:'#7be07f',robot:'#c9b8ff',shimmy:'#ff7a1a',jump:'#ff3d6e',slide:'#ffffff',flip:'#ffcf3f',twist:'#7be07f',runman:'#ffcf3f',clap:'#ff7a1a',spin:'#c9b8ff',dab:'#ffffff',floss:'#ff3d6e',lasso:'#ffcf3f',drop:'#7be07f',twostep:'#ff7a1a',moonwalk:'#c9b8ff'};
 const ARW={L:'&#9664;',R:'&#9654;',U:'&#9650;',D:'&#9660;',A:'A',B:'B'};
 function enabledFinishers(){const off=SET().finishersOff;const k=Object.keys(FIN_MOVES).filter(x=>!off.includes(x));return k.length?k:['kick']}
@@ -4735,7 +4805,7 @@ function enabledFinishers(){const off=SET().finishersOff;const k=Object.keys(FIN
 function cueTimes(lyr,o){const out=[];o=o||0;const all=DMOVES.map(x=>x[0]).filter(x=>x!=='flip');let bag=[],prev='';
   const draw=()=>{if(!bag.length)bag=shuffle(all.slice());let k=bag.findIndex(x=>x!==prev);if(k<0)k=0;return bag.splice(k,1)[0]};
   lyr.forEach((l,i)=>{const next=lyr[i+1]?lyr[i+1].s:l.s+4.5;const span=Math.max(1.2,next-l.s);const n=Math.max(1,Math.round(span/1.95));
-    for(let j=0;j<n;j++){let m=j===0&&arr(l.m)[0]&&arr(l.m)[0]!==prev&&arr(l.m)[0]!=='flip'?arr(l.m)[0]:draw();bag=bag.filter(x=>x!==m);prev=m;out.push({m,t:Math.round((l.s+span*(j+.45)/n)*1000)+o})}});return out}
+    for(let j=0;j<n;j++){const lm=arr(l.m)[0];let m=j===0&&lm&&lm!==prev&&all.includes(lm)?lm:draw();bag=bag.filter(x=>x!==m);prev=m;out.push({m,t:Math.round((l.s+span*(j+.45)/n)*1000)+o})}});return out}
 
 /* ---------------- host state ---------------- */
 const G={hs:uid('h'),seq:0,ph:'',players:{},heads:{},inputs:{},inputJ:{},paused:false,skip:false,running:false,practice:false,
@@ -5432,6 +5502,7 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
   const tv2=scene(`<div class="stagebg"></div><div class="beam" style="left:14%"></div><div class="beam" style="left:66%;animation-delay:-1.5s"></div><div class="dfloor">${'<i></i>'.repeat(12)}</div>
     <div class="tvin" style="z-index:3">${topbar('DANCE-OFF &middot; '+secs+' SECONDS',esc((S.songName||DEF_SONG.name).toUpperCase()),'v','d')}</div><div class="cuelane" id="cl"><div class="ring"></div></div>
     <div class="hype" id="hy-red" style="left:4%"><i style="background:var(--red)"></i></div><div class="hype" id="hy-blue" style="right:4%"><i style="background:var(--blue)"></i></div>
+    <div class="obc" id="ob-red" style="left:15%;color:var(--red)">ON BEAT <b>0</b></div><div class="obc" id="ob-blue" style="right:15%;color:var(--blue)">ON BEAT <b>0</b></div>
     <div class="dancer groove" data-id="${dr.id}" style="position:absolute;left:15%;bottom:15%;width:21%;z-index:4">${fig(dr,'happy',{tag:true})}</div>
     <div class="dancer groove" data-id="${db.id}" style="position:absolute;right:15%;bottom:15%;width:21%;z-index:4">${fig(db,'happy',{tag:true})}</div>
     <div class="lyr" id="hl">${lyr.map((l,i)=>`<div class="ln" data-i="${i}">${esc(l.t).split(' ').map(w=>`<span>${w}</span>`).join(' ')}</div>`).join('')}</div>`);
@@ -5461,8 +5532,8 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
   await wait(2000);const list=team(wt);const row=el(`<div style="position:absolute;left:0;right:0;top:12%;display:flex;justify-content:center;gap:.4cqw;z-index:30">${list.map(p=>`<div class="rw" style="width:${Math.min(6.5,90/list.length)}cqw">${svgAv(p,p.ghost?'ghost':'happy',{anim:false,w:80,rim:false})}</div>`).join('')}</div>`);tv3.appendChild(row);
   row.querySelectorAll('.rw').forEach((d,i)=>HT(()=>{placePts(d,'+25','b');FX.coin()},i*130));HT(()=>banner('+25 TO EVERY '+TEAMS[wt].n+' FIGHTER'),list.length*130+300);await wait(list.length*130+3500)}
 function danceHit(id,m,rt){const tv=tvEl();const d=tv.querySelector(`.dancer[data-id="${id}"]`);if(!d||!G.dance_||G.dance_.over)return;const f=d.querySelector('.fig');if(!DMOVES.find(x=>x[0]===m))return;moveClass(f,'mv-'+m,m==='flip'?1050:950);
-  const p=G.players[id];const left=d.style.left?27:73;const lab=el(`<div class="mvname" style="left:${left}%;color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${esc(rt||'FREESTYLE')}!</div>`);tv.appendChild(lab);setTimeout(()=>lab.remove(),950);
-  G.dance_.hits[id].push(rt);G.dance_.score[id]+=rt==='PERFECT'?2:rt==='GOOD'?1:0;const h=tv.querySelector(`#hy-${p.team} i`);if(h)h.style.height=Math.min(100,10+G.dance_.score[id]*5)+'%';if(m==='flip'||m==='jump')FX.slideUp()}
+  const p=G.players[id];const left=d.style.left?27:73;const lab=el(`<div class="mvname" style="left:${left}%;color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${rt==='PERFECT'?'&#10003; ':rt==='GOOD'?'&#10003; ':''}${esc(rt||'FREESTYLE')}!</div>`);tv.appendChild(lab);setTimeout(()=>lab.remove(),950);
+  G.dance_.hits[id].push(rt);G.dance_.score[id]+=rt==='PERFECT'?2:rt==='GOOD'?1:0;if(rt==='PERFECT'||rt==='GOOD'){const ob=tv.querySelector('#ob-'+p.team+' b');if(ob)ob.textContent=G.dance_.hits[id].filter(x=>x!=='FREESTYLE').length;const rg=tv.querySelector('#cl .ring');if(rg){rg.classList.remove('hr','hb');void rg.offsetWidth;rg.classList.add(p.team==='red'?'hr':'hb')}}const h=tv.querySelector(`#hy-${p.team} i`);if(h)h.style.height=Math.min(100,10+G.dance_.score[id]*5)+'%';if(m==='flip'||m==='jump')FX.slideUp()}
 function voteLive(){const tv=tvEl();if(!G.vote_)return;G.vote_.dancers.forEach(id=>{const c=vals(G.vote_.votes).filter(v=>v===id).length;const tot=Math.max(1,P().length-2);const b=tv.querySelector('#vb-'+id),n=tv.querySelector('#vn-'+id),h=tv.querySelector('#vh-'+id);if(b)b.style.width=c/tot*100+'%';if(n)n.textContent=c;
   if(h){const shown=new Set([...h.querySelectorAll('img')].map(i=>i.dataset.id));for(const pid in G.vote_.votes){if(G.vote_.votes[pid]===id&&!shown.has(pid)&&G.players[pid]){const i=el(headImg(G.players[pid],2.8));i.dataset.id=pid;h.appendChild(i);FX.pop()}}}})}
 
@@ -5608,8 +5679,8 @@ function meP(){const pl=(ME.st&&ME.st.pl&&ME.st.pl[ME.pid])||{};return {id:ME.pi
 function plP(id){const s=ME.st&&ME.st.pl&&ME.st.pl[id];if(!s)return null;return {id,n:s.n,body:s.b,skin:s.sk,team:s.t,ghost:!!s.g,score:s.s,head:ME.heads[id]||''}}
 async function headOf(id){if(id===ME.pid)return ME.head;if(ME.heads[id])return ME.heads[id];const h=await NET.get('live/heads/'+id);if(h)ME.heads[id]=h;return h||''}
 async function plFull(id){const p=plP(id);if(!p)return null;p.head=await headOf(id);return p}
-function send(data){if(!ME.st)return;NET.set('live/in/'+ME.pid,Object.assign({r:ME.st.r},data))}
-function react(w){NET.set('live/react/'+ME.pid,{w,ts:Date.now()});FX.pop()}
+function send(data){if(PRACTICE){PRACTICE_IN&&PRACTICE_IN(data);return}if(!ME.st)return;NET.set('live/in/'+ME.pid,Object.assign({r:ME.st.r},data))}
+function react(w){if(PRACTICE){PRACTICE_IN&&PRACTICE_IN({w});FX.pop();return}NET.set('live/react/'+ME.pid,{w,ts:Date.now()});FX.pop()}
 function teamCls(){const t=meP().team;PH().className='ph'+(t?' '+t:'')}
 function chip(t,c){return `<span class="chip ${c||''}">${t}</span>`}
 
@@ -5630,22 +5701,57 @@ function stepName(){PH().className='ph';PH().innerHTML=`<div class="pt">JOIN ${e
   <label class="lab" for="nm">Your name</label><input id="nm" class="pin2" maxlength="18" autocomplete="given-name" value="${esc(ME.n)}" placeholder="First name">
   <div style="flex:1"></div><button class="pbtn" id="nx">Next</button>`;
   const go=()=>{const v=$('nm').value.trim();if(!v){$('nm').focus();return}ME.n=v.slice(0,18);SND.init();stepPhoto()};$('nx').onclick=go;$('nm').onkeydown=e=>{if(e.key==='Enter')go()}}
-function stepPhoto(){PH().className='ph';PH().innerHTML=`<div class="pt">YOUR FACE</div><div class="ps">Add your photo. It becomes your fighter's head.</div>
-  <div class="camwrap"><div class="cambox" id="cb"><span>&#128247;<br>Your face goes here</span></div></div>
+function stepPhoto(){PH().className='ph';camStop();
+  const prev=ME.head&&ME.photo&&!ME.rnd?`<img src="${ME.head}" alt="">`:`<div class="facesil"><i></i><b></b></div>`;
+  PH().innerHTML=`<div class="pt">YOUR FACE</div><div class="ps">Your photo becomes your fighter's head. Next, you pick the outfit.</div>
+  <div class="facehero">${prev}<div class="ring2"></div></div>
+  <div class="tips3"><span>&#128161; Good light</span><span>&#128578; Face the camera</span><span>&#128100; Just your face</span></div>
   <input type="file" accept="image/*" capture="user" id="fCam" hidden><input type="file" accept="image/*" id="fUp" hidden>
-  <div class="row2"><button class="pbtn" id="bCam">Take a selfie</button><button class="pbtn alt" id="bUp">Upload a photo</button></div><button class="linkbtn" id="bRnd">No photo? Give me a random face</button>`;
+  <button class="pbtn gold big" id="bCam">&#128247;&nbsp; Take a selfie</button><button class="pbtn alt" id="bUp">Upload a photo</button><button class="linkbtn" id="bRnd">No photo? Give me a random face</button>`;
   $('bRnd').onclick=()=>{const h=botHead(Math.floor(Math.random()*40));ME.head=h.head;ME.skin=h.skin;ME.photo=true;ME.rnd=true;stepBody()};
-  $('bCam').onclick=()=>$('fCam').click();$('bUp').onclick=()=>$('fUp').click();const f=e=>{const fl=e.target.files[0];if(fl)cropStep(fl)};$('fCam').onchange=f;$('fUp').onchange=f}
-function cropStep(file){const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{
-  PH().innerHTML=`<div class="pt">CENTER YOUR FACE</div><div class="ps">Drag to move. Slide to zoom. Keep your whole head inside the oval.</div>
-    <div class="cropbox" id="crop"><canvas id="cv" width="260" height="360"></canvas><div class="oval"></div></div>
-    <input type="range" id="zm" min="0.5" max="4" step="0.01" value="1" aria-label="Zoom"><div class="row2"><button class="pbtn alt" id="re">Retake</button><button class="pbtn gold" id="ok">Use this</button></div>`;
-  const cv=$('cv'),g=cv.getContext('2d');const base=Math.max(260/img.width,360/img.height);let z=1.25,ox=0,oy=-20;
-  const draw=()=>{g.clearRect(0,0,260,360);const s=base*z;g.drawImage(img,130-img.width*s/2+ox,180-img.height*s/2+oy,img.width*s,img.height*s)};$('zm').value=z;draw();
-  $('zm').oninput=e=>{z=+e.target.value;draw()};let drag=null;const cb=$('crop');
-  cb.onpointerdown=e=>{drag={x:e.clientX,y:e.clientY,ox,oy};cb.setPointerCapture(e.pointerId)};cb.onpointermove=e=>{if(!drag)return;const k=260/cb.clientWidth;ox=drag.ox+(e.clientX-drag.x)*k;oy=drag.oy+(e.clientY-drag.y)*k;draw()};cb.onpointerup=()=>drag=null;
-  $('re').onclick=stepPhoto;$('ok').onclick=async()=>{const o=document.createElement('canvas');o.width=220;o.height=300;const c=o.getContext('2d');c.save();c.filter='blur(2px)';c.beginPath();c.ellipse(110,150,104,144,0,0,Math.PI*2);c.fillStyle='#000';c.fill();c.restore();c.globalCompositeOperation='source-in';c.drawImage(cv,0,0,260,360,-10,-10,240,330);
-    let d=o.toDataURL('image/webp',.85);if(!d.startsWith('data:image/webp'))d=o.toDataURL('image/png');ME.head=d;ME.photo=true;try{ME.skin=await ArenaAvatar.sampleSkin(d)}catch(e){ME.skin='#c08a64'}URL.revokeObjectURL(url);stepBody()}};img.src=url}
+  $('bCam').onclick=()=>camStep();$('bUp').onclick=()=>$('fUp').click();const f=e=>{const fl=e.target.files[0];e.target.value='';if(fl)cropStep(fl)};$('fCam').onchange=f;$('fUp').onchange=f}
+let CAM=null;function camStop(){if(CAM){try{CAM.getTracks().forEach(t=>t.stop())}catch(e){}CAM=null}}
+async function camStep(){if(!(navigator.mediaDevices&&navigator.mediaDevices.getUserMedia)){$('fCam').click();return}
+  let st;try{st=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280},height:{ideal:1280}},audio:false})}catch(e){$('fCam').click();return}
+  CAM=st;PH().className='ph';PH().innerHTML=`<div class="pt">LINE UP YOUR FACE</div><div class="ps">Put your face inside the oval, then tap the button.</div>
+  <div class="cropbox cam" id="vb"><video id="vid" playsinline autoplay muted></video><div class="oval"><span class="ovtag">Your face here</span></div><div class="cntdn" id="cd"></div></div>
+  <div class="shutrow"><button class="linkbtn" id="cx">Cancel</button><button class="shutter" id="sh" aria-label="Take photo"><i></i></button><button class="linkbtn" id="tm">3s timer</button></div>`;
+  const v=$('vid');v.srcObject=st;try{await v.play()}catch(e){}
+  const snap=()=>{const vb=$('vb');if(!vb||!v.videoWidth)return;const W=vb.clientWidth,H=vb.clientHeight,vw=v.videoWidth,vh=v.videoHeight,sc=Math.max(W/vw,H/vh),sw=W/sc,sh=H/sc;
+    const c=document.createElement('canvas');c.width=520;c.height=720;const g=c.getContext('2d');g.translate(520,0);g.scale(-1,1);g.drawImage(v,(vw-sw)/2,(vh-sh)/2,sw,sh,0,0,520,720);
+    FX.pop();vb.classList.add('flash');camStop();setTimeout(()=>cropImg(c,{fit:true,cam:true}),180)};
+  $('sh').onclick=snap;$('cx').onclick=()=>{camStop();stepPhoto()};
+  $('tm').onclick=()=>{const cd=$('cd');let n=3;$('tm').disabled=$('sh').disabled=true;const tick=()=>{if(!$('cd'))return;if(n===0){cd.textContent='';snap();return}cd.textContent=n;FX.tick();n--;setTimeout(tick,900)};tick()}}
+function cropStep(file){const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>cropImg(img,{url});img.onerror=()=>{URL.revokeObjectURL(url);stepPhoto()};img.src=url}
+async function cropImg(img,o){o=o||{};scrollTo(0,0);const IW=img.width,IH=img.height;
+  PH().className='ph';PH().innerHTML=`<div class="pt">${o.cam?'LOOKING GOOD':'CENTER YOUR FACE'}</div><div class="ps">Pinch with two fingers to zoom. Drag to move. Fit your whole head in the oval.</div>
+    <div class="cropbox" id="crop"><canvas id="cv" width="520" height="720"></canvas><div class="oval"></div><div class="gest" id="gest">&#129306; Pinch &middot; Drag</div></div>
+    <div class="zrow"><button class="zb" id="zo" aria-label="Zoom out">&minus;</button><button class="linkbtn" id="zr" style="padding:6px">Reset</button><button class="zb" id="zi" aria-label="Zoom in">+</button></div>
+    <div class="livefig"><div id="lf"></div><span>Sample outfit only.<br><b style="color:#fff">You pick your fighter&#39;s outfit on the next screen.</b></span></div>
+    <div class="row2"><button class="pbtn alt" id="re">${o.cam?'Retake':'Pick another'}</button><button class="pbtn gold" id="ok">Use this</button></div>`;
+  const cv=$('cv'),g=cv.getContext('2d'),CW=520,CH=720,cx=CW/2,cy=CH/2;const base=Math.max(CW/IW,CH/IH);let z=1,ox=0,oy=0;
+  /* start: camera shots are already lined up; uploads try face detection, else assume the face is in the upper middle */
+  const start={z:1,ox:0,oy:0};
+  if(!o.fit){start.z=1.15;start.oy=CH*0.06;try{if('FaceDetector' in window){const fs=await new FaceDetector({fastMode:true,maxDetectedFaces:1}).detect(img);if(fs&&fs[0]){const b=fs[0].boundingBox;const want=CW*0.46/(b.width*1.0);start.z=clamp(want/base,0.4,6);const s=base*start.z;start.ox=-(b.x+b.width/2-IW/2)*s;start.oy=-(b.y+b.height*0.42-IH/2)*s}}}catch(e){}}
+  const reset=()=>{z=start.z;ox=start.ox;oy=start.oy;draw();live()};
+  const draw=()=>{g.fillStyle='#0b1430';g.fillRect(0,0,CW,CH);const s=base*z;g.drawImage(img,cx-IW*s/2+ox,cy-IH*s/2+oy,IW*s,IH*s)};
+  const makeHead=()=>{const h=document.createElement('canvas');h.width=220;h.height=300;const c=h.getContext('2d');c.save();c.filter='blur(2px)';c.beginPath();c.ellipse(110,150,104,144,0,0,Math.PI*2);c.fillStyle='#000';c.fill();c.restore();c.globalCompositeOperation='source-in';c.drawImage(cv,0,0,CW,CH,-10,-10,240,330);let d=h.toDataURL('image/webp',.85);if(!d.startsWith('data:image/webp'))d=h.toDataURL('image/png');return d};
+  let lt=null;const live=()=>{clearTimeout(lt);lt=setTimeout(()=>{const n=$('lf');if(!n)return;const body=ME.body||'designer';n.innerHTML=ArenaAvatar.render({body,head:makeHead(),skin:ME.skin||'#c08a64',team:'#ffcf3f',emotion:'happy',animate:false,width:84,headScale:1.2})},120)};
+  const zoomAt=(nz,mx,my)=>{nz=clamp(nz,0.4,6);const k=nz/z;ox=mx-cx-(mx-cx-ox)*k;oy=my-cy-(my-cy-oy)*k;z=nz;draw()};
+  const cb=$('crop'),pts=new Map();let g0=null,lastTap=0;const toC=e=>{const r=cb.getBoundingClientRect();return [(e.clientX-r.left)*CW/r.width,(e.clientY-r.top)*CH/r.height]};
+  const snapG=()=>{const a=[...pts.values()];if(a.length>=2){const d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]);g0={two:true,d,z,ox,oy,mx:(a[0][0]+a[1][0])/2,my:(a[0][1]+a[1][1])/2}}else if(a.length===1)g0={two:false,x:a[0][0],y:a[0][1],ox,oy};else g0=null};
+  cb.addEventListener('pointerdown',e=>{e.preventDefault();cb.setPointerCapture(e.pointerId);pts.set(e.pointerId,toC(e));snapG();const gs=$('gest');if(gs)gs.classList.add('gone');});
+  cb.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId)||!g0)return;pts.set(e.pointerId,toC(e));const a=[...pts.values()];
+    if(g0.two&&a.length>=2){const d=Math.hypot(a[0][0]-a[1][0],a[0][1]-a[1][1]),mx=(a[0][0]+a[1][0])/2,my=(a[0][1]+a[1][1])/2;const nz=clamp(g0.z*d/Math.max(10,g0.d),0.4,6),k=nz/g0.z;
+      z=nz;ox=g0.mx-cx-(g0.mx-cx-g0.ox)*k+(mx-g0.mx);oy=g0.my-cy-(g0.my-cy-g0.oy)*k+(my-g0.my);draw()}
+    else if(!g0.two){ox=g0.ox+(a[0][0]-g0.x);oy=g0.oy+(a[0][1]-g0.y);draw()}});
+  const up=e=>{pts.delete(e.pointerId);snapG();live()};cb.addEventListener('pointerup',up);cb.addEventListener('pointercancel',up);
+  cb.addEventListener('wheel',e=>{e.preventDefault();const [mx,my]=toC(e);zoomAt(z*Math.exp(-e.deltaY*0.0015),mx,my);live()},{passive:false});
+  ['gesturestart','gesturechange'].forEach(t=>cb.addEventListener(t,e=>e.preventDefault()));
+  $('zi').onclick=()=>{zoomAt(z*1.15,cx,cy);live()};$('zo').onclick=()=>{zoomAt(z/1.15,cx,cy);live()};$('zr').onclick=reset;
+  $('re').onclick=()=>{if(o.url)URL.revokeObjectURL(o.url);o.cam?camStep():stepPhoto()};
+  $('ok').onclick=async()=>{const d=makeHead();ME.head=d;ME.photo=true;ME.rnd=false;try{ME.skin=await ArenaAvatar.sampleSkin(d)}catch(e){ME.skin='#c08a64'}if(o.url)URL.revokeObjectURL(o.url);stepBody()};
+  reset()}
 let BF='all';
 async function stepBody(){ME.taken=await NET.get('live/players')||{};ME.picking=true;drawBodies()}
 function takenMap(){const t={};const pl=ME.taken||{};for(const id in pl){if(id!==ME.pid&&pl[id]&&pl[id].body&&!pl[id].kick)t[pl[id].body]=pl[id].n}return t}
@@ -5657,7 +5763,7 @@ function drawBodies(){if(!ME.picking)return;const taken=takenMap();
   $('bg').scrollTop=keep;
   $('bg').querySelectorAll('[data-b]').forEach(b=>b.onclick=()=>{ME.body=b.dataset.b;drawBodies()});document.querySelectorAll('.bfil [data-f]').forEach(b=>b.onclick=()=>{BF=b.dataset.f;drawBodies()});
   $('cl').onclick=async()=>{ME.taken=await NET.get('live/players')||{};if(takenMap()[ME.body]){drawBodies();const n=$('cl');if(n)n.insertAdjacentHTML('beforebegin','<div class="ps" style="color:var(--red);font-weight:800;text-align:center">Someone just claimed that one. Pick another.</div>');return}ME.picking=false;register()}}
-async function register(){if(!ME.photo||!ME.head){stepPhoto();return}ME.picking=false;saveMe();await NET.set('live/heads/'+ME.pid,ME.head);await NET.set('live/players/'+ME.pid,{n:ME.n,body:ME.body,skin:ME.skin,hv:Date.now()});ME.joined=true;FX.coin();ME.seq=-1;onState(ME.st)}
+async function register(){if(!ME.photo||!ME.head){stepPhoto();return}if(PRACTICE){ME.picking=false;FX.coin();practiceLobby();return}ME.picking=false;saveMe();await NET.set('live/heads/'+ME.pid,ME.head);await NET.set('live/players/'+ME.pid,{n:ME.n,body:ME.body,skin:ME.skin,hv:Date.now()});ME.joined=true;FX.coin();ME.seq=-1;onState(ME.st)}
 
 /* ---------------- state handling ---------------- */
 function onState(st){if(!st){if(ME.joined)PH().innerHTML=`<div class="center"><div class="pt">WAITING FOR THE HOST</div><div class="ps">Keep this page open.</div><div class="pfig">${svgAv(meP(),'ready',{w:140})}</div></div>`;return}
@@ -5728,19 +5834,24 @@ const PHASES={
   stopEnd(st){const me=meP();const t=(st.times||{})[ME.pid];const r=(st.rank||{})[ME.pid]||'-';const pts=(st.pts||{})[ME.pid]||0;const top=arr(st.top).indexOf(ME.pid);
     PH().innerHTML=`<div class="center">${top>=0?chip(['1ST PLACE','2ND PLACE','3RD PLACE'][top],'g'):''}<div class="ps">You stopped at</div><div class="big" style="font-size:60px;color:var(--gold)">${t!=null?(t/1000).toFixed(2):'--'}</div><div class="ps" style="font-weight:700">${t!=null?(Math.abs(t-5000)/1000).toFixed(2)+' s from 5.00':'You did not stop the clock'}</div><div class="big" style="font-size:34px">#${r} of ${st.n}</div><div class="pfig">${svgAv(me,me.ghost?'ghost':top>=0||pts?'happy':'wrong',{w:120})}</div>${pts?`<div class="big" style="font-size:44px;color:var(--gold)">+${pts}</div>`:''}<div class="ps">Team ${TEAMS[st.win].w} was closer: +10 each.</div></div>`;if(pts)FX.coin();withReact()},
   async wheel(st){const me=meP();const d=st.dancers;PH().innerHTML=`<div class="center"><div class="pt">WHEEL IS SPINNING</div><div class="eq" style="height:40px">${'<i></i>'.repeat(4)}</div><div class="ps">One dancer from each team</div></div>`;
-    const a=await plFull(d.red),b=await plFull(d.blue);PT(()=>{if(d.red===ME.pid||d.blue===ME.pid){PH().innerHTML=`<div class="center">${chip('YOU WERE PICKED!','g')}<div class="big" style="font-size:34px">DANCE FOR<br>TEAM ${TEAMS[me.team].n}</div><div class="pfig">${svgAv(me,'happy',{w:140})}</div><div class="ps">One button. Tap DANCE! each time a move reaches the ring.</div></div>`}
+    const a=await plFull(d.red),b=await plFull(d.blue);PT(()=>{if(d.red===ME.pid||d.blue===ME.pid){PH().innerHTML=`<div class="center">${chip('YOU WERE PICKED!','g')}<div class="big" style="font-size:34px">DANCE FOR<br>TEAM ${TEAMS[me.team].n}</div><div class="pfig">${svgAv(me,'happy',{w:140})}</div><div class="ps">Tap DANCE! when a move is inside the ring. Tap any time to freestyle too.</div></div>`}
       else PH().innerHTML=`<div class="center"><div class="pt">${esc(a.n)} VS ${esc(b.n)}</div><div style="display:flex;gap:6px"><div class="pfig" style="width:110px">${svgAv(a,'ready',{w:110})}</div><div class="pfig" style="width:110px">${svgAv(b,'ready',{w:110})}</div></div><div class="ps">Lyrics show on your phone. Send hype, then vote.</div></div>`},5900)},
   dance(st){const me=meP();const amD=st.dancers.red===ME.pid||st.dancers.blue===ME.pid;const lyr=st.lyrics||[];
     const lyrHTML=`<div class="lyr lph" id="pl">${lyr.map((l,i)=>`<div class="ln" data-i="${i}">${esc(l.t).split(' ').map(w=>`<span>${w}</span>`).join(' ')}</div>`).join('')}</div>`;
-    if(amD){PH().innerHTML=`${lyrHTML}<div class="pcue" id="pc"><div class="ring"></div></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="ps" id="rt">Tap DANCE! when a move hits the ring</span>${chip('x0','g').replace('class="chip g"','class="chip g" id="cb"')}</div>
+    if(amD){PH().innerHTML=`${lyrHTML}<div class="pcue" id="pc"><div class="ring"></div></div><div style="display:flex;justify-content:space-between;align-items:center"><span class="ps" id="rt">Tap when a move is inside the ring</span>${chip('ON BEAT 0','g').replace('class="chip g"','class="chip g" id="cb"')}</div>
       <div class="ps" id="nxm" style="text-align:center;font-size:17px;font-weight:800">Get ready...</div><button class="stopbtn" data-d="go" style="font-size:48px">DANCE!</button>`}
     else{PH().innerHTML=`${lyrHTML}<div class="center"><div class="pt">SEND HYPE</div>${REACT}<div class="ps">Sing along. Voting opens when the song ends.</div></div>`;wireReact()}
     lyr.forEach((l,i)=>PT(()=>{PH().querySelectorAll('#pl .ln').forEach(n=>n.classList.toggle('on',+n.dataset.i===i));const nx=lyr[i+1]?lyr[i+1].s:l.s+4.5;const ws=PH().querySelectorAll(`#pl .ln[data-i="${i}"] span`);ws.forEach((w,k)=>PT(()=>w.classList.add('lit'),k*((nx-l.s)*1000-300)/ws.length))},l.s*1000));
     if(!amD)return;const cues=arr(st.cues);const pc=$('pc');let combo=0,k=0;
     cues.forEach(c=>{if(c.t>st.secs*1000)return;PT(()=>{const mv=DMOVES.find(x=>x[0]===c.m)||DMOVES[0];const d=el(`<div class="cue sm" style="background:${DCOL[c.m]||'#fff'}">${mv[2]}</div>`);pc.appendChild(d);const nm=$('nxm');if(nm)nm.innerHTML='NEXT: '+mv[2]+' '+mv[1];d.animate([{left:'100%'},{left:'4%'}],{duration:1800,easing:'linear',fill:'forwards'});setTimeout(()=>d.remove(),2000)},Math.max(0,c.t-1800))});
-    PH().querySelectorAll('[data-d]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();const now=performance.now()-ME.t0;const near=cues.reduce((a,c)=>Math.abs(c.t-now)<Math.abs(a.t-now)?c:a,cues[0]||{t:0,m:''});const dt=Math.abs(near.t-now);
-      const rt=dt<260?'PERFECT':dt<600?'GOOD':'FREESTYLE';combo=rt==='FREESTYLE'?0:combo+1;$('cb').textContent='x'+combo;$('rt').innerHTML=`<b style="color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${rt}</b>`;
-      b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),120);k++;send({k,m:near.m||'armsup',rt});FX.pop()}))},
+    /* v2.0: PERFECT only when the move is inside the ring, GOOD when it is touching the ring, otherwise FREESTYLE.
+       Each move counts once. Freestyle taps are never penalized: the fighter still dances and the crowd decides. */
+    const used=new Set(),mvs=DMOVES.map(x=>x[0]);let onb=0;
+    PH().querySelectorAll('[data-d]').forEach(b=>b.addEventListener('pointerdown',e=>{e.preventDefault();const now=performance.now()-ME.t0;let bi=-1,bd=1e9;cues.forEach((c,i)=>{if(used.has(i))return;const d=Math.abs(c.t-now);if(d<bd){bd=d;bi=i}});
+      const rt=bi>=0&&bd<170?'PERFECT':bi>=0&&bd<340?'GOOD':'FREESTYLE';if(rt!=='FREESTYLE'){used.add(bi);onb++;const rg=PH().querySelector('#pc .ring');if(rg){rg.classList.remove('ok','pf');void rg.offsetWidth;rg.classList.add(rt==='PERFECT'?'pf':'ok')}}
+      $('cb').textContent='ON BEAT '+onb;$('rt').innerHTML=`<b style="color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${rt}</b>`;
+      const m=rt==='FREESTYLE'?mvs[Math.floor(Math.random()*mvs.length)]:cues[bi].m;
+      b.classList.add('hit');setTimeout(()=>b.classList.remove('hit'),120);k++;send({k,m,rt});FX.pop()}))},
   async vote(st){const d=st.dancers;if(d.red===ME.pid||d.blue===ME.pid){PH().innerHTML=`<div class="center"><div class="pt">THE CROWD IS VOTING</div><div class="pfig">${svgAv(meP(),'thinking',{w:140})}</div><div class="ps">Your timing: ${(st.timing||{})[ME.pid]||0} points. Fingers crossed.</div></div>`;return}
     const a=await plFull(d.red),b=await plFull(d.blue);PH().innerHTML=`<div class="pt">WHO DANCED BEST?</div><div class="ps">One vote. Ghosts vote too.</div><div class="vote">${[a,b].map(p=>`<button data-v="${p.id}">${svgAv(p,'happy',{w:120,anim:false})}${esc(p.n)}</button>`).join('')}</div><div class="ps" id="vs" style="text-align:center"></div>`;
     PH().querySelectorAll('[data-v]').forEach(btn=>btn.onclick=()=>{PH().querySelectorAll('[data-v]').forEach(x=>x.classList.toggle('sel',x===btn));send({v:btn.dataset.v});$('vs').innerHTML=chip('VOTE IN','l');FX.pop()})},
@@ -5951,11 +6062,61 @@ function tabBackup(){$('ab').innerHTML=`<section class="acard"><h2>Copy a backup
    CROWD CLASH  router
    ===================================================================== */
 function homePage(){document.body.className='';$('app').innerHTML=`<div class="home"><div class="box"><div class="kick">AT&amp;T &middot; Dallas Edition</div><h1>TEAM LIU <span>TRIVIA</span></h1><p>Real faces, fighter bodies, action quiz rounds, knockouts and a dance-off. Everyone plays on their phone.</p>
-  <a class="big1" href="#play">Join on my phone</a><a class="big2" href="#host">Projector screen</a><a class="small" href="#admin">Host admin</a></div></div>`}
+  <a class="big1" href="#play">Join on my phone</a><a class="big2" href="#host">Projector screen</a><a class="small" href="#practice">Practice on my phone</a><a class="small" href="#admin">Host admin</a></div></div>`}
 let ROUTE=null;
-function route(){const h=(location.hash||'').replace('#','');const r=h.startsWith('play')?'play':h.startsWith('host')?'host':h.startsWith('admin')?'admin':'home';
+/* ---------------- v2.0 phone practice: join flow plus a solo Dance-Off, nothing is shared ---------------- */
+let PRACTICE=false,PRACTICE_IN=null;
+async function practicePage(){PRACTICE=true;document.body.className='phonepage prmode';
+  $('app').innerHTML=`<div class="prbar">PRACTICE MODE &middot; only you can see this</div><div class="phwrap"><div class="ph" id="ph"></div></div>`;
+  await NET.ready;try{MS().removeItem('cc_me')}catch(e){}loadMe();ME.pid=uid('p');ME.joined=false;stepName()}
+function prStage(on){let s=$('pstage');document.body.classList.toggle('hasstage',!!on);if(!on){if(s)s.remove();return null}if(!s){s=el(`<div class="pstage" id="pstage"></div>`);document.querySelector('.phwrap').before(s)}return s}
+function practiceLobby(){scrollTo(0,0);pclear();SND.songStop();prStage(false);ME.joined=true;const bot='bot_sam',h=botHead(7);ME.heads[bot]=h.head;
+  const fb=ArenaAvatar.BODIES.find(b=>b!==ME.body&&ArenaAvatar.bodyGroup(b)!==ArenaAvatar.bodyGroup(ME.body))||'cowboy';
+  ME.st={r:1,seq:1,pl:{[ME.pid]:{n:ME.n,b:ME.body,sk:ME.skin,t:'red',s:0},[bot]:{n:'Sam',b:fb,sk:h.skin,t:'blue',s:0}}};ME.prBot=bot;
+  PH().className='ph red';PH().innerHTML=`<div class="center"><div class="ps">You are in, ${esc(ME.n)}</div><div class="pfig">${svgAv(meP(),'happy',{w:150})}</div>
+    <div class="pt" style="font-size:22px">PRACTICE THE DANCE-OFF</div><div class="ps">You get picked to dance for Team Thunder against Sam. Your phone looks exactly like it will in the real game.</div>
+    <label class="prchk"><input type="checkbox" id="bs" checked> Show the big screen at the top</label>
+    <button class="pbtn gold big" id="p30">Dance 30 seconds</button><button class="pbtn alt" id="pfull">Full song (${SET().danceSecs} s)</button>
+    <button class="pbtn alt" id="pcrowd">Watch as the crowd</button><button class="linkbtn" id="plook">Change my photo or fighter</button></div>`;
+  const go=(secs,crowd)=>{SND.init();practiceDance(secs,crowd,$('bs').checked)};
+  $('p30').onclick=()=>go(30,false);$('pfull').onclick=()=>go(SET().danceSecs,false);$('pcrowd').onclick=()=>go(30,true);$('plook').onclick=()=>{ME.joined=false;stepPhoto()}}
+function practiceDance(secs,crowd,showBig){pclear();const S=SET(),bot=ME.prBot;let other=null;
+  if(crowd){other='bot_ava';const h=botHead(12);ME.heads[other]=h.head;ME.st.pl[other]={n:'Ava',b:ArenaAvatar.BODIES.find(b=>b!==ME.body&&b!==ME.st.pl[bot].b&&ArenaAvatar.bodyGroup(b)==='f')||'diva',sk:h.skin,t:'red',s:0}}
+  const red=crowd?other:ME.pid,dancers={red,blue:bot};const lyr=S.lyrics;const cues=cueTimes(lyr,0).filter(c=>c.t<=secs*1000);
+  const score={[red]:0,[bot]:0},hits={[red]:[],[bot]:[]};
+  /* mini big screen */
+  const stg=prStage(showBig);let fR=null,fB=null;
+  if(stg){const pr=plP(red),pb=plP(bot);pr.head=ME.heads[red]||ME.head;if(red===ME.pid)pr.head=ME.head;pb.head=ME.heads[bot];
+    stg.innerHTML=`<div class="pslab">BIG SCREEN</div><div class="dfloor">${'<i></i>'.repeat(12)}</div><div class="phy l"><i style="background:var(--red)" id="hyR"></i></div><div class="phy r"><i style="background:var(--blue)" id="hyB"></i></div>
+      <div class="dancer groove" id="dR" style="left:16%">${fig(pr,'happy',{tag:true})}</div><div class="dancer groove" id="dB" style="right:16%">${fig(pb,'happy',{tag:true})}</div><div class="psmsg" id="psm"></div><div class="pob" style="left:4%;color:var(--red)">ON BEAT <b id="obR">0</b></div><div class="pob" style="right:4%;color:var(--blue)">ON BEAT <b id="obB">0</b></div>`;
+    fR=stg.querySelector('#dR .fig');fB=stg.querySelector('#dB .fig')}
+  const hit=(id,m,rt)=>{hits[id].push(rt);score[id]+=rt==='PERFECT'?2:rt==='GOOD'?1:0;if(!stg)return;const f=id===red?fR:fB;if(DMOVES.find(x=>x[0]===m))moveClass(f,'mv-'+m,950);
+    const lab=el(`<div class="mvname2" style="left:${id===red?27:73}%;color:${rt==='PERFECT'?'var(--gold)':rt==='GOOD'?'var(--lime)':'#fff'}">${rt}!</div>`);stg.appendChild(lab);setTimeout(()=>lab.remove(),900);
+    if(rt!=='FREESTYLE'){const ob=stg.querySelector(id===red?'#obR':'#obB');if(ob)ob.textContent=hits[id].filter(x=>x!=='FREESTYLE').length}const hy=stg.querySelector(id===red?'#hyR':'#hyB');if(hy)hy.style.height=Math.min(100,10+score[id]*4)+'%'};
+  PRACTICE_IN=d=>{if(d.k&&!crowd)hit(ME.pid,d.m,d.rt);if(d.w&&stg){const m=$('psm');if(m){m.textContent=(REACTS.find(r=>r[0]===d.w)||['','',''])[1].replace(/&#(\d+);/g,(a,n)=>String.fromCodePoint(+n));m.classList.remove('pop');void m.offsetWidth;m.classList.add('pop')}}};
+  /* 1 how to play */
+  scrollTo(0,0);PHASES.how({name:'Dance-Off',icon:'&#128131;',steps:['One dancer from each team','Dancers: tap DANCE! when the move hits the ring','Everyone votes for the best dancer: +25 to their team'],why:'Every fighter dances the exact same moves.',secs:5});
+  PT(()=>{pclear();scrollTo(0,0);PHASES.wheel({dancers});
+    PT(()=>{pclear();ME.t0=performance.now();PHASES.dance({dancers,lyrics:lyr,secs,cues});scrollTo(0,0);
+      SND.songPlay(DEF_SONG.url,0);
+      cues.forEach(c=>{if(crowd||!showBig)0;[crowd?red:null,bot].forEach(id=>{if(!id)return;PT(()=>hit(id,c.m,Math.random()<.62?'PERFECT':'GOOD'),c.t+Math.random()*140)})});
+      PT(()=>{SND.songStop();if(stg){[fR,fB].forEach(f=>{const d=f.parentNode;d.classList.remove('groove');f.classList.add('mv-cheer')})}
+        const myScore=score[red];pclear();
+        scrollTo(0,0);PHASES.vote({dancers,timing:{[red]:score[red],[bot]:score[bot]}});
+        if(crowd)PRACTICE_IN=d=>{if(d.v)ME.prVote=d.v};
+        PT(()=>{const win=crowd?(ME.prVote||(score[red]>=score[bot]?red:bot)):(score[red]>=score[bot]?red:bot);const t=win===bot?'blue':'red';
+          pclear();scrollTo(0,0);PHASES.voteEnd({win,team:t});if(stg){(win===red?fB:fR).classList.remove('mv-cheer')}
+          PT(()=>practiceSummary(crowd,hits[red],win===red),5000)},crowd?9000:5000)},secs*1000+600)},8500)},5600)}
+function practiceSummary(crowd,h,won){scrollTo(0,0);pclear();SND.songStop();
+  const p=h.filter(x=>x==='PERFECT').length,g=h.filter(x=>x==='GOOD').length,fs=h.filter(x=>x==='FREESTYLE').length;
+  PH().className='ph';PH().innerHTML=`<div class="center"><div class="pt">PRACTICE DONE</div><div class="pfig">${svgAv(meP(),won?'happy':'thinking',{w:130})}</div>
+    ${crowd?`<div class="ps">That is what everyone who is not dancing sees: lyrics, hype buttons, then one vote.</div>`:`<div class="prstats"><div><b style="color:var(--gold)">${p}</b>PERFECT</div><div><b style="color:var(--lime)">${g}</b>GOOD</div><div><b>${fs}</b>FREESTYLE</div></div><div class="ps">PERFECT means the move was inside the ring. Freestyle taps never cost points. The crowd picks the winner.</div>`}
+    <button class="pbtn gold big" id="again">Practice again</button><button class="linkbtn" id="look">Change my photo or fighter</button></div>`;
+  $('again').onclick=practiceLobby;$('look').onclick=()=>{ME.joined=false;prStage(false);stepPhoto()}}
+
+function route(){const h=(location.hash||'').replace('#','');const r=h.startsWith('practice')?'practice':h.startsWith('play')?'play':h.startsWith('host')?'host':h.startsWith('admin')?'admin':'home';
   if(ROUTE&&ROUTE!==r){location.reload();return}ROUTE=r;
-  if(r==='play')phonePage();else if(r==='host')hostPage();else if(r==='admin')adminPage();else homePage()}
+  if(r==='practice')practicePage();else if(r==='play')phonePage();else if(r==='host')hostPage();else if(r==='admin')adminPage();else homePage()}
 window.addEventListener('hashchange',route);
 document.addEventListener('pointerdown',()=>SND.init(),{once:true});
 route();
