@@ -4656,7 +4656,7 @@ const ROLES={round:'Game round',final:'Final face-off',comeback:'Comeback Door'}
 const DEF_SONG={url:'dance-song.mp3',name:'Under a Dallas Sky'};
 const DEF_LYR=[{t:"Here we go, Big D!",s:0.4,m:['armsup']},{t:"Thunder, Lightning, step up now",s:4.3,m:['wave']},{t:"Kick it to the left",s:8.2,m:['kick']},{t:"Slide it to the right",s:12.1,m:['slide']},{t:"Robot under city lights",s:16.0,m:['robot']},{t:"Shimmy, shimmy, feel the beat",s:19.9,m:['shimmy']},{t:"Jump up, touch the sky",s:23.8,m:['jump']},{t:"Disco in Deep Ellum",s:27.7,m:['disco']},{t:"Hands up for the Dallas sky",s:31.6,m:['armsup', 'wave']},{t:"Kick and slide, kick and slide",s:35.5,m:['kick', 'slide']},{t:"Robot, robot, lock it in",s:39.4,m:['robot']},{t:"Shimmy to the Reunion ball",s:43.3,m:['shimmy', 'disco']},{t:"Jump with your team",s:47.2,m:['jump']},{t:"Big D, show your moves",s:51.1,m:['disco', 'armsup']},{t:"Wave it high, wave it low",s:55.0,m:['wave']},{t:"Star jump time!",s:58.9,m:['jump']},{t:"Slide across the stage",s:62.8,m:['slide', 'kick']},{t:"Robot, then a shimmy",s:66.7,m:['robot', 'shimmy']},{t:"Jump, jump, jump!",s:70.6,m:['jump']},{t:"Disco for the crowd",s:74.5,m:['disco']},{t:"Hands up, one more time",s:78.4,m:['armsup']},{t:"Under a Dallas sky",s:82.4,m:['wave', 'disco']},{t:"Big finish, take a bow!",s:86.3,m:['armsup']}];
 const DEF_SET={pin:'1111',title:'TEAM LIU TRIVIA',sub:'AT&T \u00b7 DALLAS EDITION',warmup:1,speed:5,voice:true,
-  timers:{classic:25,falling:22,stones:22,doors:22,whack:22,number:25,final:18,comeback:18},tv:4,howSecs:14,howSecsRepeat:9,dodgeSecs:4,
+  timers:{classic:22,falling:20,stones:20,doors:20,whack:20,number:22,final:18,comeback:18},tv:4,howSecs:14,howSecsRepeat:6,dodgeSecs:4,
   comeback:true,comebackAfterKO:3,comebackSpots:2,tug:true,stopHide:false,tugAfterKO:1,tugSecs:15,dance:true,danceAfterKO:2,danceSecs:90,finSecs:15,finalTo:3,
   finishersOff:[],lyrics:DEF_LYR,songName:'',songStart:0,ghostHalf:true};
 const Q_SEED=[
@@ -4751,7 +4751,54 @@ const SND=(function(){
   return {init,fx,beatStart,beatStop,songPlay,songTail,songStop,cur,hold,set(v){on=v;if(!v){beatStop();songStop()}},get on(){return on}};
 })();
 const FX=SND.fx;
-function say(t){if(!SND.on||!SET().voice)return;t=String(t).replace(/\b5G\b/gi,'five G').replace(/AT&T/g,'A T and T');try{const u=new SpeechSynthesisUtterance(t);u.pitch=.4;u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function say(t){return;if(!SND.on||!SET().voice)return;t=String(t).replace(/\b5G\b/gi,'five G').replace(/AT&T/g,'A T and T');try{const u=new SpeechSynthesisUtterance(t);u.pitch=.4;u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+
+/* ---------------- v2.2 game show audio: ElevenLabs host voice, music beds and sound effects ----------------
+   Files live in audio/ next to this page and are listed in audio/manifest.json. Anything missing falls back:
+   host lines to the browser voice, sound effects to the built-in synth, music to silence. Projector only. */
+const HOST_LINES={"lobby1": "Welcome to the arena, Team Liu! Grab your phone, scan the code on the screen, snap a selfie and pick your fighter. We start in just a moment!", "lobby2": "The arena is filling up! If you are not in yet, scan that code. Your face, your fighter, your glory!", "start": "Good evening, Team Liu, and welcome to the one, the only, TEAM LIU TRIVIA! Tonight, every single one of you is a fighter in this arena. Your phone is your controller, your face is on your fighter, and your brain is your secret weapon!", "rules": "Here is how it works. A question pops up on the big screen and I read it out loud. You answer on your phone. Right answers score points, and the faster you lock in, the more points you get. Wrong answers score zero, but you never lose points just for trying. So be fast, be brave, and have fun!", "teams": "Now look up at the screen. You have been split into two teams. In red, give it up for Team THUNDER! And in blue, Team LIGHTNING! Every point you score also counts for your team, and at the end of the night one team takes home the team trophy. Thunder, make some noise! Lightning, I cannot hear you!", "warmup": "We start with a warm-up round to stretch those thumbs. Nobody gets knocked out this time, but the points are real, so do not sleep on it!", "ghost": "Now, here is the good news. Being out does not mean you are done! You become a ghost. Ghosts keep answering every question and keep earning points, just at half the value. And later tonight, ghosts might get a chance to come back to life. So stay with us!", "pause": "Quick break, everybody! Stretch, grab a snack, and we will be right back!", "round2": "Here comes Round two!", "round3": "Here comes Round three!", "round4": "Here comes Round four!", "round5": "Here comes Round five!", "round6": "Here comes Round six!", "round7": "Here comes Round seven!", "round8": "Here comes Round eight!", "roundlast": "Last round before the finals! Make it count!", "ten1": "Ten seconds! Lock it in!", "ten2": "Ten seconds left, do not leave points on the table!", "count": "Five! Four! Three! Two! One!", "timeup1": "Time is up! Phones down!", "timeup2": "That is time! Let us see what you said!", "reveal1": "The correct answer is...", "reveal2": "Drumroll please...", "most": "Look at all those brains! Team Liu is on fire tonight!", "few": "Ooh, that one was tricky! Only a few legends got it right!", "none": "Nobody?! Not one single person?! That one goes in the history books!", "board1": "Let us check that leaderboard! Watch the names move. The top three are glowing in gold, and the bottom spots, well, you might want to hold on tight.", "board2": "Here is where everybody stands right now. It is close, people!", "leader": "Oh! We have a brand NEW leader at the top!", "leadred": "And Team Thunder takes the lead!", "leadblue": "And Team Lightning takes the lead!", "classic_f": "This is a Classic Lightning round! Four answers, four colors. Tap your answer on your phone before the clock runs out. And remember, the faster you lock in the right answer, the bigger your points. Here is your question!", "classic_s": "Classic Lightning! Fast fingers win. Here we go!", "falling_f": "Falling Answers! Look up, the answers are falling from the sky into four lanes! Tap your answer on your phone and your fighter runs underneath it to catch it. Pick the right lane before they hit the ground!", "falling_s": "Look out above, the answers are falling! Get under the right one!", "stones_f": "What Comes Next! Four stepping stones over the water. Tap the stone you think is right, and your fighter jumps onto it. Choose the wrong one, and splash, that stone sinks!", "stones_s": "Stepping stones again! Jump on the right one and stay dry!", "doors_f": "Door Dash! Four doors, and only one of them is right. Pick your door on your phone and your fighter runs to it. When the doors open, only the right door lets you through. The rest, well, bonk!", "doors_s": "Door Dash! Pick your door, and pick it fast!", "whack_f": "Police Lineup! Our four suspects are standing in the lineup. Tap the one who matches the question. We reveal them one at a time, so hold your breath, detectives!", "whack_s": "Back to the lineup, detectives! Find your suspect!", "wheel_f": "Now here is where it gets spicy! After every round from now on, we spin the Wheel of Fate, and the wheel decides what happens next. It could be a Knockout, where the lowest score has to fight to stay alive. It could be a Mystery Box, a Firecracker, a Steal, Double or Nothing, or a Duel. Nobody knows until it stops. Ready? Spin the Wheel of Fate!", "wheel_s1": "Spin that wheel! Where will it land?!", "wheel_s2": "Wheel of Fate, show us what you got!", "danger": "Uh oh. Look at the bottom of the board. That is the danger zone, and the lowest score is in real trouble right now.", "ko_setup": "KNOCKOUT! The lowest score steps into the ring to defend their spot, and a random fighter has been picked to attack!", "ko_rules": "Here is how it works. Attacker, on your phone, secretly pick where to strike: HIGH, MIDDLE, or LOW. Defender, at the same time, secretly pick your defense: DUCK, BLOCK, or JUMP. Duck beats a high attack. Block beats a middle attack. Jump beats a low attack. Defender, guess right and you are safe, plus five points! Guess wrong and you are knocked out, and the attacker takes ten points. Everybody else, cheer for your fighter! Both of you, make your pick now!", "ko_again": "Another KNOCKOUT! Attacker: high, middle or low. Defender: duck, block or jump. Pick now!", "ko_show": "Both picks are locked. Let us watch it in slow motion... here comes the attack!", "ko_safe1": "WHAT A DEFENSE! Read it like a book! Still standing, and plus five!", "ko_safe2": "Dodged it! The crowd goes wild!", "ko_out": "KNOCKED OUT! Plus ten for the attacker! But do not worry, you are coming back as a ghost!", "exit": "Arena Exit! No fight this time. The lowest score has to leave the arena, and we are sending them off in style! Wave goodbye, everybody! And remember, ghosts still play for half points!", "box": "Mystery Box! Everybody plays this one! There are three boxes. One has plus fifteen points, one has plus five, and one has minus five. Tap box one, two or three on your phone. You have twelve seconds. Choose wisely!", "box1": "Box number one is the big winner! Plus fifteen!", "box2": "Box number two is the big winner! Plus fifteen!", "box3": "Box number three is the big winner! Plus fifteen!", "fire": "Firecracker! Somebody on the big screen is holding a lit firecracker. If it is you, tap PASS on your phone as fast as you can to throw it to someone else! The fuse is secret. Nobody knows when it will pop. Whoever is holding it when it goes off loses ten points! Watch the screen... pass it, pass it, PASS IT!", "firepop": "BOOM! Minus ten! Somebody get that fighter a fire extinguisher!", "steal": "The Steal! The lowest score gets a second chance. You get to pick one of the top players and steal ten of their points! Pick your target on your phone. Top players, try to look innocent!", "stolen": "STOLEN! Ten points just changed hands! Ice cold!", "bet": "Double or Nothing! Time to bet on yourself. On your phone, bet zero, five or ten points on the very next question. Get it right and you win your bet. Get it wrong and you lose it. Feeling lucky? Place your bets!", "bet_next": "Bets are locked! And the next question starts right now!", "bet_pay": "Time to pay out those bets! Winners, enjoy it. Everybody else, there is always next time!", "duel": "It is a DUEL! Two fighters, picked at random, go head to head on one question. The fastest correct answer wins fifteen points! Everybody else, you are not off the hook. Predict the winner on your phone, and if you guess right, you get three points!", "duel_win": "And the duel goes to the fastest finger in Dallas! Plus fifteen!", "duel_none": "Nobody got it! The duel ends in a draw!", "stop": "Stop the Clock! Everybody plays this one, ghosts too. When I say go, a clock starts running on your phone. Your job: tap STOP at exactly five seconds. But here is the catch, the clock disappears after three seconds, so you have to count in your head! The three closest players win twenty, fifteen and ten points. Ready? Three, two, one, GO!", "stop_res": "Wow! Look how close you got! Our top three timekeepers, take a bow!", "dance1": "It is DANCE-OFF time! One dancer from each team takes the stage. Dancers, watch your phone. When a dance move slides into the ring, tap DANCE! Hit it right in the ring for a PERFECT, or tap any time you want to freestyle. Your timing does not score points. This one is all about the show!", "dance2": "Everybody else, cheer them on! Send your reactions from your phone. When the song ends, YOU vote for the best dancer, and the winning dancer's team gets twenty-five points! Dancers, are you ready? Hit it!", "dance_vote": "The song is over! Now it is all up to you. Who danced it best? Vote on your phone right now!", "dance_red": "The crowd has spoken! Team Thunder wins the dance-off!", "dance_blue": "The crowd has spoken! Team Lightning wins the dance-off!", "comeback": "Ghosts, listen up! This is the Comeback Door. One question, one try, ghosts only. The fastest right answers come back to life and rejoin the arena! Everybody else, sit back and watch. Ghosts, this is your moment!", "cb_yes": "Welcome BACK to the arena! The ghosts have risen!", "cb_no": "So close! The door stays shut this time, but keep playing, ghosts!", "final3": "We are down to our FINAL THREE! These are the three highest scores of the night. Everybody else, do not go anywhere. On your phone, predict who will be tonight's champion. Guess right and you get five points!", "ffo": "This is it, the FINAL FACE-OFF! Our final three answer one question at a time. The fastest correct answer wins one point. First to three points is tonight's Team Liu Trivia champion! No wheel, no twists, just pure speed. Fighters, are you ready?", "point1": "That is a point!", "point2": "Fastest finger takes it!", "match": "MATCH POINT! One more and it is over!", "trophy_red": "Before we crown our champion, the team trophy! It goes to the team with the most points per player, and the winner is... Team THUNDER!", "trophy_blue": "Before we crown our champion, the team trophy! It goes to the team with the most points per player, and the winner is... Team LIGHTNING!", "awards": "And now, tonight's awards! Give it up for these legends!", "champion": "Ladies and gentlemen, it is time to crown our champion! Your TEAM LIU TRIVIA CHAMPION is right there on the screen! What a game! Give it up!", "signoff": "That is our show! Thank you for playing Team Liu Trivia. You were all amazing tonight. Same time next week. Good night, Team Liu!", "q1": "Rebecca Liu's April theme of the month was Operating with... blank! Was it Urgency? Caution? Consensus? Or Patience?", "q2": "What is Rebecca's cat's name? Is it Oliver? Milo? Benji? Or Charlie?", "q3": "Which Team Liu member is currently learning how to kitesurf? Courtney Paquette? Mary Perez? Tara Stargell? Or Natalie Mitchell?", "q4": "Which Team Liu member accidentally ended up with a welding degree? Flavia Mack? Marcos Rivera? Anna McLean? Or Joshua Thomas?", "q5": "Which Team Liu member has a great-great-great grandfather who delivered Mark Twain? Emery Porter? Davis Galleon? Brandon Beck? Or Teresa Brazil?", "q6": "Which Team Liu member has been slimed on Nickelodeon? Parker Alspach? Eva Mbote? Sher Pollard? Or Graham Amerson?", "q7": "Which Team Liu member is technically an NFL owner, through a share of the Green Bay Packers? Reese Jefferies? Kevin Nicholas? Benjamin Fronberry? Or Brandon Beck?", "q8": "Which Team Liu member competes in global Roast Battle leagues? Sarkis Majarian? Myles Ward? Reese Jefferies? Or Kim Bryant?", "f1": "What was the name of the legacy IVR male voice? Frank? Phil? Walter? Or George?", "f2": "What did Rebecca want to be when she was a kid? A teacher? A doctor? A singer? Or a veterinarian?", "f3": "What was the name of the team llama Rebecca adopted? Robbie? Jay? Larry? Or PJ?", "f4": "Which Team Liu member was an Abercrombie and Fitch model in the nineties? Evette Williams? Chris Nelson? Billy Hamilton Junior? Or Mike McKelvaine?", "a1": "Operating with URGENCY! That is how Team Liu rolls!", "a2": "It is BENJI! Everybody say hi to Benji!", "a3": "Mary Perez! Catch that wind, Mary!", "a4": "Anna McLean! Accidentally! How does that even happen?!", "a5": "Brandon Beck! History runs in the family!", "a6": "Sher Pollard got SLIMED! Absolute legend!", "a7": "Benjamin Fronberry! Mister team owner! Go Pack Go!", "a8": "Reese Jefferies! Careful, everybody, Reese might roast you next!", "af1": "It was PHIL! Thank you for your service, Phil!", "af2": "A DOCTOR! Doctor Rebecca, everybody!", "af3": "PJ the llama! Best team mascot ever!", "af4": "Chris Nelson! Strike a pose, Chris!"};
+const Q_READ={"Operating with":"q1","cat's name":"q2","kitesurf":"q3","welding degree":"q4","Mark Twain":"q5","Nickelodeon":"q6","Green Bay Packers":"q7","Roast Battle":"q8","IVR male voice":"f1","want to be when she was a kid":"f2","team llama":"f3","Abercrombie":"f4"};
+const AUD={base:'audio/',have:new Set(),pack:false,voiceEl:null,music:null,musicId:'',loops:{},last:{},
+  vol(k){const S=SET();const v={voice:S.volVoice,music:S.volMusic,sfx:S.volSfx}[k];return Math.max(0,Math.min(1,(v==null?({voice:100,music:40,sfx:80})[k]:+v)/100))},
+  async init(){if(this._init)return;this._init=1;try{const r=await fetch(this.base+'manifest.json',{cache:'no-cache'});if(r.ok){const m=await r.json();arr(m.files||m).forEach(f=>this.have.add(f));this.pack=this.have.size>0}}catch(e){}},
+  has(f){return this.have.has(f)},url(f){return this.base+f+'.mp3'},
+  on(){return SND.on},
+  /* host voice: resolves when the line has finished (or a safe estimate for the browser voice) */
+  voice(id,text){return new Promise(res=>{if(!this.on()||!SET().voice){res();return}const t=text||HOST_LINES[id]||'';this.stopVoice();
+    const est=Math.min(60000,900+t.split(/\s+/).length*390);let done=false;const fin=()=>{if(done)return;done=true;this.duck(false);res()};
+    this.duck(true);
+    if(id&&this.has('v_'+id)){const a=new Audio(this.url('v_'+id));a.volume=this.vol('voice');this.voiceEl=a;a.onended=fin;a.onerror=()=>{this.speak(t);setTimeout(fin,est)};a.play().catch(()=>{this.speak(t);setTimeout(fin,est)});setTimeout(fin,60000);return}
+    /* no recording for this line yet: stay silent and move on, never a robot voice */
+    fin()})},
+  speak(t,cb){try{t=String(t).replace(/\b5G\b/gi,'five G').replace(/AT&T/g,'A T and T');const u=new SpeechSynthesisUtterance(t);u.rate=1.05;u.pitch=.9;u.volume=this.vol('voice');if(cb)u.onend=cb;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){cb&&cb()}},
+  stopVoice(){if(this.voiceEl){try{this.voiceEl.pause()}catch(e){}this.voiceEl=null}try{speechSynthesis.cancel()}catch(e){}},
+  duck(on){if(this.music)this.fade(this.music,on?this.vol('music')*.35:this.vol('music'),300)},
+  fade(a,to,ms,then){const from=a.volume,t0=performance.now();const step=()=>{const k=Math.min(1,(performance.now()-t0)/ms);try{a.volume=Math.max(0,Math.min(1,from+(to-from)*k))}catch(e){}if(k<1)requestAnimationFrame(step);else if(then)then()};step()},
+  /* music beds: one at a time, crossfaded */
+  playMusic(id,loop){if(!this.on())return;if(this.musicId===id&&this.music)return;this.stopMusic(600);if(!this.has('m_'+id))return;const a=new Audio(this.url('m_'+id));a.loop=!!loop;a.volume=0;this.music=a;this.musicId=id;a.play().then(()=>this.fade(a,this.vol('music'),700)).catch(()=>{})},
+  stopMusic(ms){const a=this.music;this.music=null;this.musicId='';if(a)this.fade(a,0,ms==null?600:ms,()=>{try{a.pause()}catch(e){}})},
+  /* sound effects */
+  sfx(id,o){o=o||{};if(!this.on()||!this.has('s_'+id))return false;const now=performance.now();if(this.last[id]&&now-this.last[id]<(o.gap||1200))return true;this.last[id]=now;
+    const a=new Audio(this.url('s_'+id));a.volume=this.vol('sfx')*(o.v||1);if(o.loop){a.loop=true;this.stopLoop(id);this.loops[id]=a}a.play().catch(()=>{});return true},
+  stopLoop(id){const a=this.loops[id];if(a){this.fade(a,0,400,()=>{try{a.pause()}catch(e){}});delete this.loops[id]}},
+  stopAll(){this.stopVoice();this.stopMusic(300);Object.keys(this.loops).forEach(k=>this.stopLoop(k))},
+  hold(p){[this.voiceEl,this.music,...Object.values(this.loops)].forEach(a=>{if(!a)return;try{p?a.pause():a.play()}catch(e){}});try{p?speechSynthesis.pause():speechSynthesis.resume()}catch(e){}}
+};
+/* the synth effects step aside for the real ones once the audio pack is loaded */
+(function(){const MAP={cheer:'applause',fanfare:'airhorn',boom:'impact',crash:'gong',drumroll:'drumroll',coin:'coins',buzzer:'wrong',riser:'qin',heartbeat:'heart',door:'doors',wheel:'wheel'};
+  Object.keys(MAP).forEach(k=>{const o=FX[k];if(typeof o!=='function')return;FX[k]=function(){if(AUD.pack&&document.body.classList.contains('host')&&AUD.sfx(MAP[k],{gap:k==='coin'?2500:1500}))return;return o.apply(FX,arguments)}})})();
+/* host lines: say one or more lines in a row and wait for them (never less than minMs) */
+async function host(ids,minMs){ids=arr(ids).filter(Boolean);const t0=Date.now();for(const id of ids){if(!G.running&&G.running!==undefined&&ids.length&&false)break;await waitFor(AUD.voice(id))}const left=(minMs||0)-(Date.now()-t0);if(left>0)await wait(left)}
+async function hostText(text,minMs){const t0=Date.now();await waitFor(AUD.voice('',text));const left=(minMs||0)-(Date.now()-t0);if(left>0)await wait(left)}
+/* wait for a promise but keep honouring pause, skip and stop */
+async function waitFor(p){let done=false;p.then(()=>done=true,()=>done=true);while(!done){if(G.skip){AUD.stopVoice();return}if(!G.running)throw new Error('stopped');await sleep(100)}}
+function hostSay(id){AUD.voice(id)}
+function teamLeader(){const avg=t=>{const m=team(t);return m.length?m.reduce((a,p)=>a+(p.score||0),0)/m.length:0};const r=avg('red'),b=avg('blue');return r===b?'':r>b?'red':'blue'}
+function hostLobbyAudio(){let n=0;const go=()=>{SND.init();if(!G.running)AUD.playMusic('lobby',true)};document.addEventListener('pointerdown',go,{once:true});
+  setInterval(()=>{if(G.running||!document.body.classList.contains('host')||!SND.on)return;if(!AUD.musicId)AUD.playMusic('lobby',true);if(AUD.has('v_lobby1'))AUD.voice(n++%2?'lobby2':'lobby1')},45000)}
+function pickOne(a){return a[Math.floor(Math.random()*a.length)]}
+function qReadId(q){const t=(q&&q.text)||'';for(const k in Q_READ)if(t.includes(k))return Q_READ[k];return ''}
+function qReadText(q){const o=arr(q.opts);return q.text.replace(/_{2,}/g,'blank')+' '+o.slice(0,-1).join('? ')+'? Or '+o[o.length-1]+'?'}
 
 /* ---------------- avatars ---------------- */
 /* v1.5: big photo heads. On the projector the head is 1.4x and the body 0.84x so every face reads from the back of the room. */
@@ -4822,7 +4869,7 @@ function hclear(){CLK.q=[];G.timers.forEach(clearTimeout);G.timers=[];try{speech
 async function wait(ms){let t=0;while(t<ms){if(G.skip)return;if(!G.running)throw new Error('stopped');await sleep(100);if(!G.paused)t+=100}}
 async function waitUntil(fn,ms){let t=0;while(t<ms){if(G.skip)return;if(!G.running)throw new Error('stopped');if(fn())return;await sleep(100);if(!G.paused)t+=100}}
 function skipNow(){if(!G.running)return;G.skip=true;CLK.q=[];G.timers.forEach(clearTimeout);G.timers=[];try{speechSynthesis.cancel()}catch(e){}SND.songStop();if(G.paused)setPause(false)}
-function setPause(v){G.paused=!!v;document.body.classList.toggle('paused',G.paused);try{document.getAnimations().forEach(a=>G.paused?a.pause():a.play())}catch(e){}SND.hold(G.paused);try{G.paused?speechSynthesis.pause():speechSynthesis.resume()}catch(e){}
+function setPause(v){G.paused=!!v;try{AUD.hold(G.paused);if(G.paused)AUD.voice('pause')}catch(e){}document.body.classList.toggle('paused',G.paused);try{document.getAnimations().forEach(a=>G.paused?a.pause():a.play())}catch(e){}SND.hold(G.paused);try{G.paused?speechSynthesis.pause():speechSynthesis.resume()}catch(e){}
   NET.set('live/pause',G.paused?{p:1,ts:Date.now()}:null);const b=$('hostbar');if(b&&b.dataset.mode==='game')showHostBar('game');let o=$('pauseOv');if(G.paused&&!o){o=el('<div class="pauseov" id="pauseOv"><b>&#10074;&#10074; PAUSED</b></div>');document.body.appendChild(o)}if(!G.paused&&o)o.remove()}
 const P=()=>vals(G.players).filter(p=>!p.kicked);
 const alive=()=>P().filter(p=>!p.ghost);
@@ -4898,7 +4945,7 @@ function qr(text){try{const q=qrcode(0,'M');q.addData(text);q.make();return q.cr
 function joinUrl(){return location.href.split('#')[0].split('?')[0]+(NET.mode==='local'?'?local':'')+'#play'}
 
 /* ---------------- lobby ---------------- */
-function renderLobby(){
+function renderLobby(){try{const n=P().length;if(AUD._n!=null&&n>AUD._n)AUD.sfx('join',{gap:300});AUD._n=n}catch(e){}
   const tv=tvEl();if(!tv)return;const ps=P();const n=ps.length;const cols=n<=12?6:n<=24?8:10;
   const url=joinUrl();
   if(!tv.querySelector('#slots')){scene(`<div class="tvin" style="flex-direction:row;gap:3cqw;align-items:center">
@@ -4932,17 +4979,19 @@ async function startGame(){
 function alert0(t){const m=$('hMsg');if(m){m.textContent=t;m.hidden=false;setTimeout(()=>m.hidden=true,4000)}}
 async function runGame(){
   const S=SET();
-  await sceneTeams();
+  AUD.stopMusic(400);AUD.playMusic('intro');AUD.sfx('roar');await host(['start','rules']);
+  const tp=AUD.voice('teams');await sceneTeams();await waitFor(tp);
   const rounds=qList().filter(q=>(q.role||'round')==='round'&&qValid(q));
   const warm=Math.min(S.warmup,rounds.length);
   let tugDone=!S.tug,danceDone=!S.dance,cbDone=!S.comeback;
   for(let i=0;i<rounds.length;i++){
     if(alive().length<=3&&i>=warm)break;
     G.roundNo=i+1;const isWarm=i<warm;
-    await playQuestion(rounds[i],{warm:isWarm,label:isWarm?'WARM-UP':'ROUND '+(i+1-warm+ (warm?0:0)),n:i+1,of:rounds.length});
+    await playQuestion(rounds[i],{warm:isWarm,label:isWarm?'WARM-UP':'ROUND '+(i+1),last:i===rounds.length-1,n:i+1,of:rounds.length});
     if(!isWarm){
-      await board({cut:0,twist:1});
-      const tw=await wheelOfFate(i===rounds.length-1);if(tw)await runTwist(tw);G.tw++;
+      /* v2.2: after the last round we go straight to the finals (saves about a minute) */
+      if(i===rounds.length-1)await board({cut:0});
+      else{await board({cut:0,twist:1});const tw=await wheelOfFate(false);if(tw)await runTwist(tw);G.tw++}
     } else await board({cut:0,warm:true});
     const betNext=!!(G.pending&&G.pending.bets)&&i<rounds.length-1;
     if(!betNext&&!tugDone&&(G.tw>=S.tugAfterKO||i===rounds.length-1)){tugDone=true;await tug()}
@@ -4955,6 +5004,7 @@ async function runGame(){
   if(fin.length>3){fin.slice(3).forEach(p=>{p.ghost=true;G.eliminatedOrder.push(p.id)});fin=fin.slice(0,3);await topThree(fin)}
   if(fin.length>=2)await finalFaceOff(fin);
   await champion(fin);
+  await host('signoff');AUD.stopMusic(3000);
 }
 
 /* ---------------- teams: stadium run-in ---------------- */
@@ -4967,11 +5017,11 @@ async function sceneTeams(){
   const lay=(arr2,side)=>arr2.forEach((p,i)=>{const col=i%cpr,row=Math.floor(i/cpr);const tx=side==='r'?5+col*(42/cpr)+row*2:53+col*(42/cpr)+row*2,ty=40+row*(rows>2?12:16);
     const d=el(`<div style="position:absolute;width:${w}cqw;left:${side==='r'?-10:104}%;top:44%">${fig(p,'happy',{anim:false})}</div>`);tf.appendChild(d);
     const t0=(side==='r'?400:700)+i*Math.min(600,6000/per);
-    HT(()=>{runTo(d,tx,ty,1000);pyro(side==='r'?3:96,40,side==='r'?TEAMS.red.c:TEAMS.blue.c);FX.whoosh();if(i===0)say(side==='r'?'Team Thunder!':'Team Lightning!')},t0);
+    HT(()=>{runTo(d,tx,ty,1000);pyro(side==='r'?3:96,40,side==='r'?TEAMS.red.c:TEAMS.blue.c);FX.whoosh();if(i===0)0},t0);
     HT(()=>{setEmo(d.firstChild,p,'happy',{anim:per<=12});d.firstChild.classList.add('mv-cheer')},t0+1050)});
   lay(red,'r');lay(blue,'b');
   const tEnd=Math.min(7600,1500+per*Math.min(600,6000/per)+1200);
-  HT(()=>{const v=tv.querySelector('#vs');v.style.opacity=1;v.style.animation='bannS .6s cubic-bezier(.2,1.6,.4,1)';flash();FX.crash();FX.cheer(4);say("Let's go!");pyro(50,30,'#ffcf3f')},tEnd);
+  HT(()=>{const v=tv.querySelector('#vs');v.style.opacity=1;v.style.animation='bannS .6s cubic-bezier(.2,1.6,.4,1)';flash();FX.crash();FX.cheer(4);0;pyro(50,30,'#ffcf3f')},tEnd);
   await wait(tEnd+2600);
 }
 
@@ -4986,9 +5036,9 @@ async function howTo(fmt,info,q,custom){const S=SET();G.seen=G.seen||{};const fi
     <ol class="hows">${h.do.map((t,i)=>`<li style="animation-delay:${.3+i*.45}s">${esc(t)}</li>`).join('')}</ol></div></div>
     ${q?`<div class="howq"><span>THE QUESTION</span>${esc(q.text)}</div>`:''}${custom&&custom.legend?koLegend('show big'):''}${why?`<div class="howwhy">${esc(why)}</div>`:''}
     <div class="howgo">Starts in <b id="hc">${secs}</b></div></div>`,'',fmt==='final'?'final':fmt);
-  say(fmt==='stones'?'What comes next? Tap it on your phone.':(custom&&custom.say)||name);FX.riser(1);
+  const HL={wheel:first?['wheel_f']:[pickOne(['wheel_s1','wheel_s2'])],ko:first?['ko_setup','ko_rules']:['ko_again'],box:['box'],potato:['fire'],steal:['steal'],bet:['bet'],duel:['duel'],dance:['dance1','dance2'],stop:['stop'],final:['ffo'],comeback:['comeback'],bounty:[]};let lines=HL[fmt]||[first?fmt+'_f':fmt+'_s'];if(info&&!custom){lines=[info.warm?'warmup':(info.last?'roundlast':'round'+info.n)].concat(lines)}if(['ko','steal','duel'].includes(fmt))AUD.playMusic('danger',true);else if(fmt==='comeback')AUD.playMusic('comeback',true);else if(fmt==='final')AUD.playMusic('final',true);if(fmt==='ko')AUD.sfx('bell');FX.riser(1);
   for(let i=1;i<=secs;i++)HT(()=>{const c=tv.querySelector('#hc');if(c)c.textContent=Math.max(0,secs-i);if(secs-i<=3&&secs-i>0)FX.tick()},i*1000);
-  await wait(secs*1000)}
+  await Promise.all([wait(secs*1000),host(lines)])}
 async function playQuestion(q,info){
   const S=SET();const fmt=q.format||'classic';const secs=S.timers[fmt]||12;const ps=P();
   await howTo(fmt,info,q);
@@ -4998,12 +5048,18 @@ async function playQuestion(q,info){
   hostQuestionScene(G.q);
   botAnswers(G.q);
   const timeMs=secs*1000+(fmt==='falling'?0:0);
-  await wait(timeMs+300);
+  AUD.playMusic('question',true);if(fmt==='whack')AUD.sfx('siren');if(fmt==='falling')AUD.sfx('falling');
+  {const rid=qReadId(q);rid?AUD.voice(rid):AUD.voice('',qReadText(q))}
+  if(secs>=12)HT(()=>{AUD.sfx('tick10');AUD.voice(pickOne(['ten1','ten2']))},(secs-10)*1000);
+  await wait(timeMs+300);AUD.stopMusic(300);AUD.stopLoop('tick10');AUD.sfx('timeup');
   // score
   const res=scoreQuestion(G.q);const extraLines=applyPending(G.q,res);
   broadcast('reveal',{q:qPublic(q),fmtData:extra,correct:q.correct,num:q.num,res,info:extra.info});
-  await hostReveal(G.q,res);if(extraLines.length)await pendingCard(extraLines);
+  const rv=revealVoice(q,res);await hostReveal(G.q,res);await waitFor(rv);if(extraLines.length)await pendingCard(extraLines);
 }
+async function revealVoice(q,res){await AUD.voice(pickOne(['timeup1','timeup2']));await AUD.voice(pickOne(['reveal1','reveal2']));
+  const rid=qReadId(q);const aid=rid?(rid[0]==='q'?'a'+rid.slice(1):'af'+rid.slice(1)):'';await (aid?AUD.voice(aid):AUD.voice('','The answer is '+arr(q.opts)[q.correct]+'!'));
+  const rs=vals(res);const ok=rs.filter(r=>r.ok).length;const k=rs.length?ok/rs.length:0;await AUD.voice(ok===0?'none':k>=.6?'most':k<=.25?'few':'')}
 function speedBonus(ms,secs){const S=SET();return Math.max(0,Math.round(S.speed*(1-ms/(secs*1000))))}
 function scoreQuestion(Q){const q=Q.q,fmt=Q.fmt,res={};const half=SET().ghostHalf;
   P().forEach(p=>{const a=Q.answers[p.id];let pts=0,ok=false,val=null;
@@ -5090,7 +5146,7 @@ async function hostReveal(Q,res){const tv=tvEl(),q=Q.q,fmt=Q.fmt,ps=P();const op
     FX.crash();flash();tv.querySelectorAll('.drop').forEach(d=>d.classList.add(+d.dataset.i===q.correct?'caught':'smash'));
     ps.forEach((p,k)=>{const w=rn.querySelector(`.runner[data-id="${p.id}"]`);if(!w)return;const r=res[p.id]||{};setEmo(w.querySelector('.fig'),p,p.ghost?'ghost':r.ok?'happy':'wrong',{anim:false,tag:false});HT(()=>ptsAt(w,p),300+k*90)});
     FX.cheer(3.5);HT(()=>banner(String(right).toUpperCase()+'!'),400);await wait(1200+ps.length*90+3500)}
-  else if(fmt==='stones'){banner('JUMP!');say('Jump!');FX.whoosh();const pos=QV.pos;const ws=[...tv.querySelectorAll('.runner')];
+  else if(fmt==='stones'){banner('JUMP!');AUD.sfx('splash');FX.whoosh();const pos=QV.pos;const ws=[...tv.querySelectorAll('.runner')];
     const groups=[[],[],[],[]];const stay=[];ps.forEach(p=>{const r=res[p.id]||{};const w=ws.find(x=>x.dataset.id===p.id);if(!w)return;if(r.v!=null&&r.v>=0&&r.v<4)groups[r.v].push(w);else stay.push(w)});
     groups.forEach((g,st)=>{const [sx,sy]=pos[st];const {f,pos:pp}=packPos(g.length,{x:sx-8.5,y:sy-12,w:17,h:30},4.6);
       g.forEach((w,k)=>{const x0=parseFloat(w.style.left),y0=parseFloat(w.style.top),w0=parseFloat(w.style.width);const t=pp[k];w.style.zIndex=t.z;
@@ -5171,13 +5227,13 @@ async function wheelOfFate(isLast){const T=twistOptions(isLast);const opts=T.all
   const tv=scene(`<div class="tvin" style="align-items:center">${topbar('WHEEL OF FATE','WHAT HAPPENS NEXT?','g','d')}
     <div class="fate"><div class="fptr"></div><div class="fdisc" id="fd" style="background:conic-gradient(${opts.map((k,i)=>`${TWISTS[k].c} ${i/n*360}deg ${(i+1)/n*360}deg`).join(',')})">${opts.map((k,i)=>`<div class="flab" style="transform:rotate(${(i+.5)/n*360-90}deg)"><span class="${(i+.5)/n>.5?'flip':''}">${TWISTS[k].ic} ${TWISTS[k].n}</span></div>`).join('')}</div><div class="fhub">&#127922;</div></div>
     <div class="fres" id="fr">Spinning...</div></div>`,'','board');
-  say('Spin the wheel of fate!');FX.riser(1);const i=opts.indexOf(pick);const deg=360*6+(360-((i+.5)/n*360));
+  AUD.playMusic('wheel');if(G.seen.wheel>1||G.wheelSpun)AUD.voice(pickOne(['wheel_s1','wheel_s2']));G.wheelSpun=1;FX.riser(1);const i=opts.indexOf(pick);const deg=360*6+(360-((i+.5)/n*360));
   HT(()=>{const d=tv.querySelector('#fd');d.style.transition='transform 5s cubic-bezier(.12,.6,.15,1)';d.style.transform=`rotate(${deg}deg)`;FX.wheel(5)},400);
-  HT(()=>{const r=tv.querySelector('#fr');r.innerHTML=`${TWISTS[pick].ic} ${TWISTS[pick].n.toUpperCase()}!`;r.classList.add('on');flash();FX.crash();FX.cheer(3);say(TWISTS[pick].n+'!')},5600);
-  await wait(8600);return pick}
+  HT(()=>{const r=tv.querySelector('#fr');r.innerHTML=`${TWISTS[pick].ic} ${TWISTS[pick].n.toUpperCase()}!`;r.classList.add('on');flash();FX.crash();FX.cheer(3);AUD.sfx('gong')},5600);
+  await wait(7800);return pick}
 async function runTwist(k){
   if(k==='ko'||k==='exit'){const low=alive().slice().sort((a,b)=>a.score-b.score||b.joined-a.joined)[0];if(!low)return;G.danger=[low.id];
-    if(k==='ko')await knockout(1);else await arenaExit(low);G.ko++;return}
+    if(k==='ko')await knockout(1);else await arenaExit(low);G.ko++;AUD.stopMusic(800);if(ghosts().length&&!G.saidGhost){G.saidGhost=1;await host('ghost')}return}
   await howTo(k,null,null,TW_RULES[k]);
   if(k==='box')return mysteryBox();if(k==='potato')return hotPotato();if(k==='steal')return theSteal();if(k==='bet')return placeBets();if(k==='duel')return duel();if(k==='bounty')return bountyHunt()}
 /* Arena Exit: Friday Arena style send-off for the lowest score */
@@ -5187,7 +5243,7 @@ async function arenaExit(p){G.exitBoard=alive().slice().sort((a,b)=>a.score-b.sc
   const tv=scene(`<div class="stagebg"></div><div class="floor"></div><div class="tvin" style="z-index:3">${topbar('ARENA EXIT',EXITS[ex],'l','d')}</div><div class="spot2"></div><div id="ex" style="position:absolute;inset:0"></div>
     <div class="actor" id="ea" style="left:41%;width:18%;z-index:6">${fig(p,'wrong',{tag:true})}</div>
     <div class="whyout" id="wo"><span>LOWEST SCORE</span><b>${esc(p.n.toUpperCase())}</b><em>${p.score} PTS</em><div class="wlist">${G.exitBoard.map((x,i)=>`<i class="${x.id===p.id?'me':''}">${i+1}. ${esc(x.n)} <small>${x.score}</small></i>`).join('')}</div></div>`,'nosky','board');
-  const st=tv.querySelector('#ex'),a=tv.querySelector('#ea');FX.drumroll(2.4);say('Arena exit');await wait(4200);tv.querySelector('#wo').classList.add('small');banner(p.n.toUpperCase()+' IS OUT');await wait(1600);
+  const st=tv.querySelector('#ex'),a=tv.querySelector('#ea');FX.drumroll(2.4);AUD.playMusic('danger',true);AUD.voice('exit');HT(()=>AUD.sfx('trapdoor'),5600);await wait(4200);tv.querySelector('#wo').classList.add('small');banner(p.n.toUpperCase()+' IS OUT');await wait(1600);
   if(ex==='dunk'){st.innerHTML='<div class="tank2"></div><div class="seat2" id="seat"></div><div class="target2"></div>';a.style.bottom='33%';a.style.left='44%';a.style.width='14%';
     const b=el('<div class="ball2"></div>');st.appendChild(b);b.animate([{left:'0%',bottom:'25%'},{left:'50%',bottom:'65%',offset:.5},{left:'84%',bottom:'38%'}],{duration:1100,easing:'ease-in',fill:'forwards'});FX.whoosh();await wait(1100);
     st.querySelector('#seat').style.transform='rotate(70deg)';setEmo(a.querySelector('.fig'),p,'ko',{tag:true});a.animate([{transform:'none'},{transform:'translateY(70%)'}],{duration:500,easing:'ease-in',fill:'forwards'});FX.boom();banner('SPLASH!');st.appendChild(el('<div class="splash2"></div>'))}
@@ -5209,7 +5265,7 @@ async function mysteryBox(){const S=SET();const secs=12;G.box_={picks:{}};broadc
   const prizes=shuffle([15,5,-5]);const res={};FX.drumroll(1.5);await wait(1600);
   for(const i of [0,1,2].sort((a,b)=>Math.abs(prizes[a]===15)-Math.abs(prizes[b]===15))){const b=tv.querySelector('#mb'+i),z=tv.querySelector('#mz'+i);z.textContent=(prizes[i]>0?'+':'')+prizes[i];z.style.color=prizes[i]>10?'var(--lime)':prizes[i]>0?'var(--gold)':'var(--red)';b.classList.add('open');prizes[i]>0?FX.coin():FX.buzzer();await wait(1600)}
   ps.forEach(p=>{const k=G.box_.picks[p.id];if(k==null)return;const v=prizes[k];p.score=Math.max(0,(p.score||0)+v);p.last=v;res[p.id]=v});
-  broadcast('boxEnd',{prizes,res});banner('BOX '+(prizes.indexOf(15)+1)+' WINS +15');FX.cheer(3);await wait(4000)}
+  broadcast('boxEnd',{prizes,res});banner('BOX '+(prizes.indexOf(15)+1)+' WINS +15');AUD.voice('box'+(prizes.indexOf(15)+1));FX.cheer(3);await wait(4000)}
 function boxLive(){const tv=tvEl();if(!G.box_)return;[0,1,2].forEach(i=>{const m=tv.querySelector('#mv'+i);if(!m)return;const ids=Object.keys(G.box_.picks).filter(id=>G.box_.picks[id]===i);m.innerHTML=ids.slice(0,24).map(id=>G.players[id]?headImg(G.players[id],2.6):'').join('')});const c=tv.querySelector('#bc');if(c)c.textContent=`${Object.keys(G.box_.picks).length} / ${P().length} PICKED`}
 /* Hot Potato */
 async function hotPotato(){const ps=P();const fuse=14000+Math.random()*9000;let holder=ps[Math.floor(Math.random()*ps.length)];G.pot_={holder:holder.id,ready:Date.now()+600,n:0};
@@ -5219,13 +5275,13 @@ async function hotPotato(){const ps=P();const fuse=14000+Math.random()*9000;let 
   const place=()=>{const d=pf.querySelector(`.runner[data-id="${G.pot_.holder}"]`);const b=tv.querySelector('#bm');if(d){b.style.left=(parseFloat(d.style.left)+parseFloat(d.style.width)/2)+'%';b.style.top=(parseFloat(d.style.top)-6)+'%'}tv.querySelector('#phn').textContent=G.players[G.pot_.holder].n;FX.tap()};
   G.pot_.move=()=>{const others=P().filter(p=>p.id!==G.pot_.holder);const nx=others[Math.floor(Math.random()*others.length)];G.pot_.holder=nx.id;G.pot_.ready=Date.now()+500;G.pot_.n++;broadcast('potato',{holder:nx.id});place();
     if(nx.bot)HT(()=>{if(G.pot_&&G.pot_.holder===nx.id)G.pot_.move()},700+Math.random()*1200)};
-  broadcast('potato',{holder:holder.id});place();say('Pass the firecracker!');if(holder.bot)HT(()=>{if(G.pot_&&G.pot_.holder===holder.id)G.pot_.move()},1200);
+  broadcast('potato',{holder:holder.id});place();AUD.sfx('fuse',{loop:true});if(holder.bot)HT(()=>{if(G.pot_&&G.pot_.holder===holder.id)G.pot_.move()},1200);
   const tick=setInterval(()=>FX.tick(),500);G.timers.push(tick);await wait(fuse);clearInterval(tick);
-  const loser=G.players[G.pot_.holder];const tv2=tvEl();const b=tv2.querySelector('#bm');const bx=parseFloat(b.style.left),by=parseFloat(b.style.top);b.innerHTML='&#128165;';b.classList.add('boom2');flash();FX.boom();FX.crash();
+  AUD.stopLoop('fuse');AUD.sfx('bang');const loser=G.players[G.pot_.holder];const tv2=tvEl();const b=tv2.querySelector('#bm');const bx=parseFloat(b.style.left),by=parseFloat(b.style.top);b.innerHTML='&#128165;';b.classList.add('boom2');flash();FX.boom();FX.crash();
   ['#ffcf3f','#ff3d6e','#ffffff','#ff7a1a'].forEach((c,k)=>HT(()=>{pyro(bx+(k-1.5)*3,by+2,c);FX.pop()},k*110));
   const run=pf.querySelector(`.runner[data-id="${loser.id}"]`);const d=run&&run.querySelector('.fig');loser.score=Math.max(0,loser.score-10);loser.last=-10;G.pot_=null;
   broadcast('potatoEnd',{id:loser.id});
-  HT(()=>{b.remove();if(d){setEmo(d,loser,'wrong',{tag:true,anim:false});const f=run.querySelector('.fig');f.classList.add('sooty');for(let k=0;k<5;k++)run.appendChild(el(`<i class="puff" style="left:${20+k*14}%;animation-delay:${k*.25}s"></i>`))}banner('POP! '+loser.n.toUpperCase()+' -10');say('Pop!')},600);
+  HT(()=>{b.remove();if(d){setEmo(d,loser,'wrong',{tag:true,anim:false});const f=run.querySelector('.fig');f.classList.add('sooty');for(let k=0;k<5;k++)run.appendChild(el(`<i class="puff" style="left:${20+k*14}%;animation-delay:${k*.25}s"></i>`))}banner('POP! '+loser.n.toUpperCase()+' -10');AUD.voice('firepop')},600);
   HT(()=>{const f=run&&run.querySelector('.fig');if(f){f.classList.add('cough')}},1600);
   await wait(5500)}
 /* The Steal */
@@ -5237,7 +5293,7 @@ async function theSteal(){const secs=12;const thief=alive().slice().sort((a,b)=>
   for(let i=1;i<=secs;i++)HT(()=>{const c=tv.querySelector('#kc');if(c)c.textContent=secs-i},i*1000);
   if(thief.bot)HT(()=>{G.steal_.pick=top[Math.floor(Math.random()*top.length)].id},3000+Math.random()*4000);
   await waitUntil(()=>G.steal_.pick,secs*1000);clearInterval(mv);const tid=G.steal_.pick||top[0].id;const t=G.players[tid];const r=rows[top.indexOf(t)];if(r){aim(r);r.classList.add('hit')}
-  const amt=Math.min(10,t.score);t.score-=amt;thief.score+=amt;t.last=-amt;thief.last=amt;flash();FX.crash();banner(`STEALS ${amt} FROM ${t.n.toUpperCase()}!`);say('Stolen!');
+  const amt=Math.min(10,t.score);t.score-=amt;thief.score+=amt;t.last=-amt;thief.last=amt;flash();FX.crash();banner(`STEALS ${amt} FROM ${t.n.toUpperCase()}!`);AUD.sfx('steal');AUD.voice('stolen');
   for(let i=0;i<8;i++)HT(()=>{const c=el('<div class="coin2"></div>');tv.appendChild(c);c.animate([{right:'14%',top:(r?(r.getBoundingClientRect().top-tv.getBoundingClientRect().top)/tv.getBoundingClientRect().height*100:30)+'%'},{right:'55%',top:'8%',offset:.5},{right:'82%',top:'55%'}],{duration:900,fill:'forwards',easing:'ease-in'});setTimeout(()=>c.remove(),1000);FX.coin()},i*100);
   if(r)r.querySelector('span').textContent=t.score;broadcast('stealEnd',{thief:thief.id,target:tid,amt});await wait(4500);G.steal_=null}
 /* Double or Nothing */
@@ -5246,7 +5302,7 @@ async function placeBets(){const secs=12;G.bet_={bets:{}};broadcast('bet',{secs}
     <div class="chips2">${[0,5,10].map(v=>`<div><b>${v}</b><span id="bn${v}">0 players</span></div>`).join('')}</div><div class="cnt" id="bc">0 / ${ps.length} BETS PLACED</div><div class="mv2" id="allin"></div></div><div class="koclock" id="kc">${secs}</div>`,'','board');
   for(let i=1;i<=secs;i++)HT(()=>{const c=tv.querySelector('#kc');if(c)c.textContent=secs-i;FX.tick()},i*1000);
   botAct(p=>HT(()=>{G.bet_.bets[p.id]=[0,5,10][Math.floor(Math.random()*3)];betLive()},800+Math.random()*8000));
-  await wait(secs*1000+300);G.pending=G.pending||{};G.pending.bets=Object.assign({},G.bet_.bets);broadcast('betEnd',{});banner('BETS ARE IN: NEXT QUESTION');await wait(3000);G.bet_=null}
+  await wait(secs*1000+300);G.pending=G.pending||{};G.pending.bets=Object.assign({},G.bet_.bets);broadcast('betEnd',{});banner('BETS ARE IN: NEXT QUESTION');AUD.voice('bet_next');await wait(3000);G.bet_=null}
 function betLive(){const tv=tvEl();if(!G.bet_)return;const b=G.bet_.bets;[0,5,10].forEach(v=>{const e=tv.querySelector('#bn'+v);if(e){const c=Object.values(b).filter(x=>x===v).length;e.textContent=c+(c===1?' player':' players')}});
   const c=tv.querySelector('#bc');if(c)c.textContent=`${Object.keys(b).length} / ${P().length} BETS PLACED`;const a=tv.querySelector('#allin');if(a)a.innerHTML='<span>ALL IN:</span>'+Object.keys(b).filter(id=>b[id]===10&&G.players[id]).slice(0,20).map(id=>headImg(G.players[id],3)).join('');FX.pop()}
 /* Bounty Hunt */
@@ -5261,7 +5317,7 @@ async function duel(){const S=SET();const q=duelQuestion();const pool=alive();if
     <div class="opts" id="dop" style="width:70%;margin:0 auto">${arr(q.opts).map((t,i)=>`<div class="opt ${OPT_COL[i]}" style="font-size:1.5cqw;padding:.5cqw 1.2cqw"><b>${LET[i]}</b><span>${esc(t)}</span><span class="n"></span><i class="fill"></i></div>`).join('')}</div>
     <div class="pbar2"><i id="pa" style="width:50%;background:${TEAMS[a.team]?TEAMS[a.team].c:'#ff3d6e'}">${esc(a.n)} 50%</i><i id="pb" style="width:50%;background:${TEAMS[b.team]?TEAMS[b.team].c:'#009fdb'}">${esc(b.n)} 50%</i></div></div>
     ${[a,b].map((p,i)=>`<div class="podium" data-id="${p.id}" style="left:${i?66:12}%;width:22%"><div style="width:58%" class="pf">${fig(p,'thinking',{tag:false})}</div><div class="fstat" id="ds-${p.id}">THINKING...</div><div style="font-family:var(--display);font-size:2cqw;margin-top:.3cqw">${esc(p.n.toUpperCase())}</div></div>`).join('')}<div class="koclock" id="kc">${secs}</div>`,'','final');
-  say('Duel!');for(let i=1;i<=secs;i++)HT(()=>{const c=tv.querySelector('#kc');if(c)c.textContent=secs-i;FX.tick()},i*1000);
+  AUD.sfx('swords');for(let i=1;i<=secs;i++)HT(()=>{const c=tv.querySelector('#kc');if(c)c.textContent=secs-i;FX.tick()},i*1000);
   [a,b].filter(p=>p.bot).forEach(p=>{const t=1500+Math.random()*secs*600;const right=Math.random()<p.skill;HT(()=>{if(!G.duel_)return;G.duel_.ans[p.id]={a:right?+q.correct:(+q.correct+1)%4,ms:t};duelLive()},t)});
   botAct(p=>{if(G.duel_.ids.includes(p.id))return;HT(()=>{if(!G.duel_)return;G.duel_.pred[p.id]=Math.random()<.5?a.id:b.id;duelLive()},700+Math.random()*5000)});
   await waitUntil(()=>G.duel_.ids.every(id=>G.duel_.ans[id]),secs*1000);await wait(800);
@@ -5269,7 +5325,7 @@ async function duel(){const S=SET();const q=duelQuestion();const pool=alive();if
   tv.querySelector('#dop').classList.add('rev');tv.querySelectorAll('#dop .opt').forEach((d,i)=>{if(i===+q.correct)d.classList.add('ok')});
   [a,b].forEach(p=>{const an=G.duel_.ans[p.id];const okp=an&&+an.a===+q.correct;const fs=tv.querySelector('#ds-'+p.id);fs.className='fstat '+(p.id===w?'win':okp?'ok':'bad');fs.innerHTML=an?`<b>${LET[+an.a]}</b> ${esc(arr(q.opts)[+an.a]||'')}<small>${(an.ms/1000).toFixed(1)}s</small>`:'NO ANSWER';setEmo(tv.querySelector(`.podium[data-id="${p.id}"] .fig`),p,p.id===w?'happy':'wrong',{anim:true,tag:false})});
   const preds=G.duel_.pred;const right=w?Object.keys(preds).filter(id=>preds[id]===w):[];if(w){G.players[w].score+=15;G.players[w].last=15}right.forEach(id=>{if(G.players[id])G.players[id].score+=3});
-  flash();FX.crash();banner(w?G.players[w].n.toUpperCase()+' WINS THE DUEL!':'NOBODY GOT IT');;
+  flash();FX.crash();banner(w?G.players[w].n.toUpperCase()+' WINS THE DUEL!':'NOBODY GOT IT');AUD.voice(w?'duel_win':'duel_none');;
   broadcast('duelEnd',{a:a.id,b:b.id,win:w,correct:q.correct,q:qPublic(q),right});await wait(2500);tv.appendChild(el(`<div class="kosum"><b>${w?esc(G.players[w].n.toUpperCase())+' +15':'NO WINNER'}</b><span>${right.length} correct predictions: +3 each.</span></div>`));await wait(3800);G.duel_=null}
 function duelLive(){const tv=tvEl();const D=G.duel_;if(!D)return;D.ids.forEach(id=>{const e=tv.querySelector('#ds-'+id);if(e&&D.ans[id]&&!e.classList.contains('lock')){e.className='fstat lock';e.innerHTML=`LOCKED IN<small>${(D.ans[id].ms/1000).toFixed(1)}s</small>`;FX.buzz()}});
   const pr=Object.values(D.pred);const ca=pr.filter(x=>x===D.ids[0]).length,tot=Math.max(1,pr.length);const pa=Math.round(ca/tot*100);const A=tv.querySelector('#pa'),B=tv.querySelector('#pb');if(A&&pr.length){A.style.width=Math.max(8,pa)+'%';B.style.width=Math.max(8,100-pa)+'%';A.textContent=G.players[D.ids[0]].n+' '+pa+'%';B.textContent=G.players[D.ids[1]].n+' '+(100-pa)+'%'}}
@@ -5283,11 +5339,11 @@ function applyPending(Q,res){const lines=[];const pd=G.pending=G.pending||{};
       else{hunters.forEach(p=>{const t=Math.min(2,L.score);L.score-=t;p.score+=t;if(res[p.id])res[p.id].bounty=t});if(res[L.id])res[L.id].bounty=-(hunters.length*2);lines.push(`BOUNTY: ${hunters.length} hunters took points from ${L.n}`)}}
     pd.bounty=null}
   return lines}
-async function pendingCard(lines){const tv=tvEl();tv.appendChild(el(`<div class="kosum"><b>PAYOUT</b>${lines.map(l=>`<span>${esc(l)}</span>`).join('')}</div>`));FX.coin();FX.coin(.2);await wait(4500)}
+async function pendingCard(lines){if(lines.some(l=>/DOUBLE OR NOTHING/.test(l)))AUD.voice('bet_pay');const tv=tvEl();tv.appendChild(el(`<div class="kosum"><b>PAYOUT</b>${lines.map(l=>`<span>${esc(l)}</span>`).join('')}</div>`));FX.coin();FX.coin(.2);await wait(4500)}
 async function topThree(fin){broadcast('top3',{ids:fin.map(p=>p.id)});const next=alive().concat(ghosts()).filter(p=>!fin.includes(p)).sort((a,b)=>b.score-a.score).slice(0,3);
   const tv=scene(`<div class="stagebg"></div><div class="tvin" style="z-index:3;align-items:center">${topbar('THE FINAL THREE','THE 3 HIGHEST SCORES PLAY THE FINAL','g','d')}
   <div style="display:flex;gap:4cqw;margin-top:2cqw;align-items:flex-end">${fin.map((p,i)=>`<div style="width:${i?15:18}cqw;text-align:center;order:${[1,0,2][i]}"><div class="rk3">#${i+1}</div>${fig(p,'happy',{tag:true})}<div class="ticker" style="font-size:2.6cqw;color:var(--gold)">${p.score} PTS</div></div>`).join('')}</div>
-  ${next.length?`<div class="cnt" style="margin-top:1.4cqw;font-size:1.6cqw">Next: ${next.map(p=>esc(p.n)+' '+p.score).join(' &middot; ')}</div>`:''}<div class="cnt" style="margin-top:.6cqw">Everyone else predicts the champion.</div></div>`,'','final');FX.fanfare();say('The final three');await wait(7000)}
+  ${next.length?`<div class="cnt" style="margin-top:1.4cqw;font-size:1.6cqw">Next: ${next.map(p=>esc(p.n)+' '+p.score).join(' &middot; ')}</div>`:''}<div class="cnt" style="margin-top:.6cqw">Everyone else predicts the champion.</div></div>`,'','final');FX.fanfare();AUD.playMusic('final',true);G.f3=AUD.voice('final3');await Promise.all([wait(7000),waitFor(G.f3)])}
 
 /* ---------------- leaderboard ---------------- */
 async function board(o){const ps=alive().slice().sort((a,b)=>b.score-a.score||a.joined-b.joined);const gh=ghosts();const n=ps.length;
@@ -5303,8 +5359,9 @@ async function board(o){const ps=alive().slice().sort((a,b)=>b.score-a.score||a.
   HT(()=>{const first={};ps.forEach(p=>first[p.id]=rows[p.id].getBoundingClientRect());ps.forEach((p,r)=>{const d=rows[p.id];d.style.gridColumn=pos(r).col+1;d.style.gridRow=pos(r).row+1;d.querySelector('.rk').textContent=r+1});
     ps.forEach(p=>{const a=first[p.id],b=rows[p.id].getBoundingClientRect();const d=rows[p.id];d.style.transition='none';d.style.transform=`translate(${a.left-b.left}px,${a.top-b.top}px)`;requestAnimationFrame(()=>requestAnimationFrame(()=>{d.style.transition='';d.style.transform=''}))});
     ps.forEach(p=>countUp(rows[p.id].querySelector('.sc'),p.score-(p.last||0),p.score,1300,false));FX.whoosh();for(let i=0;i<14;i++)FX.tick(i*.09)},600);
-  HT(()=>{ps.slice(0,3).forEach(p=>rows[p.id].classList.add('top'));danger.forEach(id=>rows[id]&&rows[id].classList.add('danger'));if(danger.length){FX.heartbeat(4);say('Danger zone')}else FX.coin()},2300);
-  await wait(o.cut?11000:9000)}
+  AUD.playMusic('board');{const top=ps[0]&&ps[0].id;const tl=teamLeader();let v='';if(danger.length)v='';else if(!G.boardN)v='board1';else if(top&&G.lastTop&&top!==G.lastTop)v='leader';else if(tl&&G.lastTeam&&tl!==G.lastTeam)v=tl==='red'?'leadred':'leadblue';else if(G.boardN%2===0)v='board2';G.lastTop=top;G.lastTeam=tl;G.boardN=(G.boardN||0)+1;if(v)G.boardVoice=AUD.voice(v)}
+  HT(()=>{ps.slice(0,3).forEach(p=>rows[p.id].classList.add('top'));danger.forEach(id=>rows[id]&&rows[id].classList.add('danger'));if(danger.length){FX.heartbeat(4);G.boardVoice=AUD.voice('danger')}else FX.coin()},2300);
+  await Promise.all([wait(o.cut?8500:6500),G.boardVoice||Promise.resolve()]);G.boardVoice=null;AUD.stopMusic(800)}
 
 /* ---------------- knockout (v1.5: rock-paper-scissors simple) ----------------
    1. Short rules card: DUCK beats HIGH, BLOCK beats MIDDLE, JUMP beats LOW.
@@ -5329,7 +5386,7 @@ async function knockout(cut){const S=SET();const victims=G.danger.map(id=>G.play
   tv.insertAdjacentHTML('beforeend',venue('ko'));FX.boom();
   const rf=tv.querySelector('#rf'),rn=tv.querySelector('#rn');let t=0;const seq=[];for(let i=0;i<20;i++)seq.push(safe[i%safe.length]);seq.push(att);
   seq.forEach((p,i)=>{t+=70+i*i*2;HT(()=>{rf.innerHTML=headImg(p,11);rn.textContent=p.n.toUpperCase();FX.tick()},t)});
-  HT(()=>{rf.classList.add('land');FX.crash();say(att.n+' attacks!')},t+200);
+  HT(()=>{rf.classList.add('land');FX.crash();0},t+200);
   await wait(t+3600);
   // the fight: both pick in secret
   G.ko_={att:att.id,vic:[v0.id],atk:null,dodge:{},t0:Date.now()};
@@ -5342,7 +5399,7 @@ async function knockout(cut){const S=SET();const victims=G.danger.map(id=>G.play
     <div class="kocard d" id="kd"><span>DEFENDER</span><b>${esc(v0.n.toUpperCase())}</b><em id="ks-v">picking DUCK, BLOCK or JUMP...</em></div>
     ${koLegend('mid')}<div class="koclock" id="kc">${S.finSecs}</div>`);
   tv2.insertAdjacentHTML('beforeend',venue('ko'));
-  FX.heartbeat(3);say('Pick on your phone!');
+  FX.heartbeat(3);0;
   for(let i=1;i<=S.finSecs;i++)HT(()=>{const c=tv2.querySelector('#kc');if(c)c.textContent=Math.max(0,S.finSecs-i);FX.tick()},i*1000);
   const keys=Object.keys(ATTACKS),dk=Object.keys(DEFS);
   if(att.bot)HT(()=>{if(G.ko_&&!G.ko_.atk){G.ko_.atk=keys[Math.floor(Math.random()*3)];koLive('atk')}},2000+Math.random()*4000);
@@ -5359,15 +5416,15 @@ function koLive(kind){const tv=tvEl();if(!G.ko_)return;if(kind==='atk'){const e=
 /* slow-motion showdown: attack height, then defence, then the move */
 async function showdown2(att,v0,atk,def,saved){const tv=tvEl();const A=ATTACKS[atk];const st=tv.querySelector('#st');const sam=st.querySelector('.actor.mvp'),vic=st.querySelector('.actor.vic');const sf=sam.querySelector('.fig');const vf=()=>vic.querySelector('.fig');
   ['#kc'].forEach(q=>{const e=tv.querySelector(q);if(e)e.remove()});tv.querySelector('.kolegend').classList.add('show');
-  const bar=tv.querySelector('.bar1');if(bar)bar.outerHTML=topbar('KNOCKOUT &middot; SHOWDOWN','WATCH: ATTACK, THEN DEFENCE','','d');banner('SHOWDOWN!');say('Showdown!');FX.drumroll(2);await wait(2400);
+  const bar=tv.querySelector('.bar1');if(bar)bar.outerHTML=topbar('KNOCKOUT &middot; SHOWDOWN','WATCH: ATTACK, THEN DEFENCE','','d');banner('SHOWDOWN!');AUD.voice('ko_show');FX.drumroll(2);await wait(2400);
   // 1. the attack
   const ka=tv.querySelector('#ka');ka.classList.add('rev');ka.querySelector('em').innerHTML=`<strong>${A.ic} ${A.n}</strong><small>aims ${A.zone}</small>`;FX.crash();flash();
   tv.querySelector(`.kl[data-k="${atk}"]`).classList.add('on');
   const vr=vic.getBoundingClientRect(),tr=tv.getBoundingClientRect();const zy=((vr.top-tr.top)+vr.height*A.y)/tr.height*100;
-  const band=el(`<div class="zband" style="top:${zy}%"><span>${A.zone}</span></div>`);st.appendChild(band);say(A.n);await wait(2600);
+  const band=el(`<div class="zband" style="top:${zy}%"><span>${A.zone}</span></div>`);st.appendChild(band);0;await wait(2600);
   // 2. the defence
   const kd=tv.querySelector('#kd');kd.classList.add('rev',saved?'good':'bad');kd.querySelector('em').innerHTML=def?`<strong>${DEFS[def].ic} ${DEFS[def].n}</strong><small>${saved?'beats '+A.zone+'!':'does not beat '+A.zone}</small>`:`<strong>NO PICK</strong><small>needed ${DEFS[A.def].n}</small>`;
-  FX.tap();say(def?DEFS[def].n:'No defence');await wait(2600);
+  FX.tap();0;await wait(2600);
   // 3. the move, in slow motion
   tv.classList.add('slowmo');sf.classList.add('mv-run');sam.animate([{left:'8%'},{left:'40%'}],{duration:900,easing:'ease-in',fill:'forwards'});
   HT(()=>sf.classList.remove('mv-run'),900);
@@ -5376,10 +5433,10 @@ async function showdown2(att,v0,atk,def,saved){const tv=tvEl();const A=ATTACKS[a
   const sx=el(`<div class="streak ${saved?'miss':''}" style="top:${zy}%"></div>`);
   HT(()=>{st.appendChild(sx);sx.animate([{left:'50%',opacity:0},{left:'58%',opacity:1,offset:.25},{left:saved&&def!=='block'?'96%':'66%',opacity:1}],{duration:650,easing:'ease-out',fill:'forwards'});FX.whoosh()},1400);
   await wait(2100);band.remove();
-  if(saved){if(def==='block'){flash();FX.boom()}banner(def==='duck'?'DUCKED IT!':def==='jump'?'JUMPED OVER IT!':'BLOCKED IT!');FX.cheer(3.5);
+  if(saved){if(def==='block'){flash();FX.boom()}banner(def==='duck'?'DUCKED IT!':def==='jump'?'JUMPED OVER IT!':'BLOCKED IT!');AUD.sfx('dodge');AUD.voice(pickOne(['ko_safe1','ko_safe2']));FX.cheer(3.5);
     HT(()=>{const f=vf();f.classList.remove('df-'+def);const s2=vic.querySelector('.shield2');if(s2)s2.remove();setEmo(f,v0,'happy',{anim:false,tag:true});f.classList.add('mv-cheer')},900);
     HT(()=>sam.animate([{left:'40%'},{left:'30%'}],{duration:600,fill:'forwards'}),300)}
-  else{flash();FX.boom();const b=el('<div class="burst"></div>');b.style.left=(parseFloat(vic.style.left)+9)+'%';b.style.top=zy+'%';st.appendChild(b);setTimeout(()=>b.remove(),700);banner('HIT!');
+  else{flash();FX.boom();const b=el('<div class="burst"></div>');b.style.left=(parseFloat(vic.style.left)+9)+'%';b.style.top=zy+'%';st.appendChild(b);setTimeout(()=>b.remove(),700);banner('HIT!');AUD.voice('ko_out');
     const f=vf();f.classList.remove('df-'+(def||''));setEmo(f,v0,'ko',{anim:true,tag:true});vic.animate([{transform:'none'},{transform:'translate(8cqw,-10cqw) rotate(40deg)',offset:.35},{transform:'translate(30cqw,4cqw) rotate(95deg) scale(.7)',opacity:.5}],{duration:1600,easing:'cubic-bezier(.2,.6,.4,1)',fill:'forwards'});
     HT(()=>sf.classList.add('mv-cheer'),900)}
   tv.classList.remove('slowmo');await wait(2400);
@@ -5402,7 +5459,7 @@ async function strike(key,mvp,v0,blocked,def){const tv=tvEl();const st=tv.queryS
       if(def==='jump')vic.animate([{transform:'none'},{transform:'translateY(-42%)',offset:.35},{transform:'translateY(-42%)',offset:.6},{transform:'none'}],{duration:1400,easing:'ease-in-out'});
       if(def==='block'){moveClass(f,'mv-block',1500);const sh=el('<div class="shield"></div>');vic.appendChild(sh);setTimeout(()=>sh.remove(),1500)}},700);
     HT(()=>{FX.whoosh();sam.animate([{transform:'none'},{transform:'translateX(-6cqw) rotate(-14deg)'},{transform:'translateX(-10cqw) rotate(0)'}],{duration:700,fill:'forwards'})},1500);
-    HT(()=>{banner('BLOCKED!');FX.cheer(3.5);setEmo(vf(),v0,'happy',{anim:false,tag:false});vf().classList.add('mv-cheer');say(v0.n+' blocks it!')},1900);await wait(4200);return}
+    HT(()=>{banner('BLOCKED!');FX.cheer(3.5);setEmo(vf(),v0,'happy',{anim:false,tag:false});vf().classList.add('mv-cheer');0},1900);await wait(4200);return}
   if(key==='kick'){runIn('34%');HT(()=>{sf.classList.add('mv-bigkick');sam.animate([{transform:'none'},{transform:'translateY(-6cqw)'},{transform:'none'}],{duration:600})},800);HT(()=>{hit('K.O.!');drain()},1100);koFly(55,-60,900,1100)}
   if(key==='uppercut'){runIn('38%');move('mv-upper',1100,800);HT(()=>{const b=el('<div class="burst"></div>');st.appendChild(b);setTimeout(()=>b.remove(),700);hit('SKY UPPERCUT!');drain();setEmo(vf(),v0,'ko',{anim:true,tag:false});
       vic.animate([{transform:'none'},{transform:'translateY(-6cqw) rotate(-10deg) scaleY(1.1)',offset:.12},{transform:'translateY(-70cqw) rotate(-540deg) scale(.7)'}],{duration:1500,easing:'cubic-bezier(.2,.7,.4,1)',fill:'forwards'})},1300)}
@@ -5460,7 +5517,7 @@ async function stopClock(){const S=SET();const ps=P();if(ps.length<2)return;cons
     <div class="sclock" id="sc">3</div><div class="starget">STOP YOUR PHONE AT <b>5.00</b></div><div class="cnt" id="sn">GET READY</div><div class="sdone" id="sd"></div></div>`,'','tug');
   tv.insertAdjacentHTML('beforeend',venue('tug'));FX.countdown(3);
   const sc=tv.querySelector('#sc');[2,1].forEach((n,i)=>HT(()=>{sc.textContent=n},(i+1)*1000));await wait(3000);
-  sc.classList.add('run');sc.innerHTML='GO!<small>THE CLOCK IS ON YOUR PHONE</small>';say('Go!');FX.pop();const t0=CLK.t;
+  sc.classList.add('run');sc.innerHTML='GO!<small>THE CLOCK IS ON YOUR PHONE</small>';AUD.sfx('countdown');FX.pop();const t0=CLK.t;
   const iv=setInterval(()=>{const e=Math.min(CAP,CLK.t-t0);const n=Object.keys(G.stop_.t).length;const c=tv.querySelector('#sn');if(c)c.textContent=`${n} / ${ps.length} STOPPED`},40);G.timers.push(iv);
   botAct(p=>{const t=Math.round(TARGET+(Math.random()+Math.random()+Math.random()-1.5)*900*(1.3-(p.skill||.6)));HT(()=>{if(G.stop_&&G.stop_.t[p.id]==null){G.stop_.t[p.id]=t;stopLive(p.id)}},t)});
   await waitUntil(()=>ps.every(p=>G.stop_.t[p.id]!=null),CAP);clearInterval(iv);await wait(900);
@@ -5478,7 +5535,7 @@ async function stopClock(){const S=SET();const ps=P();if(ps.length<2)return;cons
   const sg=tv2.querySelector('#sg');rest.slice().reverse().forEach((p,k)=>HT(()=>{sg.insertAdjacentHTML('afterbegin',`<div class="schip${p.ghost?' ghosty':''}">${headImg(p,2.8)}<i>${esc(p.n)}</i><b>${fmtT(T[p.id])}</b></div>`);FX.tick()},k*70));
   await wait(rest.length*70+900);
   for(const i of [2,1,0]){const p=order[i];if(!p)continue;FX.drumroll(1.2);await wait(1400);const c=tv2.querySelector('#s'+i);c.classList.add('on');c.querySelector('.sface').innerHTML=headImg(p,i===0?9:7);c.querySelector('b').textContent=p.n.toUpperCase();c.querySelector('em').innerHTML=`${fmtT(T[p.id])} <small>+${[20,15,10][i]}</small>`;
-    if(i===0){flash();FX.fanfare();FX.cheer(4);confetti();banner(fmtT(T[p.id])+'!');say(p.n+' wins!')}else FX.coin();await wait(i===0?2600:900)}
+    if(i===0){flash();FX.fanfare();FX.cheer(4);confetti();banner(fmtT(T[p.id])+'!');AUD.voice('stop_res')}else FX.coin();await wait(i===0?2600:900)}
   tv2.querySelector('.tvin').insertAdjacentHTML('beforeend',`<div class="steam">${teamIcon(win,'sm')} TEAM ${TEAMS[win].n} WAS CLOSER &middot; +10 EACH</div>`);FX.coin();await wait(4200)}
 function stopLive(id){const tv=tvEl();const d=tv&&tv.querySelector('#sd');const p=G.players[id];if(!d||!p)return;d.insertAdjacentHTML('beforeend',headImg(p,P().length>20?2.6:3.4));FX.tap()}
 
@@ -5495,7 +5552,7 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
     <div style="display:flex;gap:4cqw;align-items:center;margin-top:.6cqw"><div style="display:grid;justify-items:center;gap:1cqw">${teamIcon('red','sm')}${wheelHTML('red',red)}<div id="pr" style="font-family:var(--display);font-size:2.4cqw;color:var(--red)">TEAM THUNDER...</div></div>
     <div class="vs" style="position:static;transform:none;font-size:5cqw">VS</div><div style="display:grid;justify-items:center;gap:1cqw">${teamIcon('blue','sm')}${wheelHTML('blue',blue)}<div id="pb" style="font-family:var(--display);font-size:2.4cqw;color:var(--blue)">TEAM LIGHTNING...</div></div></div></div>`);
   const spinTo=(t,list,p,delay)=>{const s=tv.querySelector(`#w-${t} .spin`);const i=list.indexOf(p),n=list.length;const deg=360*6-((i+.5)/n*360);HT(()=>{s.style.transition='transform 4.2s cubic-bezier(.12,.6,.15,1)';s.style.transform=`rotate(${deg}deg)`;FX.wheel(4.2)},delay)};
-  FX.riser(1.2);say('Dance off!');spinTo('red',red,dr,900);spinTo('blue',blue,db,1400);
+  FX.riser(1.2);AUD.stopMusic(300);AUD.sfx('scratch');spinTo('red',red,dr,900);spinTo('blue',blue,db,1400);
   HT(()=>{tv.querySelector('#pr').textContent=dr.n.toUpperCase()+'!';FX.crash()},5200);HT(()=>{tv.querySelector('#pb').textContent=db.n.toUpperCase()+'!';flash();FX.crash();FX.cheer(3);banner(dr.n.toUpperCase()+' VS '+db.n.toUpperCase())},5800);
   await wait(8500);
   // live dance
@@ -5530,7 +5587,7 @@ async function dance(){const S=SET();const red=team('red'),blue=team('blue');if(
   const cnt=id=>vals(G.vote_.votes).filter(v=>v===id).length;/* v2.1: only the crowd vote decides; dance timing never counts. A tie is a coin flip. */let winId=cnt(dr.id)===cnt(db.id)?(Math.random()<.5?dr.id:db.id):(cnt(dr.id)>cnt(db.id)?dr.id:db.id);
   const winner=G.players[winId],wt=winner.team,lt=wt==='red'?'blue':'red';team(wt).forEach(p=>{p.score+=25;p.last=25});team(lt).forEach(p=>{p.score+=5;p.last=5});
   broadcast('voteEnd',{win:winId,team:wt,votes:{[dr.id]:cnt(dr.id),[db.id]:cnt(db.id)}});
-  flash();FX.fanfare();FX.cheer(4);banner(winner.n.toUpperCase()+' WINS IT FOR '+TEAMS[wt].n+'!');say('Team '+TEAMS[wt].w+' wins!');
+  flash();FX.fanfare();FX.cheer(4);banner(winner.n.toUpperCase()+' WINS IT FOR '+TEAMS[wt].n+'!');AUD.voice(wt==='red'?'dance_red':'dance_blue');
   tv3.querySelectorAll('.vd').forEach(d=>{const p=G.players[d.dataset.id];setEmo(d.querySelector('.fig'),p,p.id===winId?'happy':'wrong',{anim:true});if(p.id===winId)d.querySelector('.fig').classList.add('mv-cheer')});
   await wait(2000);const list=team(wt);const row=el(`<div style="position:absolute;left:0;right:0;top:12%;display:flex;justify-content:center;gap:.4cqw;z-index:30">${list.map(p=>`<div class="rw" style="width:${Math.min(6.5,90/list.length)}cqw">${svgAv(p,p.ghost?'ghost':'happy',{anim:false,w:80,rim:false})}</div>`).join('')}</div>`);tv3.appendChild(row);
   row.querySelectorAll('.rw').forEach((d,i)=>HT(()=>{placePts(d,'+25','b');FX.coin()},i*130));HT(()=>banner('+25 TO EVERY '+TEAMS[wt].n+' FIGHTER'),list.length*130+300);await wait(list.length*130+3500)}
@@ -5560,8 +5617,8 @@ async function comeback(){const S=SET();const q=qList().find(x=>x.role==='comeba
   tv.querySelector('#door').classList.add('open');FX.door();FX.crash(.3);await wait(900);
   for(const [k,id] of ok.entries()){const g=tv.querySelector(`.gh[data-id="${id}"]`);const p=G.players[id];if(!g)continue;setEmo(g.querySelector('.fig'),p,'happy',{anim:true});
     const gr=g.getBoundingClientRect(),tr=tv.getBoundingClientRect();const dx=(tr.left+tr.width*(k?.56:.44))-(gr.left+gr.width/2);g.animate([{transform:'translate(0,0) scale(1)'},{transform:`translate(${dx}px,-18cqw) scale(1.3)`,offset:.5},{transform:`translate(${dx}px,-2cqw) scale(1.25)`}],{duration:1300,easing:'cubic-bezier(.3,1.4,.5,1)',fill:'forwards'});
-    FX.slideUp();FX.cheer(2.4);banner(p.n.toUpperCase()+' IS BACK!');await wait(1900)}
-  if(!ok.length){banner('NOBODY GOT THROUGH');FX.buzzer()}await wait(2500)}
+    FX.slideUp();FX.cheer(2.4);banner(p.n.toUpperCase()+' IS BACK!');if(!G.saidBack){G.saidBack=1;AUD.voice('cb_yes')}await wait(1900)}
+  if(!ok.length){banner('NOBODY GOT THROUGH');FX.buzzer();AUD.voice('cb_no')}await wait(2500);AUD.stopMusic(800)}
 function cbLive(){}
 
 /* ---------------- final face-off ---------------- */
@@ -5572,7 +5629,7 @@ async function finalFaceOff(fin){const S=SET();let pool=qList().filter(q=>q.role
   const tv=scene(`<div class="stagebg"></div><div class="tvin" style="z-index:3">${topbar('FINAL FACE-OFF','FASTEST CORRECT ANSWER SCORES &middot; FIRST TO '+S.finalTo,'g','d')}<div class="q" id="fq" style="font-size:2.4cqw">The finalists step up...</div><div class="opts" id="fo" style="width:76%;margin:0 auto"></div></div>
     ${fin.map((p,i)=>`<div class="podium" data-id="${p.id}" style="left:${(100/n)*i+(100/n-22)/2}%;width:22%"><div style="width:56%" class="pf">${fig(p,'thinking',{tag:false})}</div><div class="fstat" id="fs-${p.id}">GET READY</div><div class="pips" id="pp-${p.id}">${'<i></i>'.repeat(S.finalTo)}</div><div style="font-family:var(--display);font-size:2.1cqw;color:${TEAMS[p.team].c};margin-top:.4cqw">${esc(p.n.toUpperCase())}</div></div>`).join('')}`);
   tv.insertAdjacentHTML('beforeend',venue('final'));
-  say('Final face off!');FX.riser(2);await wait(2500);
+  0;FX.riser(2);await wait(2500);
   let qi=0,champ=null;
   while(!champ&&qi<Math.max(pool.length,1)){const q=pool[qi]||null;if(!q)break;qi++;
     G.fin_.answers={};G.fin_.order=[];const r=broadcast('final',{q:qPublic(q),fin:G.fin_.ids,pips:G.finalPips,secs:S.timers.final,first:qi===1?1:0});G.fin_.r=r;
@@ -5585,11 +5642,11 @@ async function finalFaceOff(fin){const S=SET();let pool=qList().filter(q=>q.role
     tv.querySelector('#fo').classList.add('rev');tv.querySelectorAll('#fo .opt').forEach((d,i)=>{if(i===+q.correct)d.classList.add('ok')});
     const w=okIds[0];fin.forEach(p=>{const f=tv.querySelector(`.podium[data-id="${p.id}"] .fig`);const a=G.fin_.answers[p.id];const ok=a&&+a.a===+q.correct;setEmo(f,p,ok?'happy':'wrong',{anim:true,tag:false});
       const fs=tv.querySelector('#fs-'+p.id);fs.className='fstat '+(p.id===w?'win':ok?'ok':'bad');fs.innerHTML=a?`<b>${LET[+a.a]}</b> ${esc(arr(q.opts)[+a.a]||'')}<small>${(a.ms/1000).toFixed(1)}s${p.id===w?' &middot; FASTEST CORRECT':ok?' &middot; correct, slower':' &middot; wrong'}</small>`:'NO ANSWER'});await wait(1200);
-    if(w){G.finalPips[w]++;const pips=tv.querySelectorAll(`#pp-${w} i`);if(pips[G.finalPips[w]-1])pips[G.finalPips[w]-1].classList.add('on');FX.coin();FX.coin(.15);const pd=tv.querySelector(`.podium[data-id="${w}"]`);placePts(pd,'+1','l');banner(G.players[w].n.toUpperCase()+' SCORES!')}else{FX.buzzer();banner('NO POINT')}
+    if(w){G.finalPips[w]++;const pips=tv.querySelectorAll(`#pp-${w} i`);if(pips[G.finalPips[w]-1])pips[G.finalPips[w]-1].classList.add('on');FX.coin();FX.coin(.15);const pd=tv.querySelector(`.podium[data-id="${w}"]`);placePts(pd,'+1','l');banner(G.players[w].n.toUpperCase()+' SCORES!');AUD.voice(G.finalPips[w]===S.finalTo-1?'match':pickOne(['point1','point2']))}else{FX.buzzer();banner('NO POINT')}
     broadcast('finalRev',{q:qPublic(q),correct:q.correct,point:w||null,pips:G.finalPips,fin:G.fin_.ids});
     if(w&&G.finalPips[w]>=S.finalTo)champ=G.players[w];await wait(5000)}
   if(!champ){champ=fin.slice().sort((a,b)=>(G.finalPips[b.id]-G.finalPips[a.id])||(b.score-a.score))[0]}
-  G.champ=champ;flash();FX.crash();banner(champ.n.toUpperCase()+' WINS!');await wait(2000)}
+  G.champ=champ;flash();FX.crash();banner(champ.n.toUpperCase()+' WINS!');AUD.stopMusic(1500);await wait(2000)}
 function hclear0(){}
 function finalBuzz(id){const tv=tvEl();const b=tv.querySelector('#fs-'+id);const a=G.fin_&&G.fin_.answers[id];if(!b)return;b.className='fstat lock';b.innerHTML=`LOCKED IN<small>${a?(a.ms/1000).toFixed(1)+'s':''}</small>`;FX.buzz()}
 
@@ -5612,9 +5669,9 @@ async function champion(fin){const ps=P();let champ=G.champ||fin[0]||ps.slice().
     const tv=scene(`<div class="stagebg"></div><div class="tvin" style="z-index:3;align-items:center">${topbar('TEAM TROPHY','AVERAGE POINTS PER PLAYER','g','d')}
       <div class="ttro">${['red','blue'].map(t=>`<div class="tt ${t}" id="tt-${t}">${teamIcon(t)}<b>TEAM ${TEAMS[t].n}</b><div class="ttbar"><i style="background:${TEAMS[t].c}" data-h="${(t==='red'?tr:tb)/mx*100}"></i></div><span class="ticker" data-s="${t==='red'?tr:tb}">0</span></div>`).join('')}</div></div>`,'','final');
     tv.insertAdjacentHTML('beforeend',venue('champ'));FX.drumroll(2.4);await wait(500);tv.querySelectorAll('.ttbar i').forEach(i=>i.style.height=i.dataset.h+'%');tv.querySelectorAll('[data-s]').forEach(n=>countUp(n,0,+n.dataset.s,2200,false));
-    await wait(2600);tv.querySelector('#tt-'+tw).classList.add('win');flash();FX.fanfare();FX.cheer(3);confetti();tv.querySelector('.tvin').insertAdjacentHTML('beforeend',`<div class="steam">${teamIcon(tw,'sm')} TEAM ${TEAMS[tw].n} WINS THE TEAM TROPHY</div>`);say('Team '+TEAMS[tw].w+' wins the team trophy!');await wait(4200)}
+    await wait(2600);tv.querySelector('#tt-'+tw).classList.add('win');flash();FX.fanfare();FX.cheer(3);confetti();tv.querySelector('.tvin').insertAdjacentHTML('beforeend',`<div class="steam">${teamIcon(tw,'sm')} TEAM ${TEAMS[tw].n} WINS THE TEAM TROPHY</div>`);AUD.playMusic('champion');AUD.voice(tw==='red'?'trophy_red':'trophy_blue');await wait(4200)}
   // 2. awards
-  if(aw.length){const tv=scene(`<div class="stagebg"></div><div class="tvin" style="z-index:3;align-items:center">${topbar('TONIGHT\'S AWARDS','WELL PLAYED','g','d')}<div class="awards">${aw.map((x,i)=>{const p=G.players[x.id];return `<div class="award" id="aw${i}"><div class="aic">${x.ic}</div><span>${x.k}</span>${headImg(p,8)}<b>${esc(p.n.toUpperCase())}</b><em>${esc(x.v)}</em></div>`}).join('')}</div></div>`,'','final');
+  if(aw.length){const tv=scene(`<div class="stagebg"></div><div class="tvin" style="z-index:3;align-items:center">${(AUD.voice('awards'),'')}${topbar('TONIGHT\'S AWARDS','WELL PLAYED','g','d')}<div class="awards">${aw.map((x,i)=>{const p=G.players[x.id];return `<div class="award" id="aw${i}"><div class="aic">${x.ic}</div><span>${x.k}</span>${headImg(p,8)}<b>${esc(p.n.toUpperCase())}</b><em>${esc(x.v)}</em></div>`}).join('')}</div></div>`,'','final');
     tv.insertAdjacentHTML('beforeend',venue('champ'));for(let i=0;i<aw.length;i++){await wait(700);tv.querySelector('#aw'+i).classList.add('on');FX.coin();FX.cheer(1.5);pyro(20+i*30,40,'#ffcf3f');await wait(2300)}await wait(1500)}
   // 3. podium
   const [a,b,c]=[order[0],order[1],order[2]];const crowd=order.slice(3);
@@ -5628,7 +5685,7 @@ async function champion(fin){const ps=P();let champ=G.champ||fin[0]||ps.slice().
   if(b){await wait(1900);tv.querySelector('.p2').classList.add('up');FX.coin();FX.cheer(2)}
   await wait(1800);FX.drumroll(2.6);tv.querySelector('#ct').classList.add('pulse');await wait(2800);
   broadcast('champ',{champ:champ.id,ranks,scores:Object.fromEntries(ps.map(p=>[p.id,p.score])),tw,aw:aw.map(x=>({k:x.k,id:x.id,v:x.v}))});
-  tv.querySelector('.p1').classList.add('up');tv.classList.add('won');flash();FX.crash();FX.fanfare();FX.cheer(6);confetti();say(champ.n+' is the champion!');
+  tv.querySelector('.p1').classList.add('up');tv.classList.add('won');flash();FX.crash();FX.fanfare();FX.cheer(6);confetti();AUD.sfx('confetti');AUD.voice('champion');
   tv.querySelector('#ct').textContent='CHAMPION';tv.querySelector('#ct').classList.remove('pulse');tv.querySelector('#cn').textContent=champ.n.toUpperCase();tv.querySelector('#cn').classList.add('on');
   const cf=()=>tv.querySelector('#c1 .fig');HT(()=>{tv.querySelector('.crown').classList.add('on');FX.coin()},900);
   const cols=['#ffcf3f','#ff3d6e','#ffffff','#7be07f','#ffb81c'];for(let i=0;i<34;i++)HT(()=>{pyro(8+Math.random()*84,8+Math.random()*42,cols[i%5]);if(i%3===0)FX.pop()},400+i*380);
@@ -5659,7 +5716,7 @@ function showHostBar(mode){const b=$('hostbar');if(!b)return;b.dataset.mode=mode
 async function resetLive(){G.running=false;hclear();SND.songStop();if(G.paused)setPause(false);G.paused=false;document.body.classList.remove('paused');
   for(const id in G.players){const p=G.players[id];if(p.bot){delete G.players[id];continue}p.score=0;p.ghost=false;p.team='';p.last=0}
   G.inputs={};G.inputJ={};await NET.set('live/in',null);await NET.set('live/react',null);tvEl().innerHTML='';hostLobby()}
-async function hostPage(){document.body.className='host';$('app').innerHTML=`<div class="tvwrap"><div class="tv" id="tv"></div></div><div id="hostbar" class="hostbar"></div><div id="netWarn" class="netwarn" hidden></div>`;
+async function hostPage(){document.body.className='host';AUD.init();hostLobbyAudio();$('app').innerHTML=`<div class="tvwrap"><div class="tv" id="tv"></div></div><div id="hostbar" class="hostbar"></div><div id="netWarn" class="netwarn" hidden></div>`;
   SND.init();await NET.ready;await seedIfEmpty();await migrateQuestions();watchData(()=>{});
   const fresh=$('app').dataset.fresh!=='no';await NET.set('live/state',null);await NET.set('live/in',null);await NET.set('live/react',null);await NET.set('live/host',G.hs);await NET.set('live/pause',null);
   if(fresh){await NET.set('live/players',null);await NET.set('live/heads',null)}
